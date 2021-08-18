@@ -1,0 +1,40 @@
+baseURL = 'https://netotz.github.io/'
+defaultContentLanguage = 'en'
+languageCode = 'en'
+enableEmoji = true
+enableGitInfo = true
+# footnoteReturnLinkContents = '↩'
+
+title = 'YetAnotherBlogException'
+theme = 'gokarna'
+
+[params]
+    author = 'Ernesto Ortiz'
+    GitHubUser = 'netotz'
+    footer = ''
+    description = 'Writings of programming and everything else'
+    metaKeywords = ['blog', 'personal', 'hugo', 'github-pages', 'programming', 'journal']
+
+[menu]
+    [[menu.main]]
+        identifier = 'posts'
+        url = '/posts/'
+        pre = '<span data-feather="book-open"></span>'
+        name = 'Posts'
+        weight = 1
+    [[menu.main]]
+        identifier = 'tags'
+        url = '/tags/'
+        pre = '<span data-feather="tag"></span>'
+        name = 'Tags'
+        weight = 2
+    [[menu.main]]
+        identifier = 'github'
+        url = 'https://github.com/netotz'
+        pre = '<span data-feather="github"></span>'
+        weight = 3
+    [[menu.main]]
+        identifier = 'linkedin'
+        url = 'https://www.linkedin.com/in/netotz/'
+        pre = '<span data-feather="linkedin"></span>'
+        weight = 4
