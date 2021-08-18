@@ -3,17 +3,20 @@ defaultContentLanguage = 'en'
 languageCode = 'en'
 enableEmoji = true
 enableGitInfo = true
-# footnoteReturnLinkContents = '↩'
 
-title = 'YetAnotherBlogException'
+staticDir = ['images']
+
+title = 'void?'
 theme = 'gokarna'
 
 [params]
     author = 'Ernesto Ortiz'
     GitHubUser = 'netotz'
     footer = ''
+    avatarURL = "/null.png"
     description = 'Writings of programming and everything else'
     metaKeywords = ['blog', 'personal', 'hugo', 'github-pages', 'programming', 'journal']
+    accentColor = "#ffc33c"
 
 [menu]
     [[menu.main]]
