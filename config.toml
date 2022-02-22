@@ -15,7 +15,7 @@ theme = 'gokarna'
     footer = ''
     avatarURL = "/null.png"
     description = 'Writings of programming and everything else'
-    metaKeywords = ['blog', 'personal', 'hugo', 'github-pages', 'programming', 'journal']
+    metaKeywords = ['blog', 'personal', 'hugo', 'github-pages', 'programming', 'journal', 'programming blog', 'essays', 'computer science', 'technology blog']
     showPostsOnHomePage = 'recent'
     accentColor = "#ffc33c"
     customHeadHTML = """
@@ -27,6 +27,19 @@ theme = 'gokarna'
         <!-- To automatically render math in text elements, include the auto-render extension: -->
         <script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/contrib/auto-render.min.js" integrity="sha384-+XBljXPPiv+OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR" crossorigin="anonymous"
             onload="renderMathInElement(document.body);"></script>
+        
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false},
+                    ],
+                    // rendering keys, e.g.:
+                    throwOnError : false
+                });
+            });
+        </script>
     """
 
 [menu]
