@@ -14,13 +14,13 @@ In this process, I found it interesting how some authors decompose the objective
 
 I was taking a look at the fast swap-based local search procedure[^1], which is an acceleration of the fast algorithm for greedy interchange[^2], in which the goal is to find as fast as possible a facility to remove from the solution, given a candidate facility to add to it, that would best improve the objective function value.
 
-Let me give you the context. The previous two referenced papers are applied to the $p$-median problem (PMP), which is location problem.
+Let me give you the context. The previous two heuristics are applied to the $p$-median problem (PMP), which is a location problem.
 
 > In Operations Research, location problems are discrete optimization problems that consist of determining the best location for one or several centers or facilities in order to serve and supply a set of demand points, often referred as customers or users.
 > 
 > The solution of a location problem is the set of those centers.
 > 
-> A location problem is characterized by a specific objective function, which defines what solution is the *best*.
+> A location problem is characterized by a specific objective function, which defines how a solution is *better* than another.
 
 The objective function of the PMP is formulated as:
 
@@ -46,19 +46,18 @@ For example, if the move is an interchange or a swap between a node inside the s
 You can see that the time complexity of the equation above is $O(pn)$, where $p$ is the size of $S$, and $n$ the size of $U$.
 A straight implementation of a local search with the interchange move would have to check every possible pair of nodes inside and outside of the solution, resulting in a total of $p(m - p)$ pairs, $m$ being the size of $F$, the set of candidate facilities ($S \subset F$, $p < m$).
 The time complexity of just looping through these pairs is $O(pm)$.
-And because the objective function has to be evaluated for every pair, the complexity increases to $O(p^2mn)$.
+And because the objective function supposedly has to be evaluated for every pair, the complexity increases to $O(p^2mn)$.
 
 I naively ran this implementation the first time (for the ANPCP) and, believe me, **it is slow**.
 
-A better and faster approach is to only calculate the difference in the objective function value after applying every move, because reevaluating it over and over is an expensive operation.
-
-In the case of the PMP the objection function is a summation, so the difference between its values is easy to calculate as they are just subtractions of distances.
-This is what Whitaker did in [^2] and was later improved by Resende & Werneck in [^1].
+A better and faster approach is to only calculate the difference in the objective function value at the same time as a move is being applied, since reevaluating it over and over is an expensive operation.
+In the case of the PMP the objective function is a summation, so the differences are easy to calculate as they are just subtractions of distances.
+This is what Whitaker did in [^2] and was later improved by Resende & Werneck in [^1] (using "partial" moves) by reasoning about each user contributing independently to the objective function value.
 They built a local search procedure with $O(mn)$ operations.
 
-I read those papers in order to adapt the fast swap procedure for the ANPCP, which I did. But what the heck is the ANPCP?
+I read those papers in order to adapt the fast swap procedure for the ANPCP, and I did. But what the heck is the ANPCP?
 
-> The $\alpha$-neighor $p$-center problem is a generalization of the $p$-center problem (PCP), in which the goal is to select $p$ centers such that the maximum distance of a user to its $\alpha$-th closest center is minimized.
+> The $\alpha$-neighbor $p$-center problem is a generalization of the $p$-center problem (PCP), in which the goal is to select $p$ centers such that the maximum distance of a user to its $\alpha$-th closest center is minimized.
 >
 > Setting $\alpha = 1$ corresponds to the classical PCP: it represents the *first* closest center. So $\alpha = 2$ represents the *second* closest center, and so on.
 
@@ -77,9 +76,12 @@ $$
 
 Maybe you already noticed my mistake: the fast swap procedure calculates additions and subtractions because that's how the objective function of the PMP is evaluated, which is totally different from the ANPCP's.
 
-At this point it was already implemented and I was running some experiments with it.
-It was getting stuck when $\alpha > 2$, but for the PCP it was actually improving solutions, probably due to the similarities both problems (PMP and PCP) share.
-The PCP doesn't add anything, but each user is assigned to its closest facility, which is also true for the PMP.
+But it was kind of late. The heuristic was already implemented and I was running some experiments with it.
+It was getting stuck when $\alpha > 2$, but for the PCP it was actually improving solutions, probably due to the similarities that both problems share.
+While the PCP doesn't add anything, each user is assigned to its closest facility, which is also true for the PMP.
+
+
+
 But it's not true for the ANPCP.
 
 [^1]: Resende, M. G., & Werneck, R. F. (2007). A fast swap-based local search procedure for location problems. *Annals of Operations Research*, 150(1), 205-230.
