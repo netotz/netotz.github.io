@@ -48,11 +48,11 @@ A straight implementation of a local search with the interchange move would have
 The time complexity of just looping through these pairs is $O(pm)$.
 And because the objective function supposedly has to be evaluated for every pair, the complexity increases to $O(p^2mn)$.
 
-I naively ran this implementation the first time (for the ANPCP) and, believe me, **it is slow**.
+I naively ran this implementation the first time (for the ANPCP) and, believe me, it is slow.
 
-A better and faster approach is to only calculate the difference in the objective function value at the same time as a move is being applied, since reevaluating it over and over is an expensive operation.
+A better and faster approach is to **only calculate the difference in the objective function value at the same time as a move is being applied**, since reevaluating it over and over is an expensive operation.
 In the case of the PMP the objective function is a summation, so the differences are easy to calculate as they are just subtractions of distances.
-This is what Whitaker did in [^2] and was later improved by Resende & Werneck in [^1] (using "partial" moves) by reasoning about each user contributing independently to the objective function value.
+This is what Whitaker did in [^2] and was later improved by Resende & Werneck in [^1] (using "partial" moves) by **reasoning about each user contributing independently to the objective function value**.
 They built a local search procedure with $O(mn)$ operations.
 
 I read those papers in order to adapt the fast swap procedure for the ANPCP, and I did. But what the heck is the ANPCP?
@@ -74,16 +74,41 @@ $$
 
 > Minimize the largest distance between each user and its $\alpha$-th closest open facility.
 
-Maybe you already noticed my mistake: the fast swap procedure calculates additions and subtractions because that's how the objective function of the PMP is evaluated, which is totally different from the ANPCP's.
+So maybe you already noticed my mistake: the fast swap procedure calculates additions and subtractions because that's how the objective function of the PMP is evaluated, which is totally different from the ANPCP's.
 
 But it was kind of late. The heuristic was already implemented and I was running some experiments with it.
-It was getting stuck when $\alpha > 2$, but for the PCP it was actually improving solutions, probably due to the similarities that both problems share.
-While the PCP doesn't add anything, each user is assigned to its closest facility, which is also true for the PMP.
+It was getting stuck when $\alpha > 2$, but for the PCP ($\alpha = 1$) it was actually improving solutions, probably due to the similarities that both problems share:
+while the PCP doesn't add anything, each user is assigned to its closest facility, which is also true for the PMP... but not for the ANPCP.
 
+Consequently, I decided to keep trying the same algorithm with additions and subtractions, but this time adapting it to calculate differences from the $\alpha$-th closest facilities, as if it were the "$\alpha$-neighbor $p$-median problem", which I don't know if it even exists, but it's still using the PMP objective function.
 
+The most relevant change in the algorithm is the fact that in the ANPCP, for a any user, when the facility that is being added to the solution, $f_i$, is closer than its current $\alpha$-th closest, $f_\alpha$, two things can happen:
 
-But it's not true for the ANPCP.
+- $\textrm{If } d_{\alpha - 1} < d_i < d_\alpha \textrm{, then } f_\alpha \leftarrow f_i$
+- $\textrm{Else if } d_i < d_{\alpha - 1} < d_\alpha \textrm{, then } f_\alpha \leftarrow f_{\alpha - 1}$
+
+This is because $f_\alpha$ **is determined by all the "previous" closer open facilities** $f_1, f_2, \dots, f_{\alpha - 1}$.
+
+But this change got no results either. I then reasoned that the issue must be the objective function itself (this is obvious, but I wanted to keep experimenting with the other approach).
+For this, I'm trying to adapt the fast vertex substitution local search used to solve the PCP [^3], which is based on Whitaker's algorithm, with the distinction that it decompose the PCP objective function by **updating the maximum distance at each iteration of the local search**, instead of calculating differences.
+They also use data structures for accelerations purposes, but different from those by [^1].
+
+So far, I haven't gotten good results using this adaptation.
+The main loop of the local search runs forever, except for when $\alpha = 1$ (PCP).
+I'm currently stuck in a debugging hell, where I've been running again and again the same procedure without detecting what's wrong.
+This has led me to do a manual experiment on paper and see if in that way I can find the bug.
+
+Despite this, I'm having the chance to read good papers from the field and to learn techniques from recognized authors, which for me it is what matters.
+As programmers we will always struggle with code.
+I've read from senior developers that they still enter debugging hells quite often.
+But the difference is that they have much more knowledge and experience, because that's what remains after solving so many problems.
+
+There's a [GitHub repository for this research and experiments about the ANPCP](https://github.com/netotz/alpha-neighbor-p-center-problem), if you want to take a look at the code.
+It's written in Python, and it will probably be migrated to C++ for performance.
+It's organized in branches so the latest updates may not be in `main` yet.
 
 [^1]: Resende, M. G., & Werneck, R. F. (2007). A fast swap-based local search procedure for location problems. *Annals of Operations Research*, 150(1), 205-230.
 
 [^2]: Whitaker, R. A. (1983). A fast algorithm for the greedy interchange for large-scale clustering and median location problems. *INFOR: Information Systems and Operational Research*, 21(2), 95-108.
+
+[^3]: Mladenović, N., Labbé, M., & Hansen, P. (2003). Solving the p‐center problem with tabu search and variable neighborhood search. Networks: An International Journal, 42(1), 48-64.
