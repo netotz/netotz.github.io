@@ -3,7 +3,7 @@ type: post
 title: "C# Wizardry - Understanding delegates with custom LINQ methods"
 description: "Personal notes on what delegates are in C#."
 date: 2022-03-04
-tags: ["programming", "csharp", "dotnet", "notes", "delegates"]
+tags: ["programming", "csharp", "dotnet", "notes"]
 mathjax: true
 ---
 
