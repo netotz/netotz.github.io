@@ -1,0 +1,205 @@
+<!doctype html><html lang=en><head>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<style>:root{--accent-color:#ffc33c}</style>
+<title>C# Wizardry - Understanding events</title>
+<meta name=description content="Personal notes on what events are in C#.">
+<meta name=keywords content="blog,personal,hugo,github-pages,programming,journal,programming blog,essays,computer science,technology blog,csharp,dotnet,notes">
+<meta property="og:url" content="https://netotz.github.io/posts/csharp-wizardry/events/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="C# Wizardry - Understanding events">
+<meta property="og:description" content="Personal notes on what events are in C#.">
+<meta property="og:image" content="/null.png">
+<meta name=twitter:card content="summary_large_image">
+<meta name=twitter:title content="C# Wizardry - Understanding events">
+<meta name=twitter:description content="Personal notes on what events are in C#.">
+<meta property="twitter:domain" content="https://netotz.github.io/posts/csharp-wizardry/events/">
+<meta property="twitter:url" content="https://netotz.github.io/posts/csharp-wizardry/events/">
+<meta name=twitter:image content="/null.png">
+<link rel=canonical href=https://netotz.github.io/posts/csharp-wizardry/events/>
+<link rel=stylesheet type=text/css href=/css/normalize.min.css media=print onload="this.media='all'">
+<link rel=stylesheet type=text/css href=/css/main.css>
+<link disabled id=dark-theme rel=stylesheet href=/css/dark.css>
+<script src=/js/feather-icons.min.js></script>
+<script src=/js/main.js></script>
+<link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png>
+<link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
+<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png>
+<link rel=manifest href=/site.webmanifest>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.css integrity=sha384-MlJdn/WNKDGXveldHDdyRP1R4CTHr3FeuDNfhsLPYrq2t0UBkUdK2jyTnXPEK1NQ crossorigin=anonymous>
+<script defer src=https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.js integrity=sha384-VQ8d8WVFw0yHhCk5E8I86oOhv48xLpnDZx5T9GogA/Y84DcCKWXDmSDfn13bzFZY crossorigin=anonymous></script>
+<script defer src=https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/contrib/auto-render.min.js integrity=sha384-+XBljXPPiv+OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR crossorigin=anonymous onload=renderMathInElement(document.body)></script>
+<script>document.addEventListener("DOMContentLoaded",function(){renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:!0},{left:'$',right:'$',display:!1}],throwOnError:!1})})</script>
+</head>
+<body>
+<script type=text/javascript>setThemeByUserPref()</script><header class=header>
+<nav class=header-nav>
+<div class=avatar>
+<a href=https://netotz.github.io/>
+<img src=/null.png alt=avatar>
+</a>
+</div>
+<div class=nav-title>
+<a class=nav-brand href=https://netotz.github.io/>void?</a>
+</div>
+<div class=nav-links>
+<div class=nav-link>
+<a href=/posts/><span data-feather=book-open></span> Posts </a>
+</div>
+<div class=nav-link>
+<a href=/tags/><span data-feather=tag></span> Tags </a>
+</div>
+<div class=nav-link>
+<a href=https://github.com/netotz><span data-feather=github></span> </a>
+</div>
+<div class=nav-link>
+<a href=https://www.linkedin.com/in/netotz/><span data-feather=linkedin></span> </a>
+</div>
+<div class=nav-link>
+<a href=https://twitter.com/netotz><span data-feather=twitter></span> </a>
+</div>
+<span class=nav-icons-divider></span>
+<div class="nav-link dark-theme-toggle">
+<a>
+<span id=theme-toggle-icon data-feather=moon></span>
+</a>
+</div>
+<div class=nav-link id=hamburger-menu-toggle>
+<a>
+<span data-feather=menu></span>
+</a>
+</div>
+<ul class="nav-hamburger-list visibility-hidden">
+<li class=nav-item>
+<a href=/posts/><span data-feather=book-open></span> Posts </a>
+</li>
+<li class=nav-item>
+<a href=/tags/><span data-feather=tag></span> Tags </a>
+</li>
+<li class=nav-item>
+<a href=https://github.com/netotz><span data-feather=github></span> </a>
+</li>
+<li class=nav-item>
+<a href=https://www.linkedin.com/in/netotz/><span data-feather=linkedin></span> </a>
+</li>
+<li class=nav-item>
+<a href=https://twitter.com/netotz><span data-feather=twitter></span> </a>
+</li>
+<li class="nav-item dark-theme-toggle">
+<a>
+<span id=theme-toggle-icon data-feather=moon></span>
+</a>
+</li>
+</ul>
+</div>
+</nav>
+</header>
+<main id=content>
+<div class="post container">
+<div class=post-header-section>
+<h1>C# Wizardry - Understanding events</h1>
+<small role=doc-subtitle>Personal notes on what events are in C#.</small>
+<p class=post-date>
+March 4, 2022
+</p>
+<ul class=post-tags>
+<li class=post-tag><a href=/tags/programming>programming</a></li>
+<li class=post-tag><a href=/tags/csharp>csharp</a></li>
+<li class=post-tag><a href=/tags/dotnet>dotnet</a></li>
+<li class=post-tag><a href=/tags/notes>notes</a></li>
+</ul>
+</div>
+<div class=post-content>
+<p>
+<p>The content below is retrieved from Jupyter notebooks that you can find <a href=https://github.com/netotz/learning-dotnet/blob/main/csharp/events/>in this repository</a>.</p>
+<p>Source: <a href=https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/delegates/>Microsoft documentation</a>.</p>
+<hr>
+<p>Events enable a class or object (the publisher) to notify other classes or objects (the subscribers) when something occurs.</p>
+<ul>
+<li>The publisher determines when to raise an event. It can have multiple subscribers.</li>
+<li>The subscriber determines how to handle an event when it&rsquo;s raised. It can be subscribed to multiple events.</li>
+</ul>
+<p><code>System.EventHandler</code> is a delegate to handle an event that has no event data. Its signature is:</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cs data-lang=cs><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>delegate</span> <span style=color:#66d9ef>void</span> EventHandler(<span style=color:#66d9ef>object?</span> sender, EventArgs e);
+</code></pre></div><p>It&rsquo;s equivalent to:</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C# data-lang=C#><span style=color:#66d9ef>public</span> Action&lt;<span style=color:#66d9ef>object?</span>, EventArgs&gt; ActionEventHandler;
+</code></pre></div><p><code>System.EventArgs</code> provides a value to use for events with no data, but it also represents the base class for events with data, e.g.</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C# data-lang=C#><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>MyEventArgs</span> : EventArgs {
+    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>string</span> Message { <span style=color:#66d9ef>get</span>; }
+    <span style=color:#66d9ef>public</span> DateTime DateTime { <span style=color:#66d9ef>get</span>; }
+
+    <span style=color:#66d9ef>public</span> MyEventArgs(<span style=color:#66d9ef>string</span> message) {
+        Message = message;
+        DateTime = DateTime.Now;
+    }
+}
+</code></pre></div><p>It&rsquo;s possible to define a custom event handler if we have custom event data, like the class defined above:</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C# data-lang=C#><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>delegate</span> <span style=color:#66d9ef>void</span> DefinedEventHandler(<span style=color:#66d9ef>object</span> sender, MyEventArgs args);
+</code></pre></div><p>which can also be defined using generics with <code>System.Action</code> class.</p>
+<p>Events are declared with the <code>event</code> keyword in the publisher class:</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C# data-lang=C#><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>event</span> DefinedEventHandler DefinedEvent;
+</code></pre></div><p>There&rsquo;s an option to use generic types for custom event data so it&rsquo;s not necessary to define a new delegate, as shown below:</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C# data-lang=C#><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Publisher</span> {
+    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>event</span> EventHandler&lt;MyEventArgs&gt; MyEvent;
+
+    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> SendMessage(<span style=color:#66d9ef>string</span> message) {
+        <span style=color:#66d9ef>var</span> eventArgs = <span style=color:#66d9ef>new</span> MyEventArgs(message);
+        OnRaiseMyEvent(eventArgs);
+    }
+
+    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> OnRaiseMyEvent(MyEventArgs args) {
+        <span style=color:#75715e>// use a copy of the event to avoid a race condition
+</span><span style=color:#75715e></span>        <span style=color:#66d9ef>var</span> raiseEvent = MyEvent;
+
+        <span style=color:#66d9ef>if</span> (raiseEvent <span style=color:#66d9ef>is</span> <span style=color:#66d9ef>null</span>) {
+            <span style=color:#75715e>// event is null if it doesn&#39;t have subscribers
+</span><span style=color:#75715e></span>            <span style=color:#66d9ef>return</span>;
+        }
+
+        <span style=color:#75715e>// raise the event by invoking it as calling a method
+</span><span style=color:#75715e></span>        raiseEvent(<span style=color:#66d9ef>this</span>, args);
+    }
+}
+</code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C# data-lang=C#><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Subscriber</span> {
+    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>int</span> Id { <span style=color:#66d9ef>get</span>; }
+
+    <span style=color:#66d9ef>public</span> Subscriber(<span style=color:#66d9ef>int</span> id, Publisher publisher) {
+        Id = id;
+        <span style=color:#75715e>// the event gets a new subscriber, which is a method to handle it
+</span><span style=color:#75715e></span>        publisher.MyEvent += HandleMyEvent;
+    }
+
+    <span style=color:#75715e>/// The parameters of this method match the signature of Publisher.MyEvent
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> HandleMyEvent(<span style=color:#66d9ef>object</span> sender, MyEventArgs args) {
+        Console.WriteLine(<span style=color:#e6db74>$&#34;Subscriber {Id} received the following message:\n{args.Message}\nAt {args.DateTime}&#34;</span>);
+    }
+}
+</code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C# data-lang=C#><span style=color:#66d9ef>var</span> publisher = <span style=color:#66d9ef>new</span> Publisher();
+<span style=color:#66d9ef>var</span> subscribers = Enumerable.Range(<span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>3</span>)
+    .Select(i =&gt; <span style=color:#66d9ef>new</span> Subscriber(i, publisher))
+    .ToList();
+</code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C# data-lang=C#>publisher.SendMessage(<span style=color:#e6db74>&#34;Good afternoon to all!&#34;</span>);
+</code></pre></div><pre><code>Subscriber 1 received the following message:
+Good afternoon to all!
+At 1/21/2022 6:47:40 PM
+
+Subscriber 2 received the following message:
+Good afternoon to all!
+At 1/21/2022 6:47:40 PM
+
+Subscriber 3 received the following message:
+Good afternoon to all!
+At 1/21/2022 6:47:40 PM
+</code></pre>
+<p>Events are a special type of multicast delegates that can only be invoked from within the class that declares them. In other words, only the publishers can raise their own events.</p>
+</p>
+</div>
+</div>
+</main><footer class=footer>
+<span>&copy; 2022 </span>
+<span>
+Made with &#10084;&#65039; using <a target=_blank href=https://github.com/526avijitgupta/gokarna>Gokarna</a>
+</span>
+</footer>
+</body>
+</html>
