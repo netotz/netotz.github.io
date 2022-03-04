@@ -45,6 +45,11 @@ theme = 'gokarna'
         </script>
     """
 
+[markup]
+    [markup.goldmark]
+        [markup.goldmark.renderer]
+            unsafe = true
+
 [menu]
     [[menu.main]]
         identifier = 'posts'
