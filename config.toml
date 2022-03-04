@@ -4,8 +4,6 @@ languageCode = 'en'
 enableEmoji = true
 enableGitInfo = true
 
-staticDir = ['images']
-
 title = 'void?'
 theme = 'gokarna'
 
@@ -19,6 +17,11 @@ theme = 'gokarna'
     showPostsOnHomePage = 'recent'
     accentColor = "#ffc33c"
     customHeadHTML = """
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+        <link rel="manifest" href="/site.webmanifest">
+    
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.css" integrity="sha384-MlJdn/WNKDGXveldHDdyRP1R4CTHr3FeuDNfhsLPYrq2t0UBkUdK2jyTnXPEK1NQ" crossorigin="anonymous">
 
         <!-- The loading of KaTeX is deferred to speed up page rendering -->
