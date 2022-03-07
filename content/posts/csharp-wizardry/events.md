@@ -9,7 +9,7 @@ mathjax: true
 
 The content below is retrieved from Jupyter notebooks that you can find [in this repository](https://github.com/netotz/learning-dotnet/blob/main/csharp/events/).
 
-Source: [Microsoft documentation](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/delegates/).
+Source: [Microsoft documentation](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/events/).
 
 ---
 
