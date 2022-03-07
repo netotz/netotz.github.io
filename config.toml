@@ -57,14 +57,26 @@ theme = 'gokarna'
 
 [menu]
     [[menu.main]]
+        identifier = 'home'
+        url = '/'
+        pre = '<span data-feather="home"></span>'
+        name = 'Home'
+        weight = 1
+    [[menu.main]]
         identifier = 'posts'
         url = '/posts/'
         pre = '<span data-feather="book-open"></span>'
         name = 'Posts'
-        weight = 1
+        weight = 2
     [[menu.main]]
         identifier = 'tags'
         url = '/tags/'
         pre = '<span data-feather="tag"></span>'
         name = 'Tags'
-        weight = 2
+        weight = 3
+    [[menu.main]]
+        identifier = 'source code'
+        url = 'https://github.com/netotz/netotz.github.io'
+        pre = '<span data-feather="github"></span>'
+        name = 'Source'
+        weight = 4
