@@ -15,7 +15,7 @@ theme = 'gokarna'
     ]
     author = 'Ernesto Ortiz'
     GitHubUser = 'netotz'
-    footer = ''
+    # footer = "- Thanks for reading :)"
     avatarURL = "/images/null.png"
     description = 'Writings of programming and everything else'
     metaKeywords = ['blog', 'personal', 'hugo', 'github-pages', 'programming', 'journal', 'programming blog', 'essays', 'computer science', 'technology blog']
