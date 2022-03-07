@@ -8,6 +8,11 @@ title = 'void?'
 theme = 'gokarna'
 
 [params]
+    socialIcons = [
+        {name = "github", url = "https://github.com/netotz"},
+        {name = "linkedin", url = "https://www.linkedin.com/in/netotz/"},
+        {name = "twitter", url = 'https://twitter.com/netotz'}
+    ]
     author = 'Ernesto Ortiz'
     GitHubUser = 'netotz'
     footer = ''
@@ -63,18 +68,3 @@ theme = 'gokarna'
         pre = '<span data-feather="tag"></span>'
         name = 'Tags'
         weight = 2
-    [[menu.main]]
-        identifier = 'github'
-        url = 'https://github.com/netotz'
-        pre = '<span data-feather="github"></span>'
-        weight = 3
-    [[menu.main]]
-        identifier = 'linkedin'
-        url = 'https://www.linkedin.com/in/netotz/'
-        pre = '<span data-feather="linkedin"></span>'
-        weight = 4
-    [[menu.main]]
-        identifier = 'twitter'
-        url = 'https://twitter.com/netotz'
-        pre = '<span data-feather="twitter"></span>'
-        weight = 5
