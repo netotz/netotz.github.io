@@ -21,7 +21,17 @@ Object Oriented Programming (OOP) is a programming paradigm that structures a so
 
 ## Class
 
-A class is a code template or blueprint that describes what an **object** is and what it does, by defining **attributes** to store data and implementing **behaviors** to use that data.
+A class is a code template or blueprint that describes what an **object** is and what it does, by defining **attributes** to store data and implementing **methods** or behaviors to use that data.
+
+### Attributes
+
+The attributes of a class represent its characteristics and features.
+They are also called **properties** or **fields**.
+
+### Methods
+
+The methods of a class define its behavior, most commonly to interact with the attributes.
+Methods are really functions but scoped to the class, therefore having access to its data or fields.
 
 ## Object
 
