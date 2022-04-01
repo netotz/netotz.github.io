@@ -3,7 +3,8 @@ type: post
 title: "The Four Pillars of Object Oriented Programming"
 description: "Notes on the so called four pillars of Object Oriented Programming."
 date: 2022-03-07
-tags: ["programming", "object-oriented-programming", "notes"]
+lastmod: 2022-03-31
+tags: ["programming", "object oriented programming", "software engineering", "notes"]
 ---
 
 The four pillars of OOP are:
