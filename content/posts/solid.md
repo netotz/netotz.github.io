@@ -74,7 +74,7 @@ It measures the strength of the relationships between these elements.
 **Coupling** refers to the degree of interdependence between modules.
 It measures how closely connected distinct modules are, and the strength of the relationships between them.
 
-The SRP aims for high cohesion and loose coupling.
+The Single Responsability Principle aims for high cohesion and loose coupling.
 
 ![](/images/modularization.png)
 
@@ -82,3 +82,65 @@ We have classes `A`, `B`, and `C`.
 Each class has its own elements or members labeled with numbers.
 Imagine having to modify any member in the bad modularization example.
 Those are the moments when you ask yourself why you wanted to be a developer.
+
+# Open-Closed Principle
+
+> Software entities should be open for extension, but closed for modification.
+
+In this context, a software entity can be a class, a method, a module, a function, etc.
+
+Or as Uncle Bob said,
+
+> You should be able to extend the behavior of a system without having to modify that system.
+
+This principle is important because the less the source code is edited, the less likely it is that new bugs are introduced and that dependencies are broken.
+
+One area in which the Open-Closed Principle is especially important is in libraries and packages.
+Consumers of a package cannot modify its source code directly, and the authors shouldn't either because it could break past versions.
+But consumers should be able to extend the contents of the package for their own needs.
+
+## Abstraction vs Concreteness
+
+Code that does one and only one very specific thing, is extremely concrete:
+
+```cs
+/// A class that only prints "Concrete!" in console.
+public class DoesOneThing {
+    public void Execute() {
+        Console.WriteLine("Concrete!");
+    }
+}
+```
+
+On the other hand, code than can be extended in every possible direction, capable to do literally anything, is infinitely abstract:
+
+```cs
+/// A class that can do anything.
+public class DoesAnything<TArg, TReturn> {
+    public Func<TArg, TReturn> Function { get; set; }
+}
+```
+
+```cs
+var cosineCalculator = new DoesAnything<double, int> {
+    Function = Math.Cos
+};
+var cos10 = cosineCalculator.Function(10);
+
+var firstCharGetter = new DoesAnything<string, char> {
+    Function = word => word[0]
+};
+// ...
+```
+
+This class can do anything because it can't do anything by itself. 100% of the functionality is passed to it.
+
+Code should be balanced between abstraction and concreteness, keeping in mind that abstraction adds complexity.
+In order to have a good balance, we'd have to try to predict where variation is going to be needed as the application evolves, and apply enough abstraction there.
+
+A simple and good approach is to start being concrete in everything.
+Then, if we notice some modifications in some parts of the code, we should start implementing just enough abstraction to those parts to make them extensible, like adding parameters, designing inheritance, etc.
+
+In legacy projects, use new classes for new features, to avoid breaking existing dependencies and implementations.
+
+
