@@ -1,0 +1,276 @@
+<!doctype html><html lang=en><head>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<style>:root{--accent-color:#ffc33c}</style>
+<title>The SOLID Principles</title>
+<meta name=description content="Notes and definitions about the SOLID principles.">
+<meta name=keywords content="blog,personal,hugo,github-pages,programming,journal,programming blog,essays,computer science,technology blog,software engineering,solid,notes">
+<meta property="og:url" content="https://netotz.github.io/posts/solid/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="The SOLID Principles">
+<meta property="og:description" content="Notes and definitions about the SOLID principles.">
+<meta property="og:image" content="/images/unclebob.jfif">
+<meta name=twitter:card content="summary_large_image">
+<meta name=twitter:title content="The SOLID Principles">
+<meta name=twitter:description content="Notes and definitions about the SOLID principles.">
+<meta property="twitter:domain" content="https://netotz.github.io/posts/solid/">
+<meta property="twitter:url" content="https://netotz.github.io/posts/solid/">
+<meta name=twitter:image content="/images/unclebob.jfif">
+<link rel=canonical href=https://netotz.github.io/posts/solid/>
+<link rel=stylesheet type=text/css href=/css/normalize.min.css media=print onload="this.media='all'">
+<link rel=stylesheet type=text/css href=/css/main.css>
+<link disabled id=dark-theme rel=stylesheet href=/css/dark.css>
+<script src=/js/svg-injector.min.js></script>
+<script src=/js/feather-icons.min.js></script>
+<script src=/js/main.js></script>
+<link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png>
+<link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
+<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png>
+<link rel=manifest href=/site.webmanifest>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.css integrity=sha384-MlJdn/WNKDGXveldHDdyRP1R4CTHr3FeuDNfhsLPYrq2t0UBkUdK2jyTnXPEK1NQ crossorigin=anonymous>
+<script defer src=https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.js integrity=sha384-VQ8d8WVFw0yHhCk5E8I86oOhv48xLpnDZx5T9GogA/Y84DcCKWXDmSDfn13bzFZY crossorigin=anonymous></script>
+<script defer src=https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/contrib/auto-render.min.js integrity=sha384-+XBljXPPiv+OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR crossorigin=anonymous onload=renderMathInElement(document.body)></script>
+<script>document.addEventListener("DOMContentLoaded",function(){renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:!0},{left:'$',right:'$',display:!1}],throwOnError:!1})})</script>
+</head>
+<body>
+<script type=text/javascript>setThemeByUserPref()</script><header class=header>
+<nav class=header-nav>
+<div class=avatar>
+<a href=https://netotz.github.io/>
+<img src=/images/null.png alt=avatar>
+</a>
+</div>
+<div class=nav-title>
+<a class=nav-brand href=https://netotz.github.io/>void?</a>
+</div>
+<div class=nav-links>
+<div class=nav-link>
+<a href=/><span data-feather=home></span> Home </a>
+</div>
+<div class=nav-link>
+<a href=/posts/><span data-feather=book-open></span> Posts </a>
+</div>
+<div class=nav-link>
+<a href=/tags/><span data-feather=tag></span> Tags </a>
+</div>
+<div class=nav-link>
+<a href=https://github.com/netotz/netotz.github.io><span data-feather=github></span> Source </a>
+</div>
+<span class=nav-icons-divider></span>
+<div class="nav-link dark-theme-toggle">
+<a>
+<span id=theme-toggle-icon data-feather=moon></span>
+</a>
+</div>
+<div class=nav-link id=hamburger-menu-toggle>
+<a>
+<span data-feather=menu></span>
+</a>
+</div>
+<ul class="nav-hamburger-list visibility-hidden">
+<li class=nav-item>
+<a href=/><span data-feather=home></span> Home </a>
+</li>
+<li class=nav-item>
+<a href=/posts/><span data-feather=book-open></span> Posts </a>
+</li>
+<li class=nav-item>
+<a href=/tags/><span data-feather=tag></span> Tags </a>
+</li>
+<li class=nav-item>
+<a href=https://github.com/netotz/netotz.github.io><span data-feather=github></span> Source </a>
+</li>
+<li class="nav-item dark-theme-toggle">
+<a>
+<span id=theme-toggle-icon data-feather=moon></span>
+</a>
+</li>
+</ul>
+</div>
+</nav>
+</header>
+<main id=content>
+<div class="post container">
+<div class=post-header-section>
+<h1>The SOLID Principles</h1>
+<small role=doc-subtitle>Notes and definitions about the SOLID principles.</small>
+<p class=post-date>
+April 25, 2022
+</p>
+<ul class=post-tags>
+<li class=post-tag><a href=/tags/programming>programming</a></li>
+<li class=post-tag><a href=/tags/software-engineering>software engineering</a></li>
+<li class=post-tag><a href=/tags/solid>solid</a></li>
+<li class=post-tag><a href=/tags/notes>notes</a></li>
+</ul>
+</div>
+<div class=post-content>
+<p>
+<p><img src=/images/unclebob.jfif alt></p>
+<p>Awesome articles about the topic:</p>
+<ul>
+<li><a href=https://trekhleb.medium.com/solid-principles-around-you-6db2f0e12139>SOLID Principles Around You</a></li>
+</ul>
+<hr>
+<blockquote>
+<p>In software engineering, <strong>SOLID</strong> is a mnemonic acronym for five design principles intended to make software designs more understandable, flexible, and maintainable.</p>
+</blockquote>
+<p>But when to apply SOLID? <a href=https://twitter.com/ardalis>Ardalis</a> recommends following the <em>Pain Driven Development</em> or PDD:</p>
+<ol>
+<li>Write code using the simplest techniques you know to get the problem solved. Trying to always apply all SOLID principles would result in a premature optimization of the application&rsquo;s design.</li>
+<li>As the application grows, look for places where it is <em>painful</em> to work with. See if this pain could be alleviated by applying one (or more) of the SOLID principles.</li>
+</ol>
+<p>The five SOLID principles are:</p>
+<ol>
+<li>Single Responsibility (SRP).</li>
+<li>Open-Closed (OCP).</li>
+<li>Liskov Substitution (LSP).</li>
+<li>Interface Segregation (ISP).</li>
+<li>Dependency Inversion (DIP).</li>
+</ol>
+<h1 id=single-responsibility-principle>Single Responsibility Principle</h1>
+<blockquote>
+<p>Each module should have one and only one reason to change.</p>
+</blockquote>
+<p>In the context of software design, it&rsquo;s important to separate the <em>what</em> from the <em>how</em> through <strong>delegation</strong> and <strong>encapsulation</strong>.</p>
+<p>Classes (or modules) should encapsulate doing a particular task in a particular way.
+When they&rsquo;re single-purpose, they&rsquo;re usually perfectly suited to this purpose and easy to use.
+Other classes can delegate the specific task to an instance of a class that encapsulates performing that task.</p>
+<h2 id=responsibilities>Responsibilities</h2>
+<p>A <strong>responsibility</strong> answers the question of how something is done.
+It&rsquo;s a decision that the code makes about the specific implementation details of some part of what the application does.</p>
+<p>Responsibilities in the code represent things that may change at different times and for different reasons.
+Each responsibility can be thought as a different axis of change.</p>
+<p>Logging is an example of a responsibility.
+Let&rsquo;s say that at first we log through the console output, as usual.
+But later, in production, we want to log to text files.
+If we hard coded lines like <code>Console.WriteLine</code> whenever we needed to log something, it&rsquo;s going to be a pain having to rewrite every line for something like <code>File.WriteLine</code>.
+And then the client requires logging in the database too, so waste time going back and modify all of the logging lines again.</p>
+<p>So, a class that implements how the logging is done would allow us to just change that implementation, and nothing more, no changes in classes that have no relation with logging.
+This would take care of the logging responsibility.
+We can even add multiple implementations to that class and use them as we need in the rest of the code.</p>
+<p>We need to output information through the lifetime of the application.
+What is this? Logging.
+The output destination may change.
+The logging framework or library may change.
+How to implement logging then? With this question we have identified a responsibility, meaning that the solution would be to implement a class that handles only this single responsibility of logging.</p>
+<h2 id=modularization>Modularization</h2>
+<p>Modular programming emphasizes separating the functionality of a program into independent, interchangeable modules, such that each one contains everything necessary to execute only one aspect of the desired functionality.</p>
+<p><strong>Cohesion</strong> refers to the degree to which elements contained in the same module are related between them.
+It measures the strength of the relationships between these elements.</p>
+<p><strong>Coupling</strong> refers to the degree of interdependence between modules.
+It measures how closely connected distinct modules are, and the strength of the relationships between them.</p>
+<p>The SRP aims for high cohesion and loose coupling.</p>
+<p><img src=/images/modularization.png alt></p>
+<p>We have classes <code>A</code>, <code>B</code>, and <code>C</code>.
+Each class has its own elements or members labeled with numbers.
+Imagine having to modify any member in the bad modularization example.
+Those are the moments when you ask yourself why you wanted to be a developer.</p>
+<h1 id=open-closed-principle>Open-Closed Principle</h1>
+<blockquote>
+<p>Software entities should be open for extension, but closed for modification.</p>
+</blockquote>
+<p>In this context, a software entity can be a class, a method, a module, a function, etc.</p>
+<p>Or as <a href=https://en.wikipedia.org/wiki/Robert_C._Martin>Uncle Bob</a> said,</p>
+<blockquote>
+<p>You should be able to extend the behavior of a system without having to modify that system.</p>
+</blockquote>
+<p>This principle is important because the less the source code is edited, the less likely it is that new bugs are introduced and that dependencies are broken.</p>
+<p>One area in which the Open-Closed Principle is especially important is in libraries and packages.
+Consumers of a package cannot modify its source code directly, and the authors shouldn&rsquo;t either because it could break past versions.
+But consumers should be able to extend the contents of the package for their own needs.</p>
+<h2 id=abstraction-vs-concreteness>Abstraction vs Concreteness</h2>
+<p>Code that does one and only one very specific thing, is extremely concrete:</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cs data-lang=cs><span style=color:#75715e>/// A class that only prints &#34;Concrete!&#34; in console.
+</span><span style=color:#75715e></span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>DoesOneThing</span> {
+    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> Execute() {
+        Console.WriteLine(<span style=color:#e6db74>&#34;Concrete!&#34;</span>);
+    }
+}
+</code></pre></div><p>On the other hand, code than can be extended in every possible direction, capable to do literally anything, is infinitely abstract:</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cs data-lang=cs><span style=color:#75715e>/// A class that can do anything.
+</span><span style=color:#75715e></span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>DoesAnything</span>&lt;TArg, TReturn&gt; {
+    <span style=color:#66d9ef>public</span> Func&lt;TArg, TReturn&gt; Function { <span style=color:#66d9ef>get</span>; <span style=color:#66d9ef>set</span>; }
+}
+</code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cs data-lang=cs><span style=color:#66d9ef>var</span> cosineCalculator = <span style=color:#66d9ef>new</span> DoesAnything&lt;<span style=color:#66d9ef>double</span>, <span style=color:#66d9ef>int</span>&gt; {
+    Function = Math.Cos
+};
+<span style=color:#66d9ef>var</span> cos10 = cosineCalculator.Function(<span style=color:#ae81ff>10</span>);
+
+<span style=color:#66d9ef>var</span> firstCharGetter = <span style=color:#66d9ef>new</span> DoesAnything&lt;<span style=color:#66d9ef>string</span>, <span style=color:#66d9ef>char</span>&gt; {
+    Function = word =&gt; word[<span style=color:#ae81ff>0</span>]
+};
+<span style=color:#75715e>// ...
+</span></code></pre></div><p>This class can do anything because it can&rsquo;t do anything by itself. 100% of the functionality is passed to it.</p>
+<p>Code should be balanced between abstraction and concreteness, keeping in mind that abstraction adds complexity.
+In order to have a good balance, we&rsquo;d have to try to predict where variation is going to be needed as the application evolves, and apply enough abstraction there.</p>
+<p>A simple and good approach is to start being concrete in everything.
+Then, if we notice some modifications in some parts of the code, we should start implementing just enough abstraction to those parts to make them extensible, like adding parameters, designing inheritance, etc.</p>
+<p>In legacy projects, use new classes for new features, to avoid breaking existing dependencies and implementations.</p>
+<h1 id=liskov-substitution-principle>Liskov Substitution Principle</h1>
+<p><a href=https://en.wikipedia.org/wiki/Barbara_Liskov>Barbara Liskov</a> and <a href=https://en.wikipedia.org/wiki/Jeannette_Wing>Jeannette Wing</a> described this principle in 1994 as follows:</p>
+<blockquote>
+<p>Let $\phi(x)$ be a property provable about objects $x$ of type $T$.
+Then $\phi(y)$ should be true for objects $y$ of type $S$ where $S$ is a subtype of $T$.</p>
+</blockquote>
+<p>Huh? What they meant is:</p>
+<blockquote>
+<p>Classes and subclasses should be interchangeable without breaking the system.</p>
+</blockquote>
+<p>Inheritance in OOP is often defined as an &ldquo;is&rdquo; relationship: a dog <strong>is</strong> a mammal, and a mammal <strong>is</strong> an animal.</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cs data-lang=cs><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>abstract</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Animal</span> {
+    <span style=color:#75715e>// ...
+</span><span style=color:#75715e></span>}
+
+<span style=color:#66d9ef>public</span> <span style=color:#66d9ef>abstract</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Mammal</span> : Animal {
+    <span style=color:#75715e>// ...
+</span><span style=color:#75715e></span>}
+
+<span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Dog</span> : Mammal {
+    <span style=color:#75715e>// ...
+</span><span style=color:#75715e></span>}
+</code></pre></div><p>The Liskov Substitution Principle states that this &ldquo;is&rdquo; relationship is insufficient, so it should be replaced by &ldquo;is substitutable for&rdquo;: a dog <strong>is substitutable for</strong> a mammal&mldr; isn&rsquo;t it?
+That depends on the logic of your application.
+Sometimes, types have invariants that break the supposed &ldquo;is&rdquo; relationship with another type.
+If a <code>Dog</code> object is not substitutable for a <code>Mammal</code> object and vice versa in the code because there&rsquo;s some invariant about <code>Dog</code> that must be kept, then consider making <code>Dog</code> a class and not a subclass of <code>Mammal</code>.</p>
+<h2 id=detecting-lsp-violations>Detecting LSP violations</h2>
+<p>If some code is supposed to be polymorphic, then it should work with a type or any subtype of it.
+Therefore, there shouldn&rsquo;t be type checking conditions or castings, i.e. using keywords like <code>is</code> and <code>as</code>.
+These conditions break LSP because if you must change the code according to the subtypes, then they are not substitutable for their base type.
+One way to solve this is to override specific behavior in the subclasses themselves, instead of externally checking their subtypes.
+This is known as <em>Tell, Don&rsquo;t Ask</em>.</p>
+<p>Another violation is the use of <code>NotImplementedException</code> because then the calls to a subtype methods wouldn&rsquo;t be safe.
+This is also a violation of the next principle, ISP.</p>
+<h1 id=interface-segregation-principle>Interface Segregation Principle</h1>
+<blockquote>
+<p>No code should be forced to depend on methods it doesn&rsquo;t use.</p>
+</blockquote>
+<p>Many small, cohesive, and client-specific interfaces are preferred over a one large and general purpose interface.
+This is very similar to what the Single Responsibility Principle states.</p>
+<p>An interface in OOP is a contract between classes that standardize behavior.
+In the ISP context, an interface refers to anything that can be accessed by client code, such as public methods and properties.
+The client code is the calling code, so the OOP definition holds because a subtype is the client code of an interface, but it&rsquo;s not limited to that.</p>
+<p><a href=https://medium.com/@jim_ej/the-interface-segregation-principle-its-confused-aa856de97d36>This article</a> explains ISP with examples.</p>
+<h1 id=dependency-inversion-principle>Dependency Inversion Principle</h1>
+<blockquote>
+<p>High-level modules should not depend on low-level modules. Both should depend on abstractions.</p>
+<p>Details (concrete implementations) should depend on abstractions.</p>
+</blockquote>
+<p>The high-level code is more abstract and is process-oriented, whereas low-level code is detailed-oriented and interacts with specific external systems.</p>
+<p>Abstraction describes the <strong>what</strong> and details describe specify the <strong>how</strong>.</p>
+<p><img src=/images/dependencies.png alt></p>
+<h2 id=dependency-injection>Dependency Injection</h2>
+<p>The dependency injection is a programming technique that avoids creating owned dependencies.
+Instead, client code &ldquo;injects&rdquo; the required dependencies.
+In this way the client code knows the specific dependencies that a class needs.</p>
+</p>
+</div>
+</div>
+</main><footer class=footer>
+<span>&copy; 2022 </span>
+<span>
+Made with &#10084;&#65039; using <a target=_blank href=https://github.com/526avijitgupta/gokarna>Gokarna</a>
+</span>
+</footer>
+</body>
+</html>
