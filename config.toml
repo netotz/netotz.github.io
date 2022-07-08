@@ -11,7 +11,8 @@ theme = 'gokarna'
     socialIcons = [
         {name = "github", url = "https://github.com/netotz"},
         {name = "linkedin", url = "https://www.linkedin.com/in/netotz/"},
-        {name = "twitter", url = 'https://twitter.com/netotz'}
+        {name = "twitter", url = 'https://twitter.com/netotz'},
+        {name = "twitch", url = 'https://www.twitch.tv/tcernesto'}
     ]
     author = 'Ernesto Ortiz'
     GitHubUser = 'netotz'
