@@ -12,7 +12,8 @@ theme = 'gokarna'
         {name = "github", url = "https://github.com/netotz"},
         {name = "linkedin", url = "https://www.linkedin.com/in/netotz/"},
         {name = "twitter", url = 'https://twitter.com/netotz'},
-        {name = "twitch", url = 'https://www.twitch.tv/tcernesto'}
+        {name = "twitch", url = 'https://www.twitch.tv/tcernesto'},
+        {name = "leetcode", url = 'https://leetcode.com/netotz/'}
     ]
     author = 'Ernesto Ortiz'
     GitHubUser = 'netotz'
