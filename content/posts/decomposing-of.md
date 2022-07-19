@@ -91,7 +91,7 @@ The most relevant change in the algorithm is the fact that in the ANPCP, for any
 - $\textrm{If } d_{\alpha - 1} < d_i < d_\alpha \textrm{, then } f_\alpha \leftarrow f_i$
 - $\textrm{Else if } d_i < d_{\alpha - 1} < d_\alpha \textrm{, then } f_\alpha \leftarrow f_{\alpha - 1}$
 
-This is because $f_\alpha$ **is determined by all the "previous" closer open facilities** $f_1, f_2, \dots, f_{\alpha - 1}$.
+This is because $f_\alpha$  **is determined by all the "previous" closer open facilities**  $f_1, f_2, \dots, f_{\alpha - 1}$.
 
 But this change got no results either. I then reasoned that the issue must be the objective function itself, which is obvious, but I wanted to keep experimenting with the objective function of the PMP.
 For this, I'm trying to adapt the fast vertex substitution local search used to solve the PCP [^3], which is based on Whitaker's algorithm, with the distinction that it decomposes the PCP objective function by **updating the maximum distance at each iteration of the local search**, instead of calculating differences.
