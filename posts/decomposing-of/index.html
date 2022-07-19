@@ -106,12 +106,14 @@ February 22, 2022
 </div>
 <div class=post-content>
 <p>
-<p>As the final project of the BSc Software Engineering, I&rsquo;m researching heuristic algorithms in the Operations Research field.
+<p>As the thesis for the BSc Software Engineering, I&rsquo;m researching heuristic algorithms in the Operations Research field.
 Specifically, <a href=http://yalma.fime.uanl.mx/~roger/work/index.html>my mentor</a> and I are implementing heuristics for the $\alpha$-neighor $p$-center problem (ANPCP for short).
 Because the literature about it is scarce, we&rsquo;ve been reading papers that use heuristic algorithms for similar problems, and trying to adapt them to the ANPCP.
-In this process, I found it interesting how some authors decompose the objective function of a problem and evaluate it step by step, at the same when some heuristic is being calculated.</p>
+In this process, I found it interesting how some authors decompose the objective function of a problem and evaluate it step by step while, at the same time, applying a heuristic to the current solution.</p>
+<p>In this post, you&rsquo;re going to learn about the field of operations research, how some optimization problems are evaluated, and a concept that allows a type of algorithms to be blazing fast.</p>
 <p>I was taking a look at the fast swap-based local search procedure<sup id=fnref:1><a href=#fn:1 class=footnote-ref role=doc-noteref>1</a></sup>, which is an acceleration of the fast algorithm for greedy interchange<sup id=fnref:2><a href=#fn:2 class=footnote-ref role=doc-noteref>2</a></sup>, in which the goal is to find as fast as possible a facility to remove from the solution, given a candidate facility to add to it, that would best improve the objective function value.</p>
-<p>Let me give you the context. The previous two heuristics are applied to the $p$-median problem (PMP), which is a location problem.</p>
+<p>Before going on, let me give you some context.
+The two heuristics mentioned above are applied to the $p$-median problem (PMP), which is a location problem.</p>
 <blockquote>
 <p>In Operations Research, location problems are discrete optimization problems that consist of determining the best location for one or several centers or facilities in order to serve and supply a set of demand points, often referred as customers or users.</p>
 <p>The solution of a location problem is the set of those centers.</p>
@@ -120,72 +122,71 @@ In this process, I found it interesting how some authors decompose the objective
 <p>The objective function of the PMP is formulated as:</p>
 <p>$$
 \textrm{minimize}
-\sum_{i \in U}{
-\min_{j \in S}{
-d_{ij}
+\sum_{u \in U}{
+\min_{s \in S}{
+d(u, s)
 }
 }
 $$</p>
 <blockquote>
-<p>Minimize the sum of distances between each user and its closest open facility. In this case, the distance is the cost of supplying a user.</p>
+<p>Minimize the sum of distances between each user and its center (its closest open facility). In this case, the distance is the cost of supplying a user.</p>
 </blockquote>
-<p>In which $U$ is the set of users, $S$ the solution set of open facilities, and $d_{ij}$ the distance between nodes $i$ and $j$.</p>
+<p>In which $U$ is the set of users, $S$ the solution set of open facilities, and $d(u, s)$ a function that returns the distance between a user $u$ and a facility $s$.</p>
 <p>When I first learned about local search heuristics, I thought that the objective function had to be evaluated every time a move was made and compared.</p>
 <blockquote>
 <p>Local search heuristics try to improve an existing solution by iteratively modifying it. A modification applied to the solution is know as a <em>move</em>.</p>
 </blockquote>
-<p>For example, if the move is an interchange or a swap between a node inside the solution and another outside of it, after applying it the solution would be a different (obviously), so because the objective function depends on the solution, it would change too (obviously), meaning that, in order to determine if that move yields a better solution, the objective function needs to be evaluated (obviously&mldr; or not?).</p>
+<p>For example, if the move is an interchange or a swap between a facility inside the solution (a center) and another outside of it, then the solution would change after applying it (obviously), so because the objective function depends on the solution, the function would change as well (obviously), meaning that, in order to determine if the swap yields a better solution, the objective function needs to be evaluated again (obviously&mldr; or not?).</p>
 <p>You can see that the time complexity of the equation above is $O(pn)$, where $p$ is the size of $S$, and $n$ the size of $U$.
-A straight implementation of a local search with the interchange move would have to check every possible pair of nodes inside and outside of the solution, resulting in a total of $p(m - p)$ pairs, $m$ being the size of $F$, the set of candidate facilities ($S \subset F$, $p &lt; m$).
+A straight implementation of a local search with the interchange move would have to check every possible pair between the centers (facilities in the solution) and closed facilities, resulting in a total of $p(m - p)$ pairs, $m$ being the size of $F$, the set of candidate facilities ($S \subset F$, $p &lt; m$).
 The time complexity of just looping through these pairs is $O(pm)$.
 And because the objective function supposedly has to be evaluated for every pair, the complexity increases to $O(p^2mn)$.</p>
 <p>I naively ran this implementation the first time (for the ANPCP) and, believe me, it is slow.</p>
-<p>A better and faster approach is to <strong>only calculate the difference in the objective function value at the same time as a move is being applied</strong>, since reevaluating it over and over is an expensive operation.
+<p>A smarter and faster approach would be to <strong>just calculate the difference in the objective function value while, at the same time, a swap is being applied</strong>, since reevaluating the objective function over and over is computationally expensive (very).
 In the case of the PMP the objective function is a summation, so the differences are easy to calculate as they are just subtractions of distances.
 This is what Whitaker did in <sup id=fnref:2><a href=#fn:2 class=footnote-ref role=doc-noteref>2</a></sup> and was later improved by Resende & Werneck in <sup id=fnref:1><a href=#fn:1 class=footnote-ref role=doc-noteref>1</a></sup> (using &ldquo;partial&rdquo; moves) by <strong>reasoning about each user contributing independently to the objective function value</strong>.
-They built a local search procedure with $O(mn)$ operations.</p>
-<p>I read those papers in order to adapt the fast swap procedure for the ANPCP, and I did. But what the heck is the ANPCP?</p>
+They built a local search procedure that does $O(mn)$ operations.</p>
+<p>I read those papers to try to adapt the fast swap procedure for the ANPCP&mldr; but what the heck is the ANPCP?</p>
 <blockquote>
-<p>The $\alpha$-neighbor $p$-center problem is a generalization of the $p$-center problem (PCP), in which the goal is to select $p$ centers such that the maximum distance of a user to its $\alpha$-th closest center is minimized.</p>
+<p>The $\alpha$-neighbor $p$-center problem (ANPCP) is a generalization of the $p$-center problem (PCP), in which the goal is to select $p$ centers such that the maximum distance of a user to its $\alpha$th closest center is minimized.</p>
 <p>Setting $\alpha = 1$ corresponds to the classical PCP: it represents the <em>first</em> closest center. So $\alpha = 2$ represents the <em>second</em> closest center, and so on.</p>
 </blockquote>
 <p>The objective function of the ANPCP is formulated as:</p>
 <p>$$
 \textrm{minimize}
-\max_{i \in U}{
-\min_{j \in S}^{\alpha}{
-d_{ij}
+\max_{u \in U}{
+\min_{s \in S}^{\alpha}{
+d(u, s)
 }
 }
 $$</p>
 <blockquote>
-<p>Minimize the largest distance between each user and its $\alpha$-th closest open facility.</p>
+<p>Minimize the largest distance between each user and its $\alpha$th closest center.</p>
 </blockquote>
-<p>So maybe you already noticed my mistake: the fast swap procedure calculates additions and subtractions because that&rsquo;s how the objective function of the PMP is evaluated, which is totally different from the ANPCP&rsquo;s.</p>
+<p>Perhaps you have already noticed my mistake: the fast swap procedure calculates additions and subtractions because that&rsquo;s how the objective function of the PMP is evaluated, and this is totally different from the ANPCP objective function.</p>
 <p>But it was kind of late. The heuristic was already implemented and I was running some experiments with it.
 It was getting stuck when $\alpha > 2$, but for the PCP ($\alpha = 1$) it was actually improving solutions, probably due to the similarities that both problems share:
 while the PCP doesn&rsquo;t add anything, each user is assigned to its closest facility, which is also true for the PMP&mldr; but not for the ANPCP.</p>
-<p>Consequently, I decided to keep trying the same algorithm with additions and subtractions, but this time adapting it to calculate differences from the $\alpha$-th closest facilities, as if it were the &ldquo;$\alpha$-neighbor $p$-median problem&rdquo;, which I don&rsquo;t know if it even exists, but it&rsquo;s still using the PMP objective function.</p>
-<p>The most relevant change in the algorithm is the fact that in the ANPCP, for a any user, when the facility that is being added to the solution, $f_i$, is closer than its current $\alpha$-th closest, $f_\alpha$, two things can happen:</p>
+<p>Consequently, I decided to keep trying the same algorithm with additions and subtractions, but this time adapting it to calculate differences from the $\alpha$th closest facilities, as if it were the &ldquo;$\alpha$-neighbor $p$-median problem&rdquo;, which I don&rsquo;t know if it even exists, but it was using the PMP objective function.</p>
+<p>The most relevant change in the algorithm is the fact that in the ANPCP, for any user $u$, when the facility that is being added to the solution, $f_i$, is closer than its current $\alpha$th closest, $f_\alpha$, two things can happen:</p>
 <ul>
 <li>$\textrm{If } d_{\alpha - 1} &lt; d_i &lt; d_\alpha \textrm{, then } f_\alpha \leftarrow f_i$</li>
 <li>$\textrm{Else if } d_i &lt; d_{\alpha - 1} &lt; d_\alpha \textrm{, then } f_\alpha \leftarrow f_{\alpha - 1}$</li>
 </ul>
 <p>This is because $f_\alpha$ **is determined by all the &ldquo;previous&rdquo; closer open facilities** $f_1, f_2, \dots, f_{\alpha - 1}$.</p>
-<p>But this change got no results either. I then reasoned that the issue must be the objective function itself (this is obvious, but I wanted to keep experimenting with the other approach).
-For this, I&rsquo;m trying to adapt the fast vertex substitution local search used to solve the PCP <sup id=fnref:3><a href=#fn:3 class=footnote-ref role=doc-noteref>3</a></sup>, which is based on Whitaker&rsquo;s algorithm, with the distinction that it decompose the PCP objective function by <strong>updating the maximum distance at each iteration of the local search</strong>, instead of calculating differences.
-They also use data structures for accelerations purposes, but different from those by <sup id=fnref:1><a href=#fn:1 class=footnote-ref role=doc-noteref>1</a></sup>.</p>
+<p>But this change got no results either. I then reasoned that the issue must be the objective function itself, which is obvious, but I wanted to keep experimenting with the objective function of the PMP.
+For this, I&rsquo;m trying to adapt the fast vertex substitution local search used to solve the PCP <sup id=fnref:3><a href=#fn:3 class=footnote-ref role=doc-noteref>3</a></sup>, which is based on Whitaker&rsquo;s algorithm, with the distinction that it decomposes the PCP objective function by <strong>updating the maximum distance at each iteration of the local search</strong>, instead of calculating differences.
+They also use some data structures for accelerations purposes, but different from those by <sup id=fnref:1><a href=#fn:1 class=footnote-ref role=doc-noteref>1</a></sup>.</p>
 <p>So far, I haven&rsquo;t gotten good results using this adaptation.
 The main loop of the local search runs forever, except for when $\alpha = 1$ (PCP).
 I&rsquo;m currently stuck in a debugging hell, where I&rsquo;ve been running again and again the same procedure without detecting what&rsquo;s wrong.
 This has led me to do a manual experiment on paper and see if in that way I can find the bug.</p>
-<p>Despite this, I&rsquo;m having the chance to read good papers from the field and to learn techniques from recognized authors, which for me it is what matters.
-As programmers we will always struggle with code.
+<p>Despite this, I&rsquo;m having the chance to read good papers about combinatorial optimization and to learn techniques from recognized authors, which for me it is what matters, because as programmers we will always struggle with code.
 I&rsquo;ve read from senior developers that they still enter debugging hells quite often.
 But the difference is that they have much more knowledge and experience, because that&rsquo;s what remains after solving so many problems.</p>
-<p>There&rsquo;s a <a href=https://github.com/netotz/alpha-neighbor-p-center-problem>GitHub repository for this research and experiments about the ANPCP</a>, if you want to take a look at the code.
+<p>There&rsquo;s a <a href=https://github.com/netotz/alpha-neighbor-p-center-problem>GitHub repository</a> about this research and the experiments of the algorithms, in case you want to take a look at the code.
 It&rsquo;s written in Python, and it will probably be migrated to C++ for performance.
-It&rsquo;s organized in branches so the latest updates may not be in <code>main</code> yet.</p>
+It&rsquo;s organized in branches so the latest updates may not be in <code>main</code> one yet.</p>
 <section class=footnotes role=doc-endnotes>
 <hr>
 <ol>
@@ -193,10 +194,10 @@ It&rsquo;s organized in branches so the latest updates may not be in <code>main<
 <p>Resende, M. G., & Werneck, R. F. (2007). A fast swap-based local search procedure for location problems. <em>Annals of Operations Research</em>, 150(1), 205-230.&#160;<a href=#fnref:1 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
 </li>
 <li id=fn:2 role=doc-endnote>
-<p>Whitaker, R. A. (1983). A fast algorithm for the greedy interchange for large-scale clustering and median location problems. <em>INFOR: Information Systems and Operational Research</em>, 21(2), 95-108.&#160;<a href=#fnref:2 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
+<p>Whitaker, R. A. (1983). A fast algorithm for the greedy interchange for large-scale clustering and median location problems. <em>INFOR</em>, 21(2), 95-108.&#160;<a href=#fnref:2 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
 </li>
 <li id=fn:3 role=doc-endnote>
-<p>Mladenović, N., Labbé, M., & Hansen, P. (2003). Solving the p‐center problem with tabu search and variable neighborhood search. Networks: An International Journal, 42(1), 48-64.&#160;<a href=#fnref:3 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
+<p>Mladenović, N., Labbé, M., & Hansen, P. (2003). Solving the $p$‐center problem with tabu search and variable neighborhood search. <em>Networks</em>, 42(1), 48-64.&#160;<a href=#fnref:3 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
 </li>
 </ol>
 </section>
