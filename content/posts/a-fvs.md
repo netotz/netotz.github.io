@@ -32,7 +32,7 @@ The final version of the algorithm was baptized as the *Alpha Fast Vertex Substi
 Since then, I have been able to write most of the thesis (**big shout-out to [my mentor](https://yalma.fime.uanl.mx/~roger/work/index.html) and my revisors!**), which I think is more understandable than the previous post, so I'm going to put here the chapter that reviews the background of the fast interchange concept and explains the observations that led us to the birth of the A-FVS.
 To the best of our knowledge at the time writing this post, implementing a fast interchange local search heuristic to solve the ANPCP hasn't been considered before. 
 
-# The local search heuristic
+# The process
 
 A solution to the ANPCP can be improved by applying a local search procedure, i.e., modifying one or more components of the solution based on some rule, looking for a better objective function value among the space of candidate solutions or neighborhoods, until a local optimum is reached.
 A well-known local search procedure is the *vertex substitution method*, also known as the *greedy interchange* or *swap*.
@@ -50,10 +50,12 @@ For this reason, we propose a faster vertex substitution algorithm to obtain sol
 The **fast algorithm for the greedy interchange** (FAGI) was first proposed for the $p$-median problem (PMP) by Whitaker (1983).
 The key aspect of this implementation is its ability to find the most profitable candidate facility for removal ($f_r$), given a certain candidate facility for insertion ($f_i$), while partially evaluating the objective function.
 What makes this procedure fast is the observation that the profit that would result from applying a swap can be decomposed into two components.
+
 The first one, called *gain*, identifies the users who would benefit from the insertion of $f_i$ into the solution because each user is closer to it than its current closest facility.
 The second component, *netloss*, accounts for all other users that would not benefit from the insertion of $f_i$.
 If $f_r$ is the current closest facility of a user, then it would have to be reassigned either to its second closest one or to $f_i$, whichever is the closest.
 In both cases, the cost of serving that user will either increase or remain constant.
+
 These two components are useful as they work as auxiliary data structures that make the algorithm fast, which has a worst-case time complexity of $O(mn)$.
 
 The FAGI was implemented and tested for the ANPCP.
@@ -77,11 +79,13 @@ Hence, the new center of $u$ denoted as $\phi_\alpha'(u)$ would, by definition, 
 
 A visual representation is shown below, where $f_r$ is the gray node, the black straight line is the assignment of $u$ to its center, and the red line and outline indicate which node will be the new center of $u$ after removing $f_r$.
 
-![](/images/not_attracted.png)
+<img src="/images/not_attracted.png" width="75%" />
+
 > Resulting new center of $u$, $\phi_\alpha'(u)$, after removing its current center $\phi_\alpha(u)$.
 
 Similarly, the fact that $u$ is attracted to $f_i$ does not necessarily mean that $f_i$ is going to be its new center: it depends on how close $f_i$ is from $u$.
-This is represented visually in \autoref{fig:attracted}. The light red nodes are open facilities, and the dotted lines represent the distances from $u$ to the open facilities that are closer than its center.
+This is represented visually in the two figures below.
+The light red nodes are open facilities, and the dotted lines represent the distances from $u$ to the open facilities that are closer than its center.
 
 Mathematically, let $d_k(u) = d(u, \phi_k(u))$ and $d_i(u) = d(u, f_i)$, then
 
@@ -97,6 +101,72 @@ $$
 \end{equation}
 $$
 
+<img src="/images/attracted_fi.png" width="75%" />
+
+> $\phi_\alpha'(u) \gets f_i$
+
+<img src="/images/attracted_a-1.png" width="75%" />
+
+> $\phi_\alpha'(u) \gets \phi_{\alpha - 1}(u)$
+
+> The two options for the new center when $u$ is attracted to $f_i$ (equation 2).
+
+These observations resulted in modifying FAGI to update the data structures $gain$ and $netloss$ accordingly.
+However, after applying such modifications, the algorithm did not produce any solutions either.
+As a consequence, we decided to modify the greedy evaluation step by evaluating the ANPCP's objective function instead of the PMP's, and focus on how to calculate the objective function of our problem faster.
+
+## Fast Vertex Substitution (FVS)
+
+We found that FAGI was later adapted to solve the PCP, named the **fast vertex substitution** (FVS), proposed by Mladenović et al. (2003).
+This algorithm also has a worst-case time complexity of $O(mn)$.
+Now, as mentioned earlier, the ANPCP is a variant of the PCP in which the difference is how the centers are defined.
+However, the observation that both problems aim to minimize a maximum allowed us to use FVS as a better basis algorithm to adapt for the ANPCP.
+The key to this adaptation is the use of three data structures that accelerate the search of $f_r$.
+
+In the implementation for the PCP, the new objective function value or radius $x'$, that would result after the interchange, is kept only for users who are attracted by $f_i$, i.e., $f_i$ is closer to them than their center.
+Besides these new assignments to $f_i$, a new maximum distance $x^*$ could be found among existing assignments.
+To determine which of these existing connections would remain after a swap, it becomes necessary to store how the radiuses of old centers change when they are considered to be removed or not.
+
+The following conditions apply for users who are not attracted by $f_i$:
+
+1. If a center will be removed ($f_r$), then its users must be reallocated. For each user $u$, its new center would be either its second-closest facility or $f_i$, whichever is the closest to $u$, but incurring a penalty because both options are farther than its old center. The overall penalty is stored in the array $z(\cdot)$, for each center.
+2. Otherwise, the radius of that center would not change. This unchanged radius is stored in the array $r(\cdot)$, for each center.
+
+These data structures have size $|S|$ because any open facility can become a center. They get updated by users who are not attracted by $f_i$ and are crucial for the algorithm to decide the most profitable swap, i.e., the best facility to remove given a candidate facility to insert.
+The pseudocode of this method is described as follows:
+
+<img src="/images/alg-move_pcp.png" width="100%" />
+
+Let $x^*(S)$ be the minimum possible objective function value that can result after applying the FVS to the solution $S$, evaluated as the equation 3 below.
+The formula can be accelerated by keeping track of the two greatest values ($g_1$ and $g_2$ in equation 3) from $r(\cdot)$ while updating the arrays.
+
+$$
+\begin{equation}
+    x^*(S) = \min_{f_j \in S}\{
+        \max\{
+            x', z(f_j),
+            \max_{f_l \ne f_j}\{ r(f_l) \}
+        \}
+    \}
+\end{equation}
+$$
+
+The data structures altogether accelerate the local search by partially evaluating the objective function, using the relations between $f_i$, $U$, and $S$ for every possible swap, stored in $r(\cdot)$, $z(\cdot)$, and $x'$.
+This stored information allows the algorithm to keep track of multiple maximum distances, without repeating expensive computations, such as a complete revaluation of the objective function.
+
+We tried implementing FVS to solve the ANPCP by applying the equation 2, but without success again.
+The algorithm kept getting stuck when $\alpha \ge 2$.
+We observed that the resulting objective function value after an interchange, i.e., a complete modification of the original solution, was unrelated to the information stored in the data structures, meaning that they were not enough to accurately solve the ANPCP.
+This was likely because it needed to keep track of more relations for this problem than for the PCP.
+
+A detailed evaluation of the FVS on an instance of the PCP proved that the data structures worked correctly as they ended up storing the precise objective function value.
+This evaluation also helped to better understand the functionality of FVS, making it easier to adapt it for the ANPCP.
+We propose an adaptation of the FVS to obtain solutions for any value of $\alpha < p$.
+
+In the next subsection, we describe in more detail how we adapted the algorithm to solve the ANPCP.
+
+
+
 # References
 
 [^1]: R. A. Whitaker.
@@ -107,4 +177,5 @@ A fast algorithm for the greedy interchange for large-scale clustering and media
 GRASP with strategic oscillation for the $\alpha$-neighbor $p$-center problem.
 *European Journal of Operational Research*, 2022.
 
-
+[^3]: N. Mladenović, M. Labbé, and P. Hansen. Solving the $p$-center problem with tabu
+search and variable neighborhood search. *Networks*, 42(1):48–64, 2003.
