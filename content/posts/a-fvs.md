@@ -74,13 +74,15 @@ $$
 If for $u$, one of the open facilities closer than its current center is considered to be $f_r$, then this center would no longer be the \alphath closest open facility.
 Hence, the new center of $u$ denoted as $\phi_\alpha'(u)$ would, by definition, be moved to the next farther open facility, which would be the current $\phi_{\alpha + 1}(u)$.
 
-A visual representation is shown below, where $f_r$ is the gray node, the black straight line is the assignment of $u$ to its center, and the red line and outline indicate which node will be the new center of $u$ after removing $f_r$.
+A visual representation is shown below, where $f_r$ is the gray facility (the one that will be removed from the solution), the black straight line is the assignment of $u$ to its center, and the red line and outline indicate which node will be the new center of $u$ after removing $f_r$.
 
 <img src="/images/not_attracted.png" width="75%" />
 
 > Resulting new center of $u$, $\phi_\alpha'(u)$, after removing its current center $\phi_\alpha(u)$.
 
-Similarly, the fact that $u$ is attracted to $f_i$ does not necessarily mean that $f_i$ is going to be its new center: it depends on how close $f_i$ is from $u$.
+"Attraction" here refers to when $f_i$ is closer to $u$ than its center.
+
+The fact that $u$ is attracted to $f_i$ does not necessarily mean that $f_i$ is going to be its new center: it depends on how close $f_i$ is from $u$.
 This is represented visually in the two figures below.
 The light red nodes are open facilities, and the dotted lines represent the distances from $u$ to the open facilities that are closer than its center.
 
@@ -121,7 +123,7 @@ However, the observation that both problems aim to minimize a maximum allowed us
 The key to this adaptation is the use of three data structures that accelerate the search of $f_r$.
 
 In the implementation for the PCP, the new objective function value or radius $x'$, that would result after the interchange, is kept only for users who are attracted by $f_i$, i.e., $f_i$ is closer to them than their center.
-Besides these new assignments to $f_i$, a new maximum distance $x^*$ could be found among existing assignments.
+Besides these new assignments to $f_i$, a new maximum distance $x^\*$ could be found among existing assignments.
 To determine which of these existing connections would remain after a swap, it becomes necessary to store how the radiuses of old centers change when they are considered to be removed or not.
 
 The following conditions apply for users who are not attracted by $f_i$:
@@ -139,12 +141,12 @@ The pseudocode of this method is described as follows:
 
 <img src="/images/alg-move_pcp.png" />
 
-Let $x^*(S)$ be the minimum possible objective function value that can result after applying the FVS to the solution $S$, evaluated as the equation 3 below.
+Let $x^\*(S)$ be the minimum possible objective function value that can result after applying the FVS to the solution $S$, evaluated as the equation 3 below.
 The formula can be accelerated by keeping track of the two greatest values ($g_1$ and $g_2$ in equation 3) from $r(\cdot)$ while updating the arrays.
 
 $$
 \begin{equation}
-    x^*(S) = \min_{f_j \in S}\{
+    x^\*(S) = \min_{f_j \in S}\{
         \max\{
             x', z(f_j),
             \max_{f_l \ne f_j}\{ r(f_l) \}
@@ -209,20 +211,92 @@ This is why the objective function value after a swap and the data in the arrays
 With these three observations, all users update and contribute to both arrays $z(\cdot)$ and $r(\cdot)$.
 This crucial difference from the original FVS is necessary for the ANPCP because both equation 1 and equation 2 are not properties of the PCP, and produced the following additional modifications:
 
+### When $f_r$ is an $\alpha$-neighbor
+
 If an $\alpha$-neighbor will be removed ($f_r$), then its users must be reallocated unless they are attracted to $f_i$.
 In that case, their centers would not change, so the distances to them would remain constant (no penalty), independently of exactly which $\alpha$-neighbor would be removed, and of the exact relative distance from a user $u$ to $f_i$.
+
 Two examples of this case can be visualized below:
 
-![]()
+<img src="/images/z_attracted_a-1_fi.png" width="75%" />
+
+> $d_{\alpha - 1} < d_i < d_\alpha$
+
+<img src="/images/z_attracted_fi_a-1.png" width="75%" />
+
+> $d_i < d_{\alpha - 1} < d_\alpha$
+
+> If an $\alpha$-neighbor is $f_r$ and $u$ is attracted to $f_i$, its center remains unchanged (no penalty).
 
 However, in the worst case, if they were not attracted to $f_i$, then their new center would be either the $\alpha + 1$ closest facility or $f_i$, whichever is the closest, but still farther than their old center.
+
 Both possibilities are shown below, where the red line is the new assignment of $u$ as well as the penalty of interchanging $f_r$ (the gray $\alpha$-neighbor) with $f_i$.
 This penalty is stored in the array $z(\cdot)$, for each $\alpha$-neighbor.
 
-![]()
+<img src="/images/z_not_attracted_a+1.png" width="75%" />
 
- 
+> $d_\alpha < d_{\alpha + 1} < d_i$
 
+<img src="/images/z_not_attracted_fi.png" width="75%" />
+
+> $d_\alpha < d_i < d_{\alpha + 1}$
+
+> If an $\alpha$-neighbor is $f_r$ and $u$ is not attracted to $f_i$, its new center will be farther (penalty).
+
+### When $f_r$ is not an $\alpha$-neighbor
+
+Otherwise, the radius of that $\alpha$-neighbor would only change if its users are attracted to $f_i$.
+In that case, their new center would be either the $\alpha - 1$ closest facility or $f_i$, whichever is the farthest, as stated in equation 2 and visualized in its figure, resulting in an improved assignment because this new distance would be shorter.
+
+In the worst case, if they were not attracted to $f_i$, then their center would not change, remaining its radius unchanged.
+This possible gain is stored in array $r(\cdot)$, for each $\alpha$-neighbor.
+
+### The `move` procedure
+
+These two final modifications constitute the core step of the A-FVS, which we identify as the `move` procedure.
+The objective of this procedure is, in summary, given a candidate facility to insert, $f_i$, to store the greatest improvement in the objective function in $x'$, and for each $\alpha$-neighbor of every user, to store the greatest penalty of removing it in $z(\cdot)$, and the greatest gain of keeping it in $r(\cdot)$.
+Then, it finds the facility that minimizes the maximum of all the distances from the three data structures, and returns both that facility as $f_r$ and that distance as $x^\*$.
+
+The formula used in the `move` procedure to evaluate the resulting objective function after a swap is the same one used in the FVS (equation 3).
+This is because the data structures of both algorithms do the same thing: they are just adapted to be updated differently.
+This procedure was the first local search modification that yielded an accurate result after evaluating it step by step.
+The pseudocode of this procedure is shown below:
+
+<img src="/images/alg-move.png" />
+
+### Neighborhood reduction
+
+The A-FVS uses an additional acceleration that increasingly reduces the size of the neighborhood $N(S)$ to explore during the iterations, by considering only facilities that would decrease the maximum distance between any user and its center, or "break" the objective function, to be inserted into the solution.
+
+More formally, let the current objective function value $x(S)$ be determined by the distance between a user $u^\*$ and its center $f^\* = \phi_\alpha(u^\*)$, that is, $x(S) = d(u^\*, f^\*)$.
+We call *critical allocation* to the assignment of user-center that determines the objective function, *critical user* the $u^\*$, and *critical center* the $f^\*$.
+
+Note that there will be no improvement of $x$ in $N(S)$ if $f_i$ is farther from $u^\*$ than its center ($f^\*$) because the critical allocation would not change.
+Therefore, selecting only facilities closer to $u^\*$ than $f^\*$ as candidates to insert into $S$ allows us to avoid exploring the whole neighborhood of $S$.
+
+This technique is used in Mladenović et al. (2003) for the PCP, and in Sánchez-Oro et al. (2022) for the ANPCP as well.
+
+### Updates
+
+The concept of the $\alpha$-neighbors is mathematically defined in equation 4 using $\phi_k(u)$, which represents the \kth closest open facility of a user $u$.
+This means that the algorithm needs to store what facilities are close to every user and to what degree, which is represented by $k$.
+
+We achieve this by implementing a matrix $M$ of $n$ rows and $m$ columns, where each cell indicates the degree of closeness between a user $u$ and a facility $f$.
+For each user, the assigned value in $M$ for the open facilities in $\{ \phi_k(u) | 1 \le k \le \alpha + 1 \}$ is $k$. For the rest of the facilities, including the closed ones, the value is 0.
+The time complexity to fill $M$ is $O(mn)$ because each cell in the matrix is updated.
+
+This matrix serves as a memory that allows the calculation of the objective function value in $O(pn)$ time.
+For each user, its center can be found by iterating its row and looking for the column that has $\alpha$ as a value.
+To avoid visiting the closed facilities, we filter the search by only using the indexes of the open facilities.
+
+This updating step is used in both NI and A-FVS local search algorithms.
+However, in the NI, the matrix is updated when every swap is considered, while in the A-FVS, it is only updated after a swap is applied to the solution (line 20), reducing the number of times that $M$ is filled.
+
+### Final algorithm
+
+The complete pseudocode of the A-FVS, including the `move` that uses the data structures, the technique to reduce the neighborhood, and the updates to the matrix, is shown below:
+
+<img src="/images/alg-a-fvs.png" />
 
 # References
 
@@ -230,9 +304,9 @@ This penalty is stored in the array $z(\cdot)$, for each $\alpha$-neighbor.
 A fast algorithm for the greedy interchange for large-scale clustering and median location problems.
 *INFOR*, 21(2):95–108, 1983.
 
-[^2]: J. Sánchez-Oro, A. D. López-Sánchez, A. G. Hernández-Díaz, and A. Duarte.
+[^2]: N. Mladenović, M. Labbé, and P. Hansen. Solving the $p$-center problem with tabu
+search and variable neighborhood search. *Networks*, 42(1):48–64, 2003.
+
+[^3]: J. Sánchez-Oro, A. D. López-Sánchez, A. G. Hernández-Díaz, and A. Duarte.
 GRASP with strategic oscillation for the $\alpha$-neighbor $p$-center problem.
 *European Journal of Operational Research*, 2022.
-
-[^3]: N. Mladenović, M. Labbé, and P. Hansen. Solving the $p$-center problem with tabu
-search and variable neighborhood search. *Networks*, 42(1):48–64, 2003.
