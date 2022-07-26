@@ -106,7 +106,7 @@ $$
     \phi_\alpha'(u) \gets
         \begin{cases}
             f_i,
-                & \text{if } d_{\alpha - 1}(u) < d_i(u) < d_\alpha(u) \\\\
+                & \text{if } d_{\alpha - 1}(u) < d_i(u) < d_\alpha(u) \\
             \phi_{\alpha - 1}(u),
                 & \text{if } d_i(u) < d_{\alpha - 1}(u)
         \end{cases}
@@ -195,10 +195,11 @@ The variable for the first case remained as $x'$.
 The reasoning for this is due to equation 1.
 Let $A_u$ be, for any user $u$, the set of open facilities closer than or equal to its center, representing the $\alpha$-neighbors of $u$.
 Note that in the figure below, $\phi_{\alpha + 1}$ is not part of $A_u$, which is shown over purple background.
+
 $$
 \begin{gather}
     A_u \leftarrow \{ \phi_k(u) \mid 1 \le k \le \alpha \}
-    \\\\
+    \\
     \nonumber A_u \subset S, \ u \in U
 \end{gather}
 $$
