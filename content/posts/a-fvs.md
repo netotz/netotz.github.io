@@ -1,15 +1,11 @@
 ---
 type: post
-title: "The Alpha Fast Vertex Substitution algorithm"
-description: "A new fast local search heuristic for a location problem."
-date: 2022-07-19
+title: "The process of designing a new algorithm"
+description: "The story of coming up with a new fast local search heuristic for a location problem."
+date: 2022-07-26
 tags: ["operations research", "optimization", "math", "computer science", "algorithms", "data structures", "thesis"]
 mathjax: true
 showTableOfContents: true
----
-
-TL;DR: 
-
 ---
 
 # Introduction
@@ -20,7 +16,7 @@ But the goal wasn't to just understand the decomposing of an objective function.
 I needed to design a fast algorithm to solve the $\alpha$-neighbor $p$-center problem (ANPCP), as I mentioned in the other post, and while researching to do so, I came across the concept of the *fast interchange* or *fast swap* and how it was applied to other location problems (not the ANPCP).
 I also wrote about it in that post, however, at that moment I didn't have a working algorithm for the problem, and I just noticed that I didn't include some definitions there like that of *heuristic*, so:
 
-> A heuristic is any approach to problem solving that employs a practical method that is not guaranteed to be optimal, perfect, or rational, but is nevertheless sufficient for reaching an immediate, short-term goal or approximation.
+> A **heuristic** is any approach to problem solving that employs a practical method that is not guaranteed to be optimal, perfect, or rational, but is nevertheless sufficient for reaching an immediate, short-term goal or approximation.
 
 In that post, I concluded that I would have to do "manual" tests to see where exactly the adapted algorithm was failing... *ok boomer*.
 Although careful experiments were needed to detect the errors, I thought that recurring to pen and paper was too much.
@@ -29,8 +25,9 @@ After four notebooks of testing and modifying the algorithm, it could finally so
 You can check them out [here](https://github.com/netotz/alpha-neighbor-p-center-problem/tree/main/anpcp), they are the ones whose filenames start with `ieval_`, but only the introduction and conclusion explain something, I didn't document much the whole evaluation process.
 The final version of the algorithm was baptized as the *Alpha Fast Vertex Substitution* (A-FVS) local search heuristic, because it considers the $\alpha$th closest center, it is fast, and it substitutes one vertex for another.
 
-Since then, I have been able to write most of the thesis (**big shout-out to [my mentor](https://yalma.fime.uanl.mx/~roger/work/index.html) and my revisors!**), which I think is more understandable than the previous post, so I'm going to put here the chapter that reviews the background of the fast interchange concept and explains the observations that led us to the birth of the A-FVS.
-To the best of our knowledge at the time writing this post, implementing a fast interchange local search heuristic to solve the ANPCP hasn't been considered before. 
+Since then, I have been able to write most of the thesis (**big shout-out to [my mentor](https://yalma.fime.uanl.mx/~roger/work/index.html) and my revisors!**), which I think is more understandable than the previous post, so here is the chapter that reviews the background of the fast interchange concept and explains the observations that led us to the birth of the A-FVS.
+
+To the best of our knowledge, implementing a fast interchange local search heuristic to solve the ANPCP hasn't been considered before. 
 
 # The process
 
@@ -129,13 +126,18 @@ To determine which of these existing connections would remain after a swap, it b
 
 The following conditions apply for users who are not attracted by $f_i$:
 
-1. If a center will be removed ($f_r$), then its users must be reallocated. For each user $u$, its new center would be either its second-closest facility or $f_i$, whichever is the closest to $u$, but incurring a penalty because both options are farther than its old center. The overall penalty is stored in the array $z(\cdot)$, for each center.
-2. Otherwise, the radius of that center would not change. This unchanged radius is stored in the array $r(\cdot)$, for each center.
+1. If a center will be removed ($f_r$), then its users must be reallocated.
+For each user $u$, its new center would be either its second-closest facility or $f_i$, whichever is the closest to $u$, but incurring a penalty because both options are farther than its old center.
+The overall penalty is stored in the array $z(\cdot)$, for each center.
 
-These data structures have size $|S|$ because any open facility can become a center. They get updated by users who are not attracted by $f_i$ and are crucial for the algorithm to decide the most profitable swap, i.e., the best facility to remove given a candidate facility to insert.
+2. Otherwise, the radius of that center would not change.
+This unchanged radius is stored in the array $r(\cdot)$, for each center.
+
+These data structures have size $|S|$ because any open facility can become a center.
+They get updated by users who are not attracted by $f_i$ and are crucial for the algorithm to decide the most profitable swap, i.e., the best facility to remove given a candidate facility to insert.
 The pseudocode of this method is described as follows:
 
-<img src="/images/alg-move_pcp.png" width="100%" />
+<img src="/images/alg-move_pcp.png" />
 
 Let $x^*(S)$ be the minimum possible objective function value that can result after applying the FVS to the solution $S$, evaluated as the equation 3 below.
 The formula can be accelerated by keeping track of the two greatest values ($g_1$ and $g_2$ in equation 3) from $r(\cdot)$ while updating the arrays.
@@ -165,6 +167,61 @@ We propose an adaptation of the FVS to obtain solutions for any value of $\alpha
 
 In the next subsection, we describe in more detail how we adapted the algorithm to solve the ANPCP.
 
+## Alpha Fast Vertex Substitution (A-FVS)
+
+According to the observations explained above, we adapted the FVS for the ANPCP, which from now on we will identify as the **Alpha Fast Vertex Substitution** (A-FVS), considering first the following modifications:
+
+1. The group of users that is attracted to $f_i$ was divided into two groups and, consequently, into two data structures as well.
+These two different groups came from the two possible cases for the new center in equation 2.
+Therefore, a new variable was introduced for the objective function of the second case: $\bar{x'}$.
+The variable for the first case remained as $x'$.
+
+2. The data structure $z(\cdot)$ was adapted to update all of the $\alpha$-neighbors of every user, and not only its center.
+The reasoning for this is due to equation 1.
+Let $A_u$ be, for any user $u$, the set of open facilities closer than or equal to its center, representing the $\alpha$-neighbors of $u$.
+Note that in the figure below, $\phi_{\alpha + 1}$ is not part of $A_u$, which is shown over purple background.
+$$
+\begin{gather}
+    A_u \leftarrow \{ \phi_k(u) \mid 1 \le k \le \alpha \}
+    \\\\
+    \nonumber A_u \subset S, \ u \in U
+\end{gather}
+$$
+<img src="/images/alpha_neighbors.png" width="75%" />
+
+> $\alpha$-neighbors of $u$ ($A_u$).
+
+Each one of the $\alpha$-neighbors is an open facility, therefore they can be removed from the solution.
+In other words, any of them can be selected to be $f_r$.
+
+After evaluating the A-FVS in detail, we observed that the arrays did not accurately store the data between connections of users and centers, and the resulting objective function value was unrelated to them.
+During this evaluation, the following was noted:
+
+1. The variables for the possible new objective function $x'$ and $\bar{x'}$ could be merged back, just as they were before.
+It is important to mention that the users still belong to two different groups; however, there is no need to use two different variables, because in any case, the equation applies a $\max$ function on both.
+
+2. The data structure $z(\cdot)$ should be updated for all users, including those who are attracted by $f_i$ because their $\alpha$-neighbors were being considered when finding $f_r$, but these same users were not contributing to the array, so there was no stored information about what would happen to the centers that had any of their $\alpha$-neighbors as $f_r$.
+This is why the objective function value after a swap and the data in the arrays were mismatched in previous evaluations.
+
+3. As a consequence of the modification to $z(\cdot)$, data structure $r(\cdot)$ should be updated in the same way: for every user and all $\alpha$-neighbors.
+
+
+With these three observations, all users update and contribute to both arrays $z(\cdot)$ and $r(\cdot)$.
+This crucial difference from the original FVS is necessary for the ANPCP because both equation 1 and equation 2 are not properties of the PCP, and produced the following additional modifications:
+
+If an $\alpha$-neighbor will be removed ($f_r$), then its users must be reallocated unless they are attracted to $f_i$.
+In that case, their centers would not change, so the distances to them would remain constant (no penalty), independently of exactly which $\alpha$-neighbor would be removed, and of the exact relative distance from a user $u$ to $f_i$.
+Two examples of this case can be visualized below:
+
+![]()
+
+However, in the worst case, if they were not attracted to $f_i$, then their new center would be either the $\alpha + 1$ closest facility or $f_i$, whichever is the closest, but still farther than their old center.
+Both possibilities are shown below, where the red line is the new assignment of $u$ as well as the penalty of interchanging $f_r$ (the gray $\alpha$-neighbor) with $f_i$.
+This penalty is stored in the array $z(\cdot)$, for each $\alpha$-neighbor.
+
+![]()
+
+ 
 
 
 # References
