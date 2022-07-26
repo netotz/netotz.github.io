@@ -1,0 +1,417 @@
+<!doctype html><html lang=en><head>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<style>:root{--accent-color:#ffc33c}</style>
+<title>The process of designing a new algorithm</title>
+<meta name=description content="The story of coming up with a new fast local search heuristic for a location problem.">
+<meta name=keywords content="blog,personal,hugo,github-pages,programming,journal,programming blog,essays,computer science,technology blog,operations research,optimization,math,algorithms,data structures,thesis">
+<meta property="og:url" content="https://netotz.github.io/posts/a-fvs/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="The process of designing a new algorithm">
+<meta property="og:description" content="The story of coming up with a new fast local search heuristic for a location problem.">
+<meta property="og:image" content="/images/null.png">
+<meta name=twitter:card content="summary_large_image">
+<meta name=twitter:title content="The process of designing a new algorithm">
+<meta name=twitter:description content="The story of coming up with a new fast local search heuristic for a location problem.">
+<meta property="twitter:domain" content="https://netotz.github.io/posts/a-fvs/">
+<meta property="twitter:url" content="https://netotz.github.io/posts/a-fvs/">
+<meta name=twitter:image content="/images/null.png">
+<link rel=canonical href=https://netotz.github.io/posts/a-fvs/>
+<link rel=stylesheet type=text/css href=https://netotz.github.io//css/normalize.min.css media=print onload="this.media='all'">
+<link rel=stylesheet type=text/css href=https://netotz.github.io//css/main.css>
+<link disabled id=dark-theme rel=stylesheet href=https://netotz.github.io//css/dark.css>
+<script src=https://netotz.github.io//js/svg-injector.min.js></script>
+<script src=https://netotz.github.io//js/feather-icons.min.js></script>
+<script src=https://netotz.github.io//js/main.js></script>
+<link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png>
+<link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
+<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png>
+<link rel=manifest href=/site.webmanifest>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css integrity=sha384-Xi8rHCmBmhbuyyhbI88391ZKP2dmfnOl4rT9ZfRI7mLTdk1wblIUnrIq35nqwEvC crossorigin=anonymous>
+<script defer src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js integrity=sha384-X/XCfMm41VSsqRNQgDerQczD69XqmjOOOwYQvr/uuC+j4OPoNhVgjdGFwhvN02Ja crossorigin=anonymous></script>
+<script defer src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js integrity=sha384-+XBljXPPiv+OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR crossorigin=anonymous onload=renderMathInElement(document.body)></script>
+<script>document.addEventListener("DOMContentLoaded",function(){renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:!0},{left:'$',right:'$',display:!1}],throwOnError:!1})})</script>
+</head>
+<body>
+<script type=text/javascript>setThemeByUserPref()</script><header class=header>
+<nav class=header-nav>
+<div class=avatar>
+<a href=https://netotz.github.io/>
+<img src=https://netotz.github.io//images/null.png alt=avatar>
+</a>
+</div>
+<div class=nav-title>
+<a class=nav-brand href=https://netotz.github.io/>void?</a>
+</div>
+<div class=nav-links>
+<div class=nav-link>
+<a href=https://netotz.github.io/><span data-feather=home></span> Home </a>
+</div>
+<div class=nav-link>
+<a href=https://netotz.github.io/posts/><span data-feather=book-open></span> Posts </a>
+</div>
+<div class=nav-link>
+<a href=https://netotz.github.io/tags/><span data-feather=tag></span> Tags </a>
+</div>
+<div class=nav-link>
+<a href=https://github.com/netotz/netotz.github.io><span data-feather=github></span> Source </a>
+</div>
+<span class=nav-icons-divider></span>
+<div class="nav-link dark-theme-toggle">
+<a>
+<span id=theme-toggle-icon data-feather=moon></span>
+</a>
+</div>
+<div class=nav-link id=hamburger-menu-toggle>
+<a>
+<span data-feather=menu></span>
+</a>
+</div>
+<ul class="nav-hamburger-list visibility-hidden">
+<li class=nav-item>
+<a href=https://netotz.github.io/><span data-feather=home></span> Home </a>
+</li>
+<li class=nav-item>
+<a href=https://netotz.github.io/posts/><span data-feather=book-open></span> Posts </a>
+</li>
+<li class=nav-item>
+<a href=https://netotz.github.io/tags/><span data-feather=tag></span> Tags </a>
+</li>
+<li class=nav-item>
+<a href=https://github.com/netotz/netotz.github.io><span data-feather=github></span> Source </a>
+</li>
+<li class="nav-item dark-theme-toggle">
+<a>
+<span id=theme-toggle-icon data-feather=moon></span>
+</a>
+</li>
+</ul>
+</div>
+</nav>
+</header>
+<main id=content>
+<div class="post container">
+<div class=post-header-section>
+<h1>The process of designing a new algorithm</h1>
+<small role=doc-subtitle>The story of coming up with a new fast local search heuristic for a location problem.</small>
+<p class=post-date>
+July 26, 2022
+</p>
+<ul class=post-tags>
+<li class=post-tag><a href=https://netotz.github.io/tags/operations-research>operations research</a></li>
+<li class=post-tag><a href=https://netotz.github.io/tags/optimization>optimization</a></li>
+<li class=post-tag><a href=https://netotz.github.io/tags/math>math</a></li>
+<li class=post-tag><a href=https://netotz.github.io/tags/computer-science>computer science</a></li>
+<li class=post-tag><a href=https://netotz.github.io/tags/algorithms>algorithms</a></li>
+<li class=post-tag><a href=https://netotz.github.io/tags/data-structures>data structures</a></li>
+<li class=post-tag><a href=https://netotz.github.io/tags/thesis>thesis</a></li>
+</ul>
+</div>
+<div class=post-content>
+<p>
+<h1 id=introduction>Introduction</h1>
+<p>Earlier in the year I wrote about <a href=../decomposing-of>how the objective function of an optimization problem is decomposed</a> and partially evaluated so an algorithm that uses that function runs faster.
+I found this technique so interesting that I tried to explain it in that post.
+But the goal wasn&rsquo;t to just understand the decomposing of an objective function.
+I needed to design a fast algorithm to solve the $\alpha$-neighbor $p$-center problem (ANPCP), as I mentioned in the other post, and while researching to do so, I came across the concept of the <em>fast interchange</em> or <em>fast swap</em> and how it was applied to other location problems (not the ANPCP).
+I also wrote about it in that post, however, at that moment I didn&rsquo;t have a working algorithm for the problem, and I just noticed that I didn&rsquo;t include some definitions there like that of <em>heuristic</em>, so:</p>
+<blockquote>
+<p>A <strong>heuristic</strong> is any approach to problem solving that employs a practical method that is not guaranteed to be optimal, perfect, or rational, but is nevertheless sufficient for reaching an immediate, short-term goal or approximation.</p>
+</blockquote>
+<p>In that post, I concluded that I would have to do &ldquo;manual&rdquo; tests to see where exactly the adapted algorithm was failing&mldr; <em>ok boomer</em>.
+Although careful experiments were needed to detect the errors, I thought that recurring to pen and paper was too much.
+I ended up preferring Gen-Z cutting-edge futuristic technologies instead and tested the algorithm in Jupyter Notebooks (/s) using small instances of the ANPCP.
+After four notebooks of testing and modifying the algorithm, it could finally solve the problem for any $\alpha &lt; p$.
+You can check them out <a href=https://github.com/netotz/alpha-neighbor-p-center-problem/tree/main/anpcp>here</a>, they are the ones whose filenames start with <code>ieval_</code>, but only the introduction and conclusion explain something, I didn&rsquo;t document much the whole evaluation process.</p>
+<p>The final version of the algorithm was baptized as the <em>Alpha Fast Vertex Substitution</em> (A-FVS) local search heuristic, because it considers the $\alpha$th closest center, it is fast, and it substitutes one vertex for another.</p>
+<p>Since then, I have been able to write most of the thesis (<strong>big shout-out to <a href=https://yalma.fime.uanl.mx/~roger/work/index.html>my mentor</a> and my revisors!</strong>), which I think is more understandable than the previous post, so here is the chapter that reviews the background of the fast interchange concept and explains the observations that led us to the birth of the A-FVS.</p>
+<p>Still, I recommend reading that post <a href=../decomposing-of>here</a> before reading this one because there&rsquo;s relevant context in there.
+Also, if this post gets too technical and I forgot to explain something or it&rsquo;s difficult to understand, please let me know via <a href=https://twitter.com/netotz>Twitter</a> and I&rsquo;ll add or edit it 👍.</p>
+<p>To the best of our knowledge, implementing a fast interchange local search heuristic to solve the ANPCP hadn&rsquo;t been considered before.
+The A-FVS has shown significant speedups of computational time in every test, being around 100 times faster than a simple interchange algorithm, depending on the size of the problem.
+This shows the power of using the appropriate data structures to improve the runtime of an algorithm.</p>
+<p>I&rsquo;ve been coding this in Python in <a href=https://github.com/netotz/alpha-neighbor-p-center-problem>this repository</a>.
+I warn you, there&rsquo;s a high technical debt there and it&rsquo;s not the cleanest code that I&rsquo;ve written.
+But until I refactor it, it is what it is.</p>
+<h1 id=the-process>The process</h1>
+<p>A solution to the ANPCP can be improved by applying a <strong>local search heuristic</strong>, i.e., modifying one or more components of the solution based on some rule, looking for a better objective function value among the space of candidate solutions or neighborhoods, until a local optimum is reached.</p>
+<p>A well-known local search procedure is the <em>vertex substitution method</em>, also known as the <em>greedy interchange</em> or <em>swap</em>.
+This method consists of replacing one of the facilities in the solution, denoted as $f_r$, for another one outside the solution, denoted as $f_i$.
+The procedure is repeated until no more improvements are found (local optimum reached).</p>
+<p>A straightforward local search algorithm was first implemented for the ANPCP, identified as Naive Interchange (NI).
+This algorithm simply iterates over the set of open facilities and, for each of them, iterates the set of closed facilities.
+At each iteration, it temporarily removes the current open facility, adds the closed facility, and recalculates the objective function value.</p>
+<p>This procedure does $O(p^2mn)$ operations, resulting in inefficient performance, based on preliminary experiments.
+For this reason, we propose a faster vertex substitution algorithm to obtain solutions faster.</p>
+<h2 id=fast-algorithm-for-the-greedy-interchange-fagi>Fast Algorithm for the Greedy Interchange (FAGI)</h2>
+<p>The <strong>fast algorithm for the greedy interchange</strong> (FAGI) was first proposed for the $p$-median problem (PMP) by Whitaker (1983)<sup id=fnref:1><a href=#fn:1 class=footnote-ref role=doc-noteref>1</a></sup>.
+The key aspect of this implementation is its ability to find the most profitable candidate facility for removal ($f_r$), given a certain candidate facility for insertion ($f_i$), while partially evaluating the objective function.</p>
+<p>What makes this procedure fast is the observation that the profit that would result from applying a swap can be decomposed into two components.</p>
+<p>The first one, called <em>gain</em>, identifies the users who would benefit from the insertion of $f_i$ into the solution because each user is closer to it than its current closest facility.
+The second component, <em>netloss</em>, accounts for all other users that would not benefit from the insertion of $f_i$.
+If $f_r$ is the current closest facility of a user, then it would have to be reassigned either to its second closest one or to $f_i$, whichever is the closest.
+In both cases, the cost of serving that user will either increase or remain constant.</p>
+<p>These two components are useful as they work as auxiliary data structures that make the algorithm fast, which has a worst-case time complexity of $O(mn)$.</p>
+<p>The FAGI was implemented and tested for the ANPCP.
+Even though this algorithm uses the objective function of the PMP, no solutions were obtained successfully (the algorithm was getting stuck when $\alpha \ge 2$, even with small instances).
+After analyzing how the algorithm was taking decisions and updating the auxiliary data structures, we observed some key differences between the PMP and the ANPCP which were later crucial to propose an improved adaptation that could obtain solutions for any value of $\alpha$ (where $\alpha &lt; p$).</p>
+<p>In the PMP, as well as in the PCP, users are assigned to their closest open facility.
+Although their objective functions are evaluated differently, in both problems the centers have the same definition.
+Nonetheless, the definition of a center changes for the ANPCP, because users are assigned not to their closest open facility but their $\alpha$th closest open facility, meaning that there are $\alpha - 1$ open facilities that are closer to any user $u$ than its center.</p>
+<p>More formally, let $\phi_k(u)$ be the $k$th closest open facility of any user $u$,</p>
+<p>$$
+\begin{equation}
+\phi_\alpha(u) \text{ is determined by all } { \phi_k(u) \mid 1 \le k &lt; \alpha }
+\end{equation}
+$$</p>
+<p>If for $u$, one of the open facilities closer than its current center is considered to be $f_r$, then this center would no longer be the $\alpha$th closest open facility.
+Hence, the new center of $u$ denoted as $\phi_\alpha'(u)$ would, by definition, be moved to the next farther open facility, which would be the current $\phi_{\alpha + 1}(u)$.</p>
+<p>A visual representation is shown below, where $f_r$ is the gray facility (the one that will be removed from the solution), the black straight line is the assignment of $u$ to its center, and the red line and outline indicate which node will be the new center of $u$ after removing $f_r$.</p>
+<p><img src=/images/not_attracted.png width=75%></p>
+<blockquote>
+<p>Resulting new center of $u$, $\phi_\alpha'(u)$, after removing its current center $\phi_\alpha(u)$.</p>
+</blockquote>
+<p>&ldquo;Attraction&rdquo; here refers to when $f_i$ is closer to $u$ than its center.</p>
+<p>The fact that $u$ is attracted to $f_i$ does not necessarily mean that $f_i$ is going to be its new center: it depends on how close $f_i$ is from $u$.
+This is represented visually in the two figures below.
+The light red nodes are open facilities, and the dotted lines represent the distances from $u$ to the open facilities that are closer than its center.</p>
+<p>Mathematically, let $d_k(u) = d(u, \phi_k(u))$ and $d_i(u) = d(u, f_i)$, then</p>
+<p>$$
+\begin{equation}
+\phi_\alpha'(u) \gets
+\begin{cases}
+f_i,
+& \text{if } d_{\alpha - 1}(u) &lt; d_i(u) &lt; d_\alpha(u) \\<br>
+\phi_{\alpha - 1}(u),
+& \text{if } d_i(u) &lt; d_{\alpha - 1}(u)
+\end{cases}
+\end{equation}
+$$</p>
+<p><img src=/images/attracted_fi.png width=75%></p>
+<blockquote>
+<p>$\phi_\alpha'(u) \gets f_i$</p>
+</blockquote>
+<p><img src=/images/attracted_a-1.png width=75%></p>
+<blockquote>
+<p>$\phi_\alpha'(u) \gets \phi_{\alpha - 1}(u)$</p>
+</blockquote>
+<blockquote>
+<p>The two options for the new center when $u$ is attracted to $f_i$ (equation 2).</p>
+</blockquote>
+<p>These observations resulted in modifying FAGI to update the data structures $gain$ and $netloss$ accordingly.
+However, after applying such modifications, the algorithm did not produce any solutions either.
+As a consequence, we decided to modify the greedy evaluation step by evaluating the ANPCP&rsquo;s objective function instead of the PMP&rsquo;s, and focus on how to calculate the objective function of our problem faster.</p>
+<h2 id=fast-vertex-substitution-fvs>Fast Vertex Substitution (FVS)</h2>
+<p>We found that FAGI was later adapted to solve the PCP, named the <strong>fast vertex substitution</strong> (FVS), proposed by Mladenović et al. (2003)<sup id=fnref:2><a href=#fn:2 class=footnote-ref role=doc-noteref>2</a></sup>.
+This algorithm also has a worst-case time complexity of $O(mn)$.
+Now, as mentioned earlier, the ANPCP is a variant of the PCP in which the difference is how the centers are defined.
+However, the observation that both problems aim to minimize a maximum allowed us to use FVS as a better basis algorithm to adapt for the ANPCP.
+The key to this adaptation is the use of three data structures that accelerate the search of $f_r$.</p>
+<p>In the implementation for the PCP, the new objective function value or radius $x'$, that would result after the interchange, is kept only for users who are attracted by $f_i$, i.e., $f_i$ is closer to them than their center.
+Besides these new assignments to $f_i$, a new maximum distance $x^*$ could be found among existing assignments.
+To determine which of these existing connections would remain after a swap, it becomes necessary to store how the radiuses of old centers change when they are considered to be removed or not.</p>
+<p>The following conditions apply for users who are not attracted by $f_i$:</p>
+<ol>
+<li>
+<p>If a center will be removed ($f_r$), then its users must be reallocated.
+For each user $u$, its new center would be either its second-closest facility or $f_i$, whichever is the closest to $u$, but incurring a penalty because both options are farther than its old center.
+The overall penalty is stored in the array $z(\cdot)$, for each center.</p>
+</li>
+<li>
+<p>Otherwise, the radius of that center would not change.
+This unchanged radius is stored in the array $r(\cdot)$, for each center.</p>
+</li>
+</ol>
+<p>These data structures have size $|S|$ because any open facility can become a center.
+They get updated by users who are not attracted by $f_i$ and are crucial for the algorithm to decide the most profitable swap, i.e., the best facility to remove given a candidate facility to insert.
+The pseudocode of this method is described as follows:</p>
+<p><img src=/images/alg-move_pcp.png></p>
+<p>Let $x^*(S)$ be the minimum possible objective function value that can result after applying the FVS to the solution $S$, evaluated as the equation 3 below.
+The formula can be accelerated by keeping track of the two greatest values ($g_1$ and $g_2$ in equation 3) from $r(\cdot)$ while updating the arrays.</p>
+<p>$$
+\begin{equation}
+x^*(S) = \min_{f_j \in S}{
+\max{
+x', z(f_j),
+\max_{f_l \ne f_j}{ r(f_l) }
+}
+}
+\end{equation}
+$$</p>
+<p>The data structures altogether accelerate the local search by partially evaluating the objective function, using the relations between $f_i$, $U$, and $S$ for every possible swap, stored in $r(\cdot)$, $z(\cdot)$, and $x'$.
+This stored information allows the algorithm to keep track of multiple maximum distances, without repeating expensive computations, such as a complete revaluation of the objective function.</p>
+<p>We tried implementing FVS to solve the ANPCP by applying the equation 2, but without success again.
+The algorithm kept getting stuck when $\alpha \ge 2$.
+We observed that the resulting objective function value after an interchange, i.e., a complete modification of the original solution, was unrelated to the information stored in the data structures, meaning that they were not enough to accurately solve the ANPCP.
+This was likely because it needed to keep track of more relations for this problem than for the PCP.</p>
+<p>A detailed evaluation of the FVS on an instance of the PCP proved that the data structures worked correctly as they ended up storing the precise objective function value.
+This evaluation also helped to better understand the functionality of FVS, making it easier to adapt it for the ANPCP.
+We propose an adaptation of the FVS to obtain solutions for any value of $\alpha &lt; p$.</p>
+<p>In the next subsection, we describe in more detail how we adapted the algorithm to solve the ANPCP.</p>
+<h2 id=alpha-fast-vertex-substitution-a-fvs>Alpha Fast Vertex Substitution (A-FVS)</h2>
+<p>According to the observations explained above, we adapted the FVS for the ANPCP, which from now on we will identify as the <strong>Alpha Fast Vertex Substitution</strong> (A-FVS), considering first the following modifications:</p>
+<ol>
+<li>
+<p>The group of users that is attracted to $f_i$ was divided into two groups and, consequently, into two data structures as well.
+These two different groups came from the two possible cases for the new center in equation 2.
+Therefore, a new variable was introduced for the objective function of the second case: $\bar{x'}$.
+The variable for the first case remained as $x'$.</p>
+</li>
+<li>
+<p>The data structure $z(\cdot)$ was adapted to update all of the $\alpha$-neighbors of every user, and not only its center.
+The reasoning for this is due to equation 1.
+Let $A_u$ be, for any user $u$, the set of open facilities closer than or equal to its center, representing the $\alpha$-neighbors of $u$.
+Note that in the figure below, $\phi_{\alpha + 1}$ is not part of $A_u$, which is shown over purple background.
+$$
+\begin{gather}
+A_u \leftarrow { \phi_k(u) \mid 1 \le k \le \alpha }
+\\<br>
+\nonumber A_u \subset S, \ u \in U
+\end{gather}
+$$
+<img src=/images/alpha_neighbors.png width=75%></p>
+</li>
+</ol>
+<blockquote>
+<p>$\alpha$-neighbors of $u$ ($A_u$).</p>
+</blockquote>
+<p>Each one of the $\alpha$-neighbors is an open facility, therefore they can be removed from the solution.
+In other words, any of them can be selected to be $f_r$.</p>
+<p>After evaluating the A-FVS in detail, we observed that the arrays did not accurately store the data between connections of users and centers, and the resulting objective function value was unrelated to them.
+During this evaluation, the following was noted:</p>
+<ol>
+<li>
+<p>The variables for the possible new objective function $x'$ and $\bar{x'}$ could be merged back, just as they were before.
+It is important to mention that the users still belong to two different groups; however, there is no need to use two different variables, because in any case, the equation applies a $\max$ function on both.</p>
+</li>
+<li>
+<p>The data structure $z(\cdot)$ should be updated for all users, including those who are attracted by $f_i$ because their $\alpha$-neighbors were being considered when finding $f_r$, but these same users were not contributing to the array, so there was no stored information about what would happen to the centers that had any of their $\alpha$-neighbors as $f_r$.
+This is why the objective function value after a swap and the data in the arrays were mismatched in previous evaluations.</p>
+</li>
+<li>
+<p>As a consequence of the modification to $z(\cdot)$, data structure $r(\cdot)$ should be updated in the same way: for every user and all $\alpha$-neighbors.</p>
+</li>
+</ol>
+<p>With these three observations, all users update and contribute to both arrays $z(\cdot)$ and $r(\cdot)$.
+This crucial difference from the original FVS is necessary for the ANPCP because both equation 1 and equation 2 are not properties of the PCP, and produced the following additional modifications:</p>
+<h3 id=when-f_r-is-an-alpha-neighbor>When $f_r$ is an $\alpha$-neighbor</h3>
+<p>If an $\alpha$-neighbor will be removed ($f_r$), then its users must be reallocated unless they are attracted to $f_i$.
+In that case, their centers would not change, so the distances to them would remain constant (no penalty), independently of exactly which $\alpha$-neighbor would be removed, and of the exact relative distance from a user $u$ to $f_i$.</p>
+<p>Two examples of this case can be visualized below:</p>
+<p><img src=/images/z_attracted_a-1_fi.png width=75%></p>
+<blockquote>
+<p>$d_{\alpha - 1} &lt; d_i &lt; d_\alpha$</p>
+</blockquote>
+<p><img src=/images/z_attracted_fi_a-1.png width=75%></p>
+<blockquote>
+<p>$d_i &lt; d_{\alpha - 1} &lt; d_\alpha$</p>
+</blockquote>
+<blockquote>
+<p>If an $\alpha$-neighbor is $f_r$ and $u$ is attracted to $f_i$, its center remains unchanged (no penalty).</p>
+</blockquote>
+<p>However, in the worst case, if they were not attracted to $f_i$, then their new center would be either the $\alpha + 1$ closest facility or $f_i$, whichever is the closest, but still farther than their old center.</p>
+<p>Both possibilities are shown below, where the red line is the new assignment of $u$ as well as the penalty of interchanging $f_r$ (the gray $\alpha$-neighbor) with $f_i$.
+This penalty is stored in the array $z(\cdot)$, for each $\alpha$-neighbor.</p>
+<p><img src=/images/z_not_attracted_a+1.png width=75%></p>
+<blockquote>
+<p>$d_\alpha &lt; d_{\alpha + 1} &lt; d_i$</p>
+</blockquote>
+<p><img src=/images/z_not_attracted_fi.png width=75%></p>
+<blockquote>
+<p>$d_\alpha &lt; d_i &lt; d_{\alpha + 1}$</p>
+</blockquote>
+<blockquote>
+<p>If an $\alpha$-neighbor is $f_r$ and $u$ is not attracted to $f_i$, its new center will be farther (penalty).</p>
+</blockquote>
+<h3 id=when-f_r-is-not-an-alpha-neighbor>When $f_r$ is not an $\alpha$-neighbor</h3>
+<p>Otherwise, the radius of that $\alpha$-neighbor would only change if its users are attracted to $f_i$.
+In that case, their new center would be either the $\alpha - 1$ closest facility or $f_i$, whichever is the farthest, as stated in equation 2 and visualized in its figure, resulting in an improved assignment because this new distance would be shorter.</p>
+<p>In the worst case, if they were not attracted to $f_i$, then their center would not change, remaining its radius unchanged.
+This possible gain is stored in array $r(\cdot)$, for each $\alpha$-neighbor.</p>
+<h3 id=the-move-procedure>The <code>move</code> procedure</h3>
+<p>These two final modifications constitute the core step of the A-FVS, which we identify as the <code>move</code> procedure.
+The objective of this procedure is, in summary, given a candidate facility to insert, $f_i$, to store the greatest improvement in the objective function in $x'$, and for each $\alpha$-neighbor of every user, to store the greatest penalty of removing it in $z(\cdot)$, and the greatest gain of keeping it in $r(\cdot)$.
+Then, it finds the facility that minimizes the maximum of all the distances from the three data structures, and returns both that facility as $f_r$ and that distance as $x^*$.</p>
+<p>The formula used in the <code>move</code> procedure to evaluate the resulting objective function after a swap is the same one used in the FVS (equation 3).
+This is because the data structures of both algorithms do the same thing: they are just adapted to be updated differently.
+This procedure was the first local search modification that yielded an accurate result after evaluating it step by step.
+The pseudocode of this procedure is shown below:</p>
+<p><img src=/images/alg-move.png></p>
+<h3 id=neighborhood-reduction>Neighborhood reduction</h3>
+<p>The A-FVS uses an additional acceleration that increasingly reduces the size of the neighborhood $N(S)$ to explore during the iterations, by considering only facilities that would decrease the maximum distance between any user and its center, or &ldquo;break&rdquo; the objective function, to be inserted into the solution.</p>
+<p>More formally, let the current objective function value $x(S)$ be determined by the distance between a user $u^*$ and its center $f^* = \phi_\alpha(u^*)$, that is, $x(S) = d(u^*, f^*)$.
+We call *critical allocation* to the assignment of user-center that determines the objective function, *critical user* the $u^*$, and *critical center* the $f^*$.</p>
+<p>Note that there will be no improvement of $x$ in $N(S)$ if $f_i$ is farther from $u^*$ than its center ($f^*$) because the critical allocation would not change.
+Therefore, selecting only facilities closer to $u^*$ than $f^*$ as candidates to insert into $S$ allows us to avoid exploring the whole neighborhood of $S$.</p>
+<p>This technique is used in Mladenović et al. (2003)<sup id=fnref:2><a href=#fn:2 class=footnote-ref role=doc-noteref>2</a></sup> for the PCP, and in Sánchez-Oro et al. (2022)<sup id=fnref:3><a href=#fn:3 class=footnote-ref role=doc-noteref>3</a></sup> for the ANPCP as well.</p>
+<h3 id=updates>Updates</h3>
+<p>The concept of the $\alpha$-neighbors is mathematically defined in equation 4 using $\phi_k(u)$, which represents the $k$th closest open facility of a user $u$.
+This means that the algorithm needs to store what facilities are close to every user and to what degree, which is represented by $k$.</p>
+<p>We achieve this by implementing a matrix $M$ of $n$ rows and $m$ columns, where each cell indicates the degree of closeness between a user $u$ and a facility $f$.
+For each user, the assigned value in $M$ for the open facilities in ${ \phi_k(u) | 1 \le k \le \alpha + 1 }$ is $k$. For the rest of the facilities, including the closed ones, the value is 0.
+The time complexity to fill $M$ is $O(mn)$ because each cell in the matrix is updated.</p>
+<p>This matrix serves as a memory that allows the calculation of the objective function value in $O(pn)$ time.
+For each user, its center can be found by iterating its row and looking for the column that has $\alpha$ as a value.
+To avoid visiting the closed facilities, we filter the search by only using the indexes of the open facilities.</p>
+<p>This updating step is used in both NI and A-FVS local search algorithms.
+However, in the NI, the matrix is updated when every swap is considered, while in the A-FVS, it is only updated after a swap is applied to the solution (line 20), reducing the number of times that $M$ is filled.</p>
+<h3 id=final-algorithm>Final algorithm</h3>
+<p>The complete pseudocode of the A-FVS, including the <code>move</code> that uses the data structures, the technique to reduce the neighborhood, and the updates to the matrix, is shown below:</p>
+<p><img src=/images/alg-a-fvs.png></p>
+<h1 id=references>References</h1>
+<section class=footnotes role=doc-endnotes>
+<hr>
+<ol>
+<li id=fn:1 role=doc-endnote>
+<p>R. A. Whitaker.
+A fast algorithm for the greedy interchange for large-scale clustering and median location problems.
+<em>INFOR</em>, 21(2):95–108, 1983.&#160;<a href=#fnref:1 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
+</li>
+<li id=fn:2 role=doc-endnote>
+<p>N. Mladenović, M. Labbé, and P. Hansen. Solving the $p$-center problem with tabu
+search and variable neighborhood search. <em>Networks</em>, 42(1):48–64, 2003.&#160;<a href=#fnref:2 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
+</li>
+<li id=fn:3 role=doc-endnote>
+<p>J. Sánchez-Oro, A. D. López-Sánchez, A. G. Hernández-Díaz, and A. Duarte.
+GRASP with strategic oscillation for the $\alpha$-neighbor $p$-center problem.
+<em>European Journal of Operational Research</em>, 2022.&#160;<a href=#fnref:3 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
+</li>
+</ol>
+</section>
+</p>
+</div>
+</div>
+<aside class=post-toc>
+<nav id=toc>
+<nav id=TableOfContents>
+<ul>
+<li><a href=#introduction>Introduction</a></li>
+<li><a href=#the-process>The process</a>
+<ul>
+<li><a href=#fast-algorithm-for-the-greedy-interchange-fagi>Fast Algorithm for the Greedy Interchange (FAGI)</a></li>
+<li><a href=#fast-vertex-substitution-fvs>Fast Vertex Substitution (FVS)</a></li>
+<li><a href=#alpha-fast-vertex-substitution-a-fvs>Alpha Fast Vertex Substitution (A-FVS)</a>
+<ul>
+<li><a href=#when-f_r-is-an-alpha-neighbor>When $f_r$ is an $\alpha$-neighbor</a></li>
+<li><a href=#when-f_r-is-not-an-alpha-neighbor>When $f_r$ is not an $\alpha$-neighbor</a></li>
+<li><a href=#the-move-procedure>The <code>move</code> procedure</a></li>
+<li><a href=#neighborhood-reduction>Neighborhood reduction</a></li>
+<li><a href=#updates>Updates</a></li>
+<li><a href=#final-algorithm>Final algorithm</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href=#references>References</a></li>
+</ul>
+</nav>
+</nav>
+</aside>
+</main><footer class=footer>
+<span>&copy; 2022 </span>
+<span>
+Made with &#10084;&#65039; using <a target=_blank href=https://github.com/526avijitgupta/gokarna>Gokarna</a>
+</span>
+</footer>
+</body>
+</html>
