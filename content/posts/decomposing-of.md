@@ -4,12 +4,12 @@ title: "Decomposing an objective function"
 description: "How the objective function of an optimization problem can be evaluated step by step."
 date: 2022-02-22
 lastmod: 2022-07-19
-tags: ["operations research", "optimization", "math", "computer science"]
+tags: ["operations research", "optimization", "math", "computer science", "algorithms", "thesis"]
 mathjax: true
 ---
 
 As the thesis for the BSc Software Engineering, I'm researching heuristic algorithms in the Operations Research field.
-Specifically, [my mentor](http://yalma.fime.uanl.mx/~roger/work/index.html) and I are implementing heuristics for the $\alpha$-neighor $p$-center problem (ANPCP for short).
+Specifically, [my mentor](http://yalma.fime.uanl.mx/~roger/work/index.html) and I are implementing heuristics for the $\alpha$-neighbor $p$-center problem (ANPCP for short).
 Because the literature about it is scarce, we've been reading papers that use heuristic algorithms for similar problems, and trying to adapt them to the ANPCP.
 In this process, I found it interesting how some authors decompose the objective function of a problem and evaluate it step by step while, at the same time, applying a heuristic to the current solution.
 
