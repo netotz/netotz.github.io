@@ -20,18 +20,29 @@ I also wrote about it in that post, however, at that moment I didn't have a work
 
 In that post, I concluded that I would have to do "manual" tests to see where exactly the adapted algorithm was failing... *ok boomer*.
 Although careful experiments were needed to detect the errors, I thought that recurring to pen and paper was too much.
-I ended up preferring Gen-Z cutting-edge futuristic technologies instead and tested the algorithm in Jupyter Notebooks using small instances of the ANPCP.
+I ended up preferring Gen-Z cutting-edge futuristic technologies instead and tested the algorithm in Jupyter Notebooks (/s) using small instances of the ANPCP.
 After four notebooks of testing and modifying the algorithm, it could finally solve the problem for any $\alpha < p$.
 You can check them out [here](https://github.com/netotz/alpha-neighbor-p-center-problem/tree/main/anpcp), they are the ones whose filenames start with `ieval_`, but only the introduction and conclusion explain something, I didn't document much the whole evaluation process.
+
 The final version of the algorithm was baptized as the *Alpha Fast Vertex Substitution* (A-FVS) local search heuristic, because it considers the $\alpha$th closest center, it is fast, and it substitutes one vertex for another.
 
 Since then, I have been able to write most of the thesis (**big shout-out to [my mentor](https://yalma.fime.uanl.mx/~roger/work/index.html) and my revisors!**), which I think is more understandable than the previous post, so here is the chapter that reviews the background of the fast interchange concept and explains the observations that led us to the birth of the A-FVS.
 
-To the best of our knowledge, implementing a fast interchange local search heuristic to solve the ANPCP hasn't been considered before. 
+Still, I recommend reading that post [here](../decomposing-of) before reading this one because there's relevant context in there.
+Also, if this post gets too technical and I forgot to explain something or it's difficult to understand, please let me know via [Twitter](https://twitter.com/netotz) and I'll add or edit it :+1:.
+
+To the best of our knowledge, implementing a fast interchange local search heuristic to solve the ANPCP hadn't been considered before.
+The A-FVS has shown significant speedups of computational time in every test, being around 100 times faster than a simple interchange algorithm, depending on the size of the problem.
+This shows the power of using the appropriate data structures to improve the runtime of an algorithm.
+
+I've been coding this in Python in [this repository](https://github.com/netotz/alpha-neighbor-p-center-problem).
+I warn you, there's a high technical debt there and it's not the cleanest code that I've written.
+But until I refactor it, it is what it is.
 
 # The process
 
-A solution to the ANPCP can be improved by applying a local search procedure, i.e., modifying one or more components of the solution based on some rule, looking for a better objective function value among the space of candidate solutions or neighborhoods, until a local optimum is reached.
+A solution to the ANPCP can be improved by applying a **local search heuristic**, i.e., modifying one or more components of the solution based on some rule, looking for a better objective function value among the space of candidate solutions or neighborhoods, until a local optimum is reached.
+
 A well-known local search procedure is the *vertex substitution method*, also known as the *greedy interchange* or *swap*.
 This method consists of replacing one of the facilities in the solution, denoted as $f_r$, for another one outside the solution, denoted as $f_i$.
 The procedure is repeated until no more improvements are found (local optimum reached).
@@ -39,13 +50,15 @@ The procedure is repeated until no more improvements are found (local optimum re
 A straightforward local search algorithm was first implemented for the ANPCP, identified as Naive Interchange (NI).
 This algorithm simply iterates over the set of open facilities and, for each of them, iterates the set of closed facilities.
 At each iteration, it temporarily removes the current open facility, adds the closed facility, and recalculates the objective function value.
+
 This procedure does $O(p^2mn)$ operations, resulting in inefficient performance, based on preliminary experiments.
 For this reason, we propose a faster vertex substitution algorithm to obtain solutions faster.
 
 ## Fast Algorithm for the Greedy Interchange (FAGI)
 
-The **fast algorithm for the greedy interchange** (FAGI) was first proposed for the $p$-median problem (PMP) by Whitaker (1983).
+The **fast algorithm for the greedy interchange** (FAGI) was first proposed for the $p$-median problem (PMP) by Whitaker (1983)[^1].
 The key aspect of this implementation is its ability to find the most profitable candidate facility for removal ($f_r$), given a certain candidate facility for insertion ($f_i$), while partially evaluating the objective function.
+
 What makes this procedure fast is the observation that the profit that would result from applying a swap can be decomposed into two components.
 
 The first one, called *gain*, identifies the users who would benefit from the insertion of $f_i$ into the solution because each user is closer to it than its current closest facility.
@@ -61,9 +74,9 @@ After analyzing how the algorithm was taking decisions and updating the auxiliar
 
 In the PMP, as well as in the PCP, users are assigned to their closest open facility.
 Although their objective functions are evaluated differently, in both problems the centers have the same definition.
-Nonetheless, the definition of a center changes for the ANPCP, because users are assigned not to their closest open facility but their \alphath closest open facility, meaning that there are $\alpha - 1$ open facilities that are closer to any user $u$ than its center.
+Nonetheless, the definition of a center changes for the ANPCP, because users are assigned not to their closest open facility but their $\alpha$th closest open facility, meaning that there are $\alpha - 1$ open facilities that are closer to any user $u$ than its center.
 
-More formally, let $\phi_k(u)$ be the \kth closest open facility of any user $u$,
+More formally, let $\phi_k(u)$ be the $k$th closest open facility of any user $u$,
 
 $$
 \begin{equation}
@@ -71,7 +84,7 @@ $$
 \end{equation}
 $$
 
-If for $u$, one of the open facilities closer than its current center is considered to be $f_r$, then this center would no longer be the \alphath closest open facility.
+If for $u$, one of the open facilities closer than its current center is considered to be $f_r$, then this center would no longer be the $\alpha$th closest open facility.
 Hence, the new center of $u$ denoted as $\phi_\alpha'(u)$ would, by definition, be moved to the next farther open facility, which would be the current $\phi_{\alpha + 1}(u)$.
 
 A visual representation is shown below, where $f_r$ is the gray facility (the one that will be removed from the solution), the black straight line is the assignment of $u$ to its center, and the red line and outline indicate which node will be the new center of $u$ after removing $f_r$.
@@ -116,7 +129,7 @@ As a consequence, we decided to modify the greedy evaluation step by evaluating 
 
 ## Fast Vertex Substitution (FVS)
 
-We found that FAGI was later adapted to solve the PCP, named the **fast vertex substitution** (FVS), proposed by Mladenović et al. (2003).
+We found that FAGI was later adapted to solve the PCP, named the **fast vertex substitution** (FVS), proposed by Mladenović et al. (2003)[^2].
 This algorithm also has a worst-case time complexity of $O(mn)$.
 Now, as mentioned earlier, the ANPCP is a variant of the PCP in which the difference is how the centers are defined.
 However, the observation that both problems aim to minimize a maximum allowed us to use FVS as a better basis algorithm to adapt for the ANPCP.
@@ -274,11 +287,11 @@ We call *critical allocation* to the assignment of user-center that determines t
 Note that there will be no improvement of $x$ in $N(S)$ if $f_i$ is farther from $u^\*$ than its center ($f^\*$) because the critical allocation would not change.
 Therefore, selecting only facilities closer to $u^\*$ than $f^\*$ as candidates to insert into $S$ allows us to avoid exploring the whole neighborhood of $S$.
 
-This technique is used in Mladenović et al. (2003) for the PCP, and in Sánchez-Oro et al. (2022) for the ANPCP as well.
+This technique is used in Mladenović et al. (2003)[^2] for the PCP, and in Sánchez-Oro et al. (2022)[^3] for the ANPCP as well.
 
 ### Updates
 
-The concept of the $\alpha$-neighbors is mathematically defined in equation 4 using $\phi_k(u)$, which represents the \kth closest open facility of a user $u$.
+The concept of the $\alpha$-neighbors is mathematically defined in equation 4 using $\phi_k(u)$, which represents the $k$th closest open facility of a user $u$.
 This means that the algorithm needs to store what facilities are close to every user and to what degree, which is represented by $k$.
 
 We achieve this by implementing a matrix $M$ of $n$ rows and $m$ columns, where each cell indicates the degree of closeness between a user $u$ and a facility $f$.
