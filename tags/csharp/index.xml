@@ -1,9 +1,36 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>csharp on void?</title><link>https://netotz.github.io/tags/csharp/</link><description>Recent content in csharp on void?</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Fri, 04 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://netotz.github.io/tags/csharp/index.xml" rel="self" type="application/rss+xml"/><item><title>C# Wizardry - Understanding delegates with custom LINQ methods</title><link>https://netotz.github.io/posts/csharp-wizardry/delegates/</link><pubDate>Fri, 04 Mar 2022 00:00:00 +0000</pubDate><guid>https://netotz.github.io/posts/csharp-wizardry/delegates/</guid><description>The content below is retrieved from Jupyter notebooks that you can find in this repository.
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>csharp on void?</title>
+    <link>https://netotz.github.io/tags/csharp/</link>
+    <description>Recent content in csharp on void?</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Fri, 04 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://netotz.github.io/tags/csharp/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>C# Wizardry - Understanding delegates with custom LINQ methods</title>
+      <link>https://netotz.github.io/posts/csharp-wizardry/delegates/</link>
+      <pubDate>Fri, 04 Mar 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://netotz.github.io/posts/csharp-wizardry/delegates/</guid>
+      <description>The content below is retrieved from Jupyter notebooks that you can find in this repository.
 Source: Microsoft documentation.
-A delegate encapsulates a method.
+ A delegate encapsulates a method.
 Actions System.Action is the standard library type for void delegates, methods that don&amp;rsquo;t return a value. By default it&amp;rsquo;s parameterless, but it can have parameters with generics.
-Action action = () =&amp;gt; Console.WriteLine(&amp;#34;Action done.&amp;#34;); // invoked as method call action() Action done.
-// user-declared delegate, no parameters delegate void MyAction(); MyAction myAction = () =&amp;gt; Console.</description></item><item><title>C# Wizardry - Understanding events</title><link>https://netotz.github.io/posts/csharp-wizardry/events/</link><pubDate>Fri, 04 Mar 2022 00:00:00 +0000</pubDate><guid>https://netotz.github.io/posts/csharp-wizardry/events/</guid><description>The content below is retrieved from Jupyter notebooks that you can find in this repository.
+Action action = () =&amp;gt; Console.WriteLine(&amp;#34;Action done.&amp;#34;); // invoked as method call action() Action done. // user-declared delegate, no parameters delegate void MyAction(); MyAction myAction = () =&amp;gt; Console.</description>
+    </item>
+    
+    <item>
+      <title>C# Wizardry - Understanding events</title>
+      <link>https://netotz.github.io/posts/csharp-wizardry/events/</link>
+      <pubDate>Fri, 04 Mar 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://netotz.github.io/posts/csharp-wizardry/events/</guid>
+      <description>The content below is retrieved from Jupyter notebooks that you can find in this repository.
 Source: Microsoft documentation.
-Events enable a class or object (the publisher) to notify other classes or objects (the subscribers) when something occurs.
-The publisher determines when to raise an event. It can have multiple subscribers. The subscriber determines how to handle an event when it&amp;rsquo;s raised. It can be subscribed to multiple events. System.</description></item></channel></rss>
+ Events enable a class or object (the publisher) to notify other classes or objects (the subscribers) when something occurs.
+ The publisher determines when to raise an event. It can have multiple subscribers. The subscriber determines how to handle an event when it&amp;rsquo;s raised. It can be subscribed to multiple events.  System.</description>
+    </item>
+    
+  </channel>
+</rss>

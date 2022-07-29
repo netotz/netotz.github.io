@@ -1,130 +1,207 @@
-<!doctype html><html lang=en><head>
-<meta charset=utf-8>
-<meta name=viewport content="width=device-width,initial-scale=1">
-<style>:root{--accent-color:#ffc33c}</style>
-<title>Aristotle, Boole and Shannon</title>
-<meta name=description content="How Aristotle's works on logic, through the extensions by George Boole, helped Claude Shannon to create the basis of digital computers.">
-<meta name=keywords content="blog,personal,hugo,github-pages,programming,journal,programming blog,essays,computer science,technology blog,learning,logic,history,boole,aristotle,shannon">
-<meta property="og:url" content="https://netotz.github.io/posts/aristotle-boole-shannon/">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Aristotle, Boole and Shannon">
-<meta property="og:description" content="How Aristotle's works on logic, through the extensions by George Boole, helped Claude Shannon to create the basis of digital computers.">
-<meta property="og:image" content="/images/null.png">
-<meta name=twitter:card content="summary_large_image">
-<meta name=twitter:title content="Aristotle, Boole and Shannon">
-<meta name=twitter:description content="How Aristotle's works on logic, through the extensions by George Boole, helped Claude Shannon to create the basis of digital computers.">
-<meta property="twitter:domain" content="https://netotz.github.io/posts/aristotle-boole-shannon/">
-<meta property="twitter:url" content="https://netotz.github.io/posts/aristotle-boole-shannon/">
-<meta name=twitter:image content="/images/null.png">
-<link rel=canonical href=https://netotz.github.io/posts/aristotle-boole-shannon/>
-<link rel=stylesheet type=text/css href=https://netotz.github.io//css/normalize.min.css media=print onload="this.media='all'">
-<link rel=stylesheet type=text/css href=https://netotz.github.io//css/main.css>
-<link disabled id=dark-theme rel=stylesheet href=https://netotz.github.io//css/dark.css>
-<script src=https://netotz.github.io//js/svg-injector.min.js></script>
-<script src=https://netotz.github.io//js/feather-icons.min.js></script>
-<script src=https://netotz.github.io//js/main.js></script>
-<link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png>
-<link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
-<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png>
-<link rel=manifest href=/site.webmanifest>
-<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css integrity=sha384-Xi8rHCmBmhbuyyhbI88391ZKP2dmfnOl4rT9ZfRI7mLTdk1wblIUnrIq35nqwEvC crossorigin=anonymous>
-<script defer src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js integrity=sha384-X/XCfMm41VSsqRNQgDerQczD69XqmjOOOwYQvr/uuC+j4OPoNhVgjdGFwhvN02Ja crossorigin=anonymous></script>
-<script defer src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js integrity=sha384-+XBljXPPiv+OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR crossorigin=anonymous onload=renderMathInElement(document.body)></script>
-<script>document.addEventListener("DOMContentLoaded",function(){renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:!0},{left:'$',right:'$',display:!1}],throwOnError:!1})})</script>
+<!DOCTYPE html>
+<html lang="en"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        :root {
+            --accent-color: #ffc33c;
+        }
+    </style>
+
+    
+    
+    
+    
+    
+    
+
+    
+    <title>Aristotle, Boole and Shannon</title>
+    <meta name="description" content="How Aristotle&#39;s works on logic, through the extensions by George Boole, helped Claude Shannon to create the basis of digital computers.">
+    <meta name="keywords" content='blog, personal, hugo, github-pages, programming, journal, programming blog, essays, computer science, technology blog, learning, logic, history, boole, aristotle, shannon'>
+
+    <meta property="og:url" content="https://netotz.github.io/posts/aristotle-boole-shannon/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Aristotle, Boole and Shannon">
+    <meta property="og:description" content="How Aristotle&#39;s works on logic, through the extensions by George Boole, helped Claude Shannon to create the basis of digital computers.">
+    <meta property="og:image" content="/images/null.png">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Aristotle, Boole and Shannon">
+    <meta name="twitter:description" content="How Aristotle&#39;s works on logic, through the extensions by George Boole, helped Claude Shannon to create the basis of digital computers.">
+    <meta property="twitter:domain" content="https://netotz.github.io/posts/aristotle-boole-shannon/">
+    <meta property="twitter:url" content="https://netotz.github.io/posts/aristotle-boole-shannon/">
+    <meta name="twitter:image" content="/images/null.png">
+
+    
+    <link rel="canonical" href="https://netotz.github.io/posts/aristotle-boole-shannon/" />
+
+    <link rel="stylesheet" type="text/css" href="https://netotz.github.io//css/normalize.min.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" type="text/css" href="https://netotz.github.io//css/main.css">
+    <link disabled id="dark-theme" rel="stylesheet" href="https://netotz.github.io//css/dark.css">
+
+    <script src="https://netotz.github.io//js/svg-injector.min.js"></script>
+    <script src="https://netotz.github.io//js/feather-icons.min.js"></script>
+    <script src="https://netotz.github.io//js/main.js"></script>
+
+    
+    
+            <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+        <link rel="manifest" href="/site.webmanifest">
+    
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css" integrity="sha384-Xi8rHCmBmhbuyyhbI88391ZKP2dmfnOl4rT9ZfRI7mLTdk1wblIUnrIq35nqwEvC" crossorigin="anonymous">
+
+        <!-- The loading of KaTeX is deferred to speed up page rendering -->
+        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js" integrity="sha384-X/XCfMm41VSsqRNQgDerQczD69XqmjOOOwYQvr/uuC+j4OPoNhVgjdGFwhvN02Ja" crossorigin="anonymous"></script>
+
+        <!-- To automatically render math in text elements, include the auto-render extension: -->
+        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js" integrity="sha384-+XBljXPPiv+OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR" crossorigin="anonymous"
+            onload="renderMathInElement(document.body);"></script>
+        
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false}
+                    ],
+                    // rendering keys, e.g.:
+                    throwOnError : false
+                });
+            });
+        </script>
+    
+    
 </head>
 <body>
-<script type=text/javascript>setThemeByUserPref()</script><header class=header>
-<nav class=header-nav>
-<div class=avatar>
-<a href=https://netotz.github.io/>
-<img src=https://netotz.github.io//images/null.png alt=avatar>
-</a>
-</div>
-<div class=nav-title>
-<a class=nav-brand href=https://netotz.github.io/>void?</a>
-</div>
-<div class=nav-links>
-<div class=nav-link>
-<a href=https://netotz.github.io/><span data-feather=home></span> Home </a>
-</div>
-<div class=nav-link>
-<a href=https://netotz.github.io/posts/><span data-feather=book-open></span> Posts </a>
-</div>
-<div class=nav-link>
-<a href=https://netotz.github.io/tags/><span data-feather=tag></span> Tags </a>
-</div>
-<div class=nav-link>
-<a href=https://github.com/netotz/netotz.github.io><span data-feather=github></span> Source </a>
-</div>
-<span class=nav-icons-divider></span>
-<div class="nav-link dark-theme-toggle">
-<a>
-<span id=theme-toggle-icon data-feather=moon></span>
-</a>
-</div>
-<div class=nav-link id=hamburger-menu-toggle>
-<a>
-<span data-feather=menu></span>
-</a>
-</div>
-<ul class="nav-hamburger-list visibility-hidden">
-<li class=nav-item>
-<a href=https://netotz.github.io/><span data-feather=home></span> Home </a>
-</li>
-<li class=nav-item>
-<a href=https://netotz.github.io/posts/><span data-feather=book-open></span> Posts </a>
-</li>
-<li class=nav-item>
-<a href=https://netotz.github.io/tags/><span data-feather=tag></span> Tags </a>
-</li>
-<li class=nav-item>
-<a href=https://github.com/netotz/netotz.github.io><span data-feather=github></span> Source </a>
-</li>
-<li class="nav-item dark-theme-toggle">
-<a>
-<span id=theme-toggle-icon data-feather=moon></span>
-</a>
-</li>
-</ul>
-</div>
-</nav>
+        <script type="text/javascript">
+            
+            setThemeByUserPref();
+        </script><header class="header">
+    <nav class="header-nav">
+
+        
+        <div class="avatar">
+            <a href="https://netotz.github.io/">
+                <img src="https://netotz.github.io//images/null.png" alt="avatar" />
+            </a>
+        </div>
+        
+
+        <div class="nav-title">
+            <a class="nav-brand" href="https://netotz.github.io/">void?</a>
+        </div>
+
+        <div class="nav-links">
+            
+            <div class="nav-link">
+                <a href="https://netotz.github.io/"><span data-feather="home"></span> Home </a>
+            </div>
+            
+            <div class="nav-link">
+                <a href="https://netotz.github.io/posts/"><span data-feather="book-open"></span> Posts </a>
+            </div>
+            
+            <div class="nav-link">
+                <a href="https://netotz.github.io/tags/"><span data-feather="tag"></span> Tags </a>
+            </div>
+            
+            <div class="nav-link">
+                <a href="https://github.com/netotz/netotz.github.io"><span data-feather="github"></span> Source </a>
+            </div>
+            
+
+            <span class="nav-icons-divider"></span>
+            <div class="nav-link dark-theme-toggle">
+                <a>
+                    <span id="theme-toggle-icon" data-feather="moon"></span>
+                </a>
+            </div>
+
+            <div class="nav-link" id="hamburger-menu-toggle">
+                <a>
+                    <span data-feather="menu"></span>
+                </a>
+            </div>
+
+            
+            <ul class="nav-hamburger-list visibility-hidden">
+                
+                <li class="nav-item">
+                    <a href="https://netotz.github.io/"><span data-feather="home"></span> Home </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="https://netotz.github.io/posts/"><span data-feather="book-open"></span> Posts </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="https://netotz.github.io/tags/"><span data-feather="tag"></span> Tags </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="https://github.com/netotz/netotz.github.io"><span data-feather="github"></span> Source </a>
+                </li>
+                
+                <li class="nav-item dark-theme-toggle">
+                    <a>
+                        <span id="theme-toggle-icon" data-feather="moon"></span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
 </header>
-<main id=content>
-<div class="post container">
-<div class=post-header-section>
-<h1>Aristotle, Boole and Shannon</h1>
-<small role=doc-subtitle>How Aristotle's works on logic, through the extensions by George Boole, helped Claude Shannon to create the basis of digital computers.</small>
-<p class=post-date>
-August 26, 2021
-</p>
-<ul class=post-tags>
-<li class=post-tag><a href=https://netotz.github.io/tags/learning>learning</a></li>
-<li class=post-tag><a href=https://netotz.github.io/tags/logic>logic</a></li>
-<li class=post-tag><a href=https://netotz.github.io/tags/computer-science>computer science</a></li>
-<li class=post-tag><a href=https://netotz.github.io/tags/history>history</a></li>
-<li class=post-tag><a href=https://netotz.github.io/tags/boole>boole</a></li>
-<li class=post-tag><a href=https://netotz.github.io/tags/aristotle>aristotle</a></li>
-<li class=post-tag><a href=https://netotz.github.io/tags/shannon>shannon</a></li>
-</ul>
-</div>
-<div class=post-content>
-<p>
-<p>The other day I started to watch <a href="https://www.youtube.com/playlist?list=PL8dPuuaLjXtNlUrzyH5r6jN9ulIgZBpdo">Computer Science Crash Course on YouTube</a>.
-The first two videos explain the early History of computers, starting from the <a href=https://en.wikipedia.org/wiki/Abacus>abacus</a>: humans needed to <strong>store</strong> quantities;
+<main id="content">
+    <div class="post container">
+    <div class="post-header-section">
+        <h1>Aristotle, Boole and Shannon</h1>
+        <small role="doc-subtitle">How Aristotle&#39;s works on logic, through the extensions by George Boole, helped Claude Shannon to create the basis of digital computers.</small>
+        <p class="post-date">
+            August 26, 2021
+        </p>
+
+        <ul class="post-tags">
+        
+            <li class="post-tag"><a href="https://netotz.github.io/tags/learning">learning</a></li>
+        
+            <li class="post-tag"><a href="https://netotz.github.io/tags/logic">logic</a></li>
+        
+            <li class="post-tag"><a href="https://netotz.github.io/tags/computer-science">computer science</a></li>
+        
+            <li class="post-tag"><a href="https://netotz.github.io/tags/history">history</a></li>
+        
+            <li class="post-tag"><a href="https://netotz.github.io/tags/boole">boole</a></li>
+        
+            <li class="post-tag"><a href="https://netotz.github.io/tags/aristotle">aristotle</a></li>
+        
+            <li class="post-tag"><a href="https://netotz.github.io/tags/shannon">shannon</a></li>
+        
+        </ul>
+    </div>
+
+    <div class="post-content">
+        <p>
+            <p>The other day I started to watch <a href="https://www.youtube.com/playlist?list=PL8dPuuaLjXtNlUrzyH5r6jN9ulIgZBpdo">Computer Science Crash Course on YouTube</a>.
+The first two videos explain the early History of computers, starting from the <a href="https://en.wikipedia.org/wiki/Abacus">abacus</a>: humans needed to <strong>store</strong> quantities;
 up to the 1950s.
 They explain how technology stopped being mechanical thanks to relays and how it was improved with vaccum tubes and then with transistors.
 Each one of these innovations allowed for faster propagation of electrical signals.</p>
 <p>The <a href="https://www.youtube.com/watch?v=gI-qXk7XojA">third video</a> is about Boolean logic, which is one of the bases of programming and one of the first topics we learn in related majors.
-In university, we are taught that somebody named George Boole invented <a href=https://en.wikipedia.org/wiki/Boolean_algebra>Boolean algebra</a>, and we learn the tables of truth of the logic operators so we can use logic gates.
+In university, we are taught that somebody named George Boole invented <a href="https://en.wikipedia.org/wiki/Boolean_algebra">Boolean algebra</a>, and we learn the tables of truth of the logic operators so we can use logic gates.
 And that was it, at least in my classes.
 But this video gave me an interesting context that my teachers didn&rsquo;t.</p>
-<p><a href=https://en.wikipedia.org/wiki/George_Boole>George Boole</a>, besides being a self-taugh mathematician, was a philosopher, and he created Boolean algebra because he wanted to provide a mathematical representation of the logical statements made by <a href=https://en.wikipedia.org/wiki/Aristotle>Aristotle</a> 2000 years before him.
+<p><a href="https://en.wikipedia.org/wiki/George_Boole">George Boole</a>, besides being a self-taugh mathematician, was a philosopher, and he created Boolean algebra because he wanted to provide a mathematical representation of the logical statements made by <a href="https://en.wikipedia.org/wiki/Aristotle">Aristotle</a> 2000 years before him.
 Boole was interested in systematizing Aristotle&rsquo;s approach to logic, in order to provide it with a mathematical foundation through equations so it can be formally proven.
 This is well summarized in Boole&rsquo;s first book title: <em>The Mathematical Analysis of Logic</em>, published in 1847.</p>
-<p>Aristotle, being a <a href=https://en.wikipedia.org/wiki/Polymath>polymath</a>, wrote about logic besides all of the other topics he&rsquo;s know for.
+<p>Aristotle, being a <a href="https://en.wikipedia.org/wiki/Polymath">polymath</a>, wrote about logic besides all of the other topics he&rsquo;s know for.
 He has even been called <em>the father of logic</em>.
-His works on logic, often referred to as <a href=https://en.wikipedia.org/wiki/Term_logic><strong>term logic</strong></a>, were compiled by the <a href=https://en.wikipedia.org/wiki/Peripatetic_school>peripatetics</a>, his followers, into a set of six books called the <a href=https://en.wikipedia.org/wiki/Organon><em>Organon</em></a>.
-He introduced the concept of <a href=https://en.wikipedia.org/wiki/Syllogism><em>syllogism</em></a>, which is a logical argument that applies deductive reasoning to arrive at a conclusion based on two propositions that are assumed to be true.
+His works on logic, often referred to as <a href="https://en.wikipedia.org/wiki/Term_logic"><strong>term logic</strong></a>, were compiled by the <a href="https://en.wikipedia.org/wiki/Peripatetic_school">peripatetics</a>, his followers, into a set of six books called the <a href="https://en.wikipedia.org/wiki/Organon"><em>Organon</em></a>.
+He introduced the concept of <a href="https://en.wikipedia.org/wiki/Syllogism"><em>syllogism</em></a>, which is a logical argument that applies deductive reasoning to arrive at a conclusion based on two propositions that are assumed to be true.
 Here&rsquo;s an example of a syllogism:</p>
 <blockquote>
 <p>All humans need to sleep.</p>
@@ -133,7 +210,7 @@ Here&rsquo;s an example of a syllogism:</p>
 </blockquote>
 <p>Sounds logical right? Well, with the <em>Organon</em>, Aristotle gave birth to a whole new field of study.</p>
 <p>Approximately 2000 years later, George Boole introduced Boolean algebra.
-In normal algebra, the variables can be any number, but in Boolean algebra, their values can only be <code>true</code> or <code>false</code>, and instead of adding or multiplying them, they work with different <a href=https://en.wikipedia.org/wiki/Boolean_algebra#Operations>operations</a>: <a href=https://en.wikipedia.org/wiki/Logical_conjunction><code>AND</code></a>, <a href=https://en.wikipedia.org/wiki/Logical_disjunction><code>OR</code></a>, <a href=https://en.wikipedia.org/wiki/Negation><code>NOT</code></a>.
+In normal algebra, the variables can be any number, but in Boolean algebra, their values can only be <code>true</code> or <code>false</code>, and instead of adding or multiplying them, they work with different <a href="https://en.wikipedia.org/wiki/Boolean_algebra#Operations">operations</a>: <a href="https://en.wikipedia.org/wiki/Logical_conjunction"><code>AND</code></a>, <a href="https://en.wikipedia.org/wiki/Logical_disjunction"><code>OR</code></a>, <a href="https://en.wikipedia.org/wiki/Negation"><code>NOT</code></a>.
 These operators work very similar to what they mean in language.
 For example, the following statement is <code>false</code>:</p>
 <blockquote>
@@ -145,7 +222,7 @@ What&rsquo;s the opposite of <code>true</code>? <code>false</code>.
 So the second sentence ends up being <code>false</code>.
 In language, when we say <em>and</em> we are trying to say that every condition has to be fulfilled or, in other words, <code>true</code>.
 Because the first sentence is <code>true</code> but the second one isn&rsquo;t, the whole sentence results in being <code>false</code>.</p>
-<p>Almost 100 years later, <a href=https://en.wikipedia.org/wiki/Claude_Shannon>Claude Shannon</a>, the father of <a href=https://en.wikipedia.org/wiki/Information_theory>information theory</a>, attended a philosophy class that introduced him to Boole&rsquo;s work.
+<p>Almost 100 years later, <a href="https://en.wikipedia.org/wiki/Claude_Shannon">Claude Shannon</a>, the father of <a href="https://en.wikipedia.org/wiki/Information_theory">information theory</a>, attended a philosophy class that introduced him to Boole&rsquo;s work.
 He realized that the rules of Boolean algebra could be applied to optimize the systems of relays, that in that time were used in telephone routing switches.
 In 1937, Shannon wrote his master&rsquo;s degree thesis, <em>A Symbolic Analysis of Relay and Switching Circuits</em>, at the MIT, in which he proved that Boolean algebra could construct any logical numerical relationship and that circuits with relays could solve any Boolean problem, thus founding the basis of <strong>digital circuits</strong>.
 This concept of electrical switches implementing logic is the fundamental property of all computers, including modern laptops and smartphones.
@@ -153,14 +230,20 @@ He was 21 years old at that time.</p>
 <p>I will continue the Crash Course series, as I have learned a lot and I have 37 videos yet to watch.
 I found it interesting how Aristotle can also be called in some way <em>the father of computers</em>, in addition to all of the other <em>father of</em> titles he already has, and how antique studies on logic ended up contributing to the creation of computation.
 There&rsquo;s a lot to read too: the works mentioned here seem definitely worth to read.</p>
-</p>
+
+        </p>
+    </div>
 </div>
-</div>
-</main><footer class=footer>
-<span>&copy; 2022 </span>
-<span>
-Made with &#10084;&#65039; using <a target=_blank href=https://github.com/526avijitgupta/gokarna>Gokarna</a>
-</span>
+
+
+
+    
+
+        </main><footer class="footer">
+    <span>&copy; 2022 </span>
+    <span>
+        Made with &#10084;&#65039; using <a target="_blank" href="https://github.com/526avijitgupta/gokarna">Gokarna</a>
+    </span>
 </footer>
 </body>
 </html>

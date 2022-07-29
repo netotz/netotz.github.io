@@ -1,1 +1,20 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>data structures on void?</title><link>https://netotz.github.io/tags/data-structures/</link><description>Recent content in data structures on void?</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 26 Jul 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://netotz.github.io/tags/data-structures/index.xml" rel="self" type="application/rss+xml"/><item><title>The process of designing a new algorithm</title><link>https://netotz.github.io/posts/a-fvs/</link><pubDate>Tue, 26 Jul 2022 00:00:00 +0000</pubDate><guid>https://netotz.github.io/posts/a-fvs/</guid><description>Introduction Earlier in the year I wrote about how the objective function of an optimization problem is decomposed and partially evaluated so an algorithm that uses that function runs faster. I found this technique so interesting that I tried to explain it in that post. But the goal wasn&amp;rsquo;t to just understand the decomposing of an objective function. I needed to design a fast algorithm to solve the $\alpha$-neighbor $p$-center problem (ANPCP), as I mentioned in the other post, and while researching to do so, I came across the concept of the fast interchange or fast swap and how it was applied to other location problems (not the ANPCP).</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>data structures on void?</title>
+    <link>https://netotz.github.io/tags/data-structures/</link>
+    <description>Recent content in data structures on void?</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Tue, 26 Jul 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://netotz.github.io/tags/data-structures/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>The process of designing a new algorithm</title>
+      <link>https://netotz.github.io/posts/a-fvs/</link>
+      <pubDate>Tue, 26 Jul 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://netotz.github.io/posts/a-fvs/</guid>
+      <description>Introduction Earlier in the year I wrote about how the objective function of an optimization problem is decomposed and partially evaluated so an algorithm that uses that function runs faster. I found this technique so interesting that I tried to explain it in that post. But the goal wasn&amp;rsquo;t to just understand the decomposing of an objective function. I needed to design a fast algorithm to solve the $\alpha$-neighbor $p$-center problem (ANPCP), as I mentioned in the other post, and while researching to do so, I came across the concept of the fast interchange or fast swap and how it was applied to other location problems (not the ANPCP).</description>
+    </item>
+    
+  </channel>
+</rss>

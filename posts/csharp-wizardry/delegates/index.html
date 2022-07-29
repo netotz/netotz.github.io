@@ -1,190 +1,264 @@
-<!doctype html><html lang=en><head>
-<meta charset=utf-8>
-<meta name=viewport content="width=device-width,initial-scale=1">
-<style>:root{--accent-color:#ffc33c}</style>
-<title>C# Wizardry - Understanding delegates with custom LINQ methods</title>
-<meta name=description content="Personal notes on what delegates are in C#.">
-<meta name=keywords content="blog,personal,hugo,github-pages,programming,journal,programming blog,essays,computer science,technology blog,csharp,dotnet,notes">
-<meta property="og:url" content="https://netotz.github.io/posts/csharp-wizardry/delegates/">
-<meta property="og:type" content="website">
-<meta property="og:title" content="C# Wizardry - Understanding delegates with custom LINQ methods">
-<meta property="og:description" content="Personal notes on what delegates are in C#.">
-<meta property="og:image" content="/images/null.png">
-<meta name=twitter:card content="summary_large_image">
-<meta name=twitter:title content="C# Wizardry - Understanding delegates with custom LINQ methods">
-<meta name=twitter:description content="Personal notes on what delegates are in C#.">
-<meta property="twitter:domain" content="https://netotz.github.io/posts/csharp-wizardry/delegates/">
-<meta property="twitter:url" content="https://netotz.github.io/posts/csharp-wizardry/delegates/">
-<meta name=twitter:image content="/images/null.png">
-<link rel=canonical href=https://netotz.github.io/posts/csharp-wizardry/delegates/>
-<link rel=stylesheet type=text/css href=https://netotz.github.io//css/normalize.min.css media=print onload="this.media='all'">
-<link rel=stylesheet type=text/css href=https://netotz.github.io//css/main.css>
-<link disabled id=dark-theme rel=stylesheet href=https://netotz.github.io//css/dark.css>
-<script src=https://netotz.github.io//js/svg-injector.min.js></script>
-<script src=https://netotz.github.io//js/feather-icons.min.js></script>
-<script src=https://netotz.github.io//js/main.js></script>
-<link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png>
-<link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
-<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png>
-<link rel=manifest href=/site.webmanifest>
-<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css integrity=sha384-Xi8rHCmBmhbuyyhbI88391ZKP2dmfnOl4rT9ZfRI7mLTdk1wblIUnrIq35nqwEvC crossorigin=anonymous>
-<script defer src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js integrity=sha384-X/XCfMm41VSsqRNQgDerQczD69XqmjOOOwYQvr/uuC+j4OPoNhVgjdGFwhvN02Ja crossorigin=anonymous></script>
-<script defer src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js integrity=sha384-+XBljXPPiv+OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR crossorigin=anonymous onload=renderMathInElement(document.body)></script>
-<script>document.addEventListener("DOMContentLoaded",function(){renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:!0},{left:'$',right:'$',display:!1}],throwOnError:!1})})</script>
+<!DOCTYPE html>
+<html lang="en"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        :root {
+            --accent-color: #ffc33c;
+        }
+    </style>
+
+    
+    
+    
+    
+    
+    
+
+    
+    <title>C# Wizardry - Understanding delegates with custom LINQ methods</title>
+    <meta name="description" content="Personal notes on what delegates are in C#.">
+    <meta name="keywords" content='blog, personal, hugo, github-pages, programming, journal, programming blog, essays, computer science, technology blog, csharp, dotnet, notes'>
+
+    <meta property="og:url" content="https://netotz.github.io/posts/csharp-wizardry/delegates/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="C# Wizardry - Understanding delegates with custom LINQ methods">
+    <meta property="og:description" content="Personal notes on what delegates are in C#.">
+    <meta property="og:image" content="/images/null.png">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="C# Wizardry - Understanding delegates with custom LINQ methods">
+    <meta name="twitter:description" content="Personal notes on what delegates are in C#.">
+    <meta property="twitter:domain" content="https://netotz.github.io/posts/csharp-wizardry/delegates/">
+    <meta property="twitter:url" content="https://netotz.github.io/posts/csharp-wizardry/delegates/">
+    <meta name="twitter:image" content="/images/null.png">
+
+    
+    <link rel="canonical" href="https://netotz.github.io/posts/csharp-wizardry/delegates/" />
+
+    <link rel="stylesheet" type="text/css" href="https://netotz.github.io//css/normalize.min.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" type="text/css" href="https://netotz.github.io//css/main.css">
+    <link disabled id="dark-theme" rel="stylesheet" href="https://netotz.github.io//css/dark.css">
+
+    <script src="https://netotz.github.io//js/svg-injector.min.js"></script>
+    <script src="https://netotz.github.io//js/feather-icons.min.js"></script>
+    <script src="https://netotz.github.io//js/main.js"></script>
+
+    
+    
+            <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+        <link rel="manifest" href="/site.webmanifest">
+    
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css" integrity="sha384-Xi8rHCmBmhbuyyhbI88391ZKP2dmfnOl4rT9ZfRI7mLTdk1wblIUnrIq35nqwEvC" crossorigin="anonymous">
+
+        <!-- The loading of KaTeX is deferred to speed up page rendering -->
+        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js" integrity="sha384-X/XCfMm41VSsqRNQgDerQczD69XqmjOOOwYQvr/uuC+j4OPoNhVgjdGFwhvN02Ja" crossorigin="anonymous"></script>
+
+        <!-- To automatically render math in text elements, include the auto-render extension: -->
+        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js" integrity="sha384-+XBljXPPiv+OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR" crossorigin="anonymous"
+            onload="renderMathInElement(document.body);"></script>
+        
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false}
+                    ],
+                    // rendering keys, e.g.:
+                    throwOnError : false
+                });
+            });
+        </script>
+    
+    
 </head>
 <body>
-<script type=text/javascript>setThemeByUserPref()</script><header class=header>
-<nav class=header-nav>
-<div class=avatar>
-<a href=https://netotz.github.io/>
-<img src=https://netotz.github.io//images/null.png alt=avatar>
-</a>
-</div>
-<div class=nav-title>
-<a class=nav-brand href=https://netotz.github.io/>void?</a>
-</div>
-<div class=nav-links>
-<div class=nav-link>
-<a href=https://netotz.github.io/><span data-feather=home></span> Home </a>
-</div>
-<div class=nav-link>
-<a href=https://netotz.github.io/posts/><span data-feather=book-open></span> Posts </a>
-</div>
-<div class=nav-link>
-<a href=https://netotz.github.io/tags/><span data-feather=tag></span> Tags </a>
-</div>
-<div class=nav-link>
-<a href=https://github.com/netotz/netotz.github.io><span data-feather=github></span> Source </a>
-</div>
-<span class=nav-icons-divider></span>
-<div class="nav-link dark-theme-toggle">
-<a>
-<span id=theme-toggle-icon data-feather=moon></span>
-</a>
-</div>
-<div class=nav-link id=hamburger-menu-toggle>
-<a>
-<span data-feather=menu></span>
-</a>
-</div>
-<ul class="nav-hamburger-list visibility-hidden">
-<li class=nav-item>
-<a href=https://netotz.github.io/><span data-feather=home></span> Home </a>
-</li>
-<li class=nav-item>
-<a href=https://netotz.github.io/posts/><span data-feather=book-open></span> Posts </a>
-</li>
-<li class=nav-item>
-<a href=https://netotz.github.io/tags/><span data-feather=tag></span> Tags </a>
-</li>
-<li class=nav-item>
-<a href=https://github.com/netotz/netotz.github.io><span data-feather=github></span> Source </a>
-</li>
-<li class="nav-item dark-theme-toggle">
-<a>
-<span id=theme-toggle-icon data-feather=moon></span>
-</a>
-</li>
-</ul>
-</div>
-</nav>
+        <script type="text/javascript">
+            
+            setThemeByUserPref();
+        </script><header class="header">
+    <nav class="header-nav">
+
+        
+        <div class="avatar">
+            <a href="https://netotz.github.io/">
+                <img src="https://netotz.github.io//images/null.png" alt="avatar" />
+            </a>
+        </div>
+        
+
+        <div class="nav-title">
+            <a class="nav-brand" href="https://netotz.github.io/">void?</a>
+        </div>
+
+        <div class="nav-links">
+            
+            <div class="nav-link">
+                <a href="https://netotz.github.io/"><span data-feather="home"></span> Home </a>
+            </div>
+            
+            <div class="nav-link">
+                <a href="https://netotz.github.io/posts/"><span data-feather="book-open"></span> Posts </a>
+            </div>
+            
+            <div class="nav-link">
+                <a href="https://netotz.github.io/tags/"><span data-feather="tag"></span> Tags </a>
+            </div>
+            
+            <div class="nav-link">
+                <a href="https://github.com/netotz/netotz.github.io"><span data-feather="github"></span> Source </a>
+            </div>
+            
+
+            <span class="nav-icons-divider"></span>
+            <div class="nav-link dark-theme-toggle">
+                <a>
+                    <span id="theme-toggle-icon" data-feather="moon"></span>
+                </a>
+            </div>
+
+            <div class="nav-link" id="hamburger-menu-toggle">
+                <a>
+                    <span data-feather="menu"></span>
+                </a>
+            </div>
+
+            
+            <ul class="nav-hamburger-list visibility-hidden">
+                
+                <li class="nav-item">
+                    <a href="https://netotz.github.io/"><span data-feather="home"></span> Home </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="https://netotz.github.io/posts/"><span data-feather="book-open"></span> Posts </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="https://netotz.github.io/tags/"><span data-feather="tag"></span> Tags </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="https://github.com/netotz/netotz.github.io"><span data-feather="github"></span> Source </a>
+                </li>
+                
+                <li class="nav-item dark-theme-toggle">
+                    <a>
+                        <span id="theme-toggle-icon" data-feather="moon"></span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
 </header>
-<main id=content>
-<div class="post container">
-<div class=post-header-section>
-<h1>C# Wizardry - Understanding delegates with custom LINQ methods</h1>
-<small role=doc-subtitle>Personal notes on what delegates are in C#.</small>
-<p class=post-date>
-March 4, 2022
-</p>
-<ul class=post-tags>
-<li class=post-tag><a href=https://netotz.github.io/tags/programming>programming</a></li>
-<li class=post-tag><a href=https://netotz.github.io/tags/csharp>csharp</a></li>
-<li class=post-tag><a href=https://netotz.github.io/tags/dotnet>dotnet</a></li>
-<li class=post-tag><a href=https://netotz.github.io/tags/notes>notes</a></li>
-</ul>
-</div>
-<div class=post-content>
-<p>
-<p>The content below is retrieved from Jupyter notebooks that you can find <a href=https://github.com/netotz/learning-dotnet/blob/main/csharp/delegates/>in this repository</a>.</p>
-<p>Source: <a href=https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/delegates/>Microsoft documentation</a>.</p>
+<main id="content">
+    <div class="post container">
+    <div class="post-header-section">
+        <h1>C# Wizardry - Understanding delegates with custom LINQ methods</h1>
+        <small role="doc-subtitle">Personal notes on what delegates are in C#.</small>
+        <p class="post-date">
+            March 4, 2022
+        </p>
+
+        <ul class="post-tags">
+        
+            <li class="post-tag"><a href="https://netotz.github.io/tags/programming">programming</a></li>
+        
+            <li class="post-tag"><a href="https://netotz.github.io/tags/csharp">csharp</a></li>
+        
+            <li class="post-tag"><a href="https://netotz.github.io/tags/dotnet">dotnet</a></li>
+        
+            <li class="post-tag"><a href="https://netotz.github.io/tags/notes">notes</a></li>
+        
+        </ul>
+    </div>
+
+    <div class="post-content">
+        <p>
+            <p>The content below is retrieved from Jupyter notebooks that you can find <a href="https://github.com/netotz/learning-dotnet/blob/main/csharp/delegates/">in this repository</a>.</p>
+<p>Source: <a href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/delegates/">Microsoft documentation</a>.</p>
 <hr>
 <p>A delegate encapsulates a method.</p>
-<h2 id=actions>Actions</h2>
+<h2 id="actions">Actions</h2>
 <p><code>System.Action</code> is the standard library type for void delegates, methods that don&rsquo;t return a value. By default it&rsquo;s parameterless, but it can have parameters with generics.</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C# data-lang=C#>Action action = () =&gt; Console.WriteLine(<span style=color:#e6db74>&#34;Action done.&#34;</span>);
-<span style=color:#75715e>// invoked as method call
-</span><span style=color:#75715e></span>action()
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C#" data-lang="C#">Action action = () =&gt; Console.WriteLine(<span style="color:#e6db74">&#34;Action done.&#34;</span>);
+<span style="color:#75715e">// invoked as method call
+</span><span style="color:#75715e"></span>action()
 </code></pre></div><pre><code>Action done.
 </code></pre>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C# data-lang=C#><span style=color:#75715e>// user-declared delegate, no parameters
-</span><span style=color:#75715e></span><span style=color:#66d9ef>delegate</span> <span style=color:#66d9ef>void</span> MyAction();
-MyAction myAction = () =&gt; Console.WriteLine(<span style=color:#e6db74>&#34;My action done.&#34;</span>);
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C#" data-lang="C#"><span style="color:#75715e">// user-declared delegate, no parameters
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">delegate</span> <span style="color:#66d9ef">void</span> MyAction();
+MyAction myAction = () =&gt; Console.WriteLine(<span style="color:#e6db74">&#34;My action done.&#34;</span>);
 myAction()
 </code></pre></div><pre><code>My action done.
 </code></pre>
 <p>I&rsquo;m using lambdas here, which are anonymous functions that are defined on the fly, but delegates can accept already defined methods as well:</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C# data-lang=C#><span style=color:#75715e>/// Method that writes &#34;Done.&#34; to console output.
-</span><span style=color:#75715e></span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> WriteDone() {
-    Console.WriteLine(<span style=color:#e6db74>&#34;Done.&#34;</span>);
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C#" data-lang="C#"><span style="color:#75715e">/// Method that writes &#34;Done.&#34; to console output.
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> WriteDone() {
+    Console.WriteLine(<span style="color:#e6db74">&#34;Done.&#34;</span>);
 }
 
 Action actionDone = WriteDone;
 actionDone()
 </code></pre></div><pre><code>Done.
 </code></pre>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C# data-lang=C#>Action actionWithParam = (<span style=color:#66d9ef>int</span> i) =&gt; Console.WriteLine(i);
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C#" data-lang="C#">Action actionWithParam = (<span style="color:#66d9ef">int</span> i) =&gt; Console.WriteLine(i);
 </code></pre></div><pre><code>(1,26): error CS1593: Delegate 'Action' does not take 1 arguments
 </code></pre>
 <p>Declaring an <code>Action</code> with generic types to invoke it with parameters:</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C# data-lang=C#><span style=color:#75715e>// type of lambda parameter `i` is determined from declaration of delegate object
-</span><span style=color:#75715e></span>Action&lt;<span style=color:#66d9ef>int</span>&gt; actionOnInteger1 = i =&gt; Console.WriteLine(i);
-<span style=color:#75715e>// same as
-</span><span style=color:#75715e>// type of delegate object is determined from definition of lambda
-</span><span style=color:#75715e></span><span style=color:#66d9ef>var</span> actionOnInteger2 = (<span style=color:#66d9ef>int</span> i) =&gt; Console.WriteLine(i);
-actionOnInteger2(<span style=color:#ae81ff>0</span>)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C#" data-lang="C#"><span style="color:#75715e">// type of lambda parameter `i` is determined from declaration of delegate object
+</span><span style="color:#75715e"></span>Action&lt;<span style="color:#66d9ef">int</span>&gt; actionOnInteger1 = i =&gt; Console.WriteLine(i);
+<span style="color:#75715e">// same as
+</span><span style="color:#75715e">// type of delegate object is determined from definition of lambda
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">var</span> actionOnInteger2 = (<span style="color:#66d9ef">int</span> i) =&gt; Console.WriteLine(i);
+actionOnInteger2(<span style="color:#ae81ff">0</span>)
 </code></pre></div><pre><code>0
 </code></pre>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C# data-lang=C#>actionOnInteger2.GetType()
-</code></pre></div><p><span><a href="https://docs.microsoft.com/dotnet/api/system.action-1?view=net-5.0">System.Action&lt;System.Int32></a></span></p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C# data-lang=C#><span style=color:#75715e>// user-declared delegate, one parameter
-</span><span style=color:#75715e></span><span style=color:#66d9ef>delegate</span> <span style=color:#66d9ef>void</span> MyActionOnInteger(<span style=color:#66d9ef>int</span> i);
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C#" data-lang="C#">actionOnInteger2.GetType()
+</code></pre></div><p><span><a href="https://docs.microsoft.com/dotnet/api/system.action-1?view=net-5.0">System.Action&lt;System.Int32&gt;</a></span></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C#" data-lang="C#"><span style="color:#75715e">// user-declared delegate, one parameter
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">delegate</span> <span style="color:#66d9ef">void</span> MyActionOnInteger(<span style="color:#66d9ef">int</span> i);
 MyActionOnInteger myActionOnInteger = i =&gt; Console.WriteLine(i);
-myActionOnInteger(<span style=color:#ae81ff>0</span>)
+myActionOnInteger(<span style="color:#ae81ff">0</span>)
 </code></pre></div><pre><code>0
 </code></pre>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C# data-lang=C#>Action&lt;<span style=color:#66d9ef>int</span>&gt; actionThatReturns = i =&gt; { <span style=color:#66d9ef>return</span> i * <span style=color:#ae81ff>2</span>; };
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C#" data-lang="C#">Action&lt;<span style="color:#66d9ef">int</span>&gt; actionThatReturns = i =&gt; { <span style="color:#66d9ef">return</span> i * <span style="color:#ae81ff">2</span>; };
 </code></pre></div><pre><code>(1,40): error CS8030: Anonymous function converted to a void returning delegate cannot return a value
 </code></pre>
 <p>Remember, <code>Action</code> is declared as a void delegate, it can&rsquo;t return any value.</p>
-<h2 id=funcs>Funcs</h2>
+<h2 id="funcs">Funcs</h2>
 <p><code>System.Func</code> is the standard library type for delegates that encapsulate methods that return a value. It can have parameters with generics too.</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C# data-lang=C#><span style=color:#75715e>// the last generic type is the return type. Parameters are optional
-</span><span style=color:#75715e></span>Func&lt;<span style=color:#66d9ef>string</span>&gt; func = () =&gt; <span style=color:#e6db74>&#34;Function returned.&#34;</span>;
-<span style=color:#66d9ef>var</span> returned = func();
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C#" data-lang="C#"><span style="color:#75715e">// the last generic type is the return type. Parameters are optional
+</span><span style="color:#75715e"></span>Func&lt;<span style="color:#66d9ef">string</span>&gt; func = () =&gt; <span style="color:#e6db74">&#34;Function returned.&#34;</span>;
+<span style="color:#66d9ef">var</span> returned = func();
 returned
 </code></pre></div><pre><code>Function returned.
 </code></pre>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C# data-lang=C#><span style=color:#75715e>// user-declared delegate that returns a string, same as previous Func
-</span><span style=color:#75715e></span><span style=color:#66d9ef>delegate</span> <span style=color:#66d9ef>string</span> MyFunc();
-MyFunc myFunc = () =&gt; <span style=color:#e6db74>&#34;My function returned.&#34;</span>;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C#" data-lang="C#"><span style="color:#75715e">// user-declared delegate that returns a string, same as previous Func
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">delegate</span> <span style="color:#66d9ef">string</span> MyFunc();
+MyFunc myFunc = () =&gt; <span style="color:#e6db74">&#34;My function returned.&#34;</span>;
 returned = myFunc();
 returned
 </code></pre></div><pre><code>My function returned.
 </code></pre>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C# data-lang=C#>Func&lt;<span style=color:#66d9ef>int</span>, <span style=color:#66d9ef>int</span>, <span style=color:#66d9ef>int</span>&gt; funcMultiply = (x, y) =&gt; x * y;
-funcMultiply(<span style=color:#ae81ff>2</span>, <span style=color:#ae81ff>3</span>)
-</code></pre></div><div class=dni-plaintext>6</div>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C# data-lang=C#><span style=color:#66d9ef>delegate</span> <span style=color:#66d9ef>int</span> MyFuncMultiply(<span style=color:#66d9ef>int</span> x, <span style=color:#66d9ef>int</span> y);
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C#" data-lang="C#">Func&lt;<span style="color:#66d9ef">int</span>, <span style="color:#66d9ef">int</span>, <span style="color:#66d9ef">int</span>&gt; funcMultiply = (x, y) =&gt; x * y;
+funcMultiply(<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>)
+</code></pre></div><div class="dni-plaintext">6</div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C#" data-lang="C#"><span style="color:#66d9ef">delegate</span> <span style="color:#66d9ef">int</span> MyFuncMultiply(<span style="color:#66d9ef">int</span> x, <span style="color:#66d9ef">int</span> y);
 MyFuncMultiply myFuncMultiply = (x, y) =&gt; x * y;
-myFuncMultiply(<span style=color:#ae81ff>2</span>, <span style=color:#ae81ff>3</span>)
-</code></pre></div><div class=dni-plaintext>6</div>
-<h2 id=multicasting>Multicasting</h2>
+myFuncMultiply(<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>)
+</code></pre></div><div class="dni-plaintext">6</div>
+<h2 id="multicasting">Multicasting</h2>
 <p>A delegate can call multiple methods when invoked:</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C# data-lang=C#>Action actions = () =&gt; Console.WriteLine(<span style=color:#e6db74>&#34;first method&#34;</span>);
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C#" data-lang="C#">Action actions = () =&gt; Console.WriteLine(<span style="color:#e6db74">&#34;first method&#34;</span>);
 actions += action;
 actions += actionDone;
-actions += () =&gt; Console.WriteLine(<span style=color:#e6db74>&#34;last method&#34;</span>);
+actions += () =&gt; Console.WriteLine(<span style="color:#e6db74">&#34;last method&#34;</span>);
 actions()
 </code></pre></div><pre><code>first method
 
@@ -194,41 +268,41 @@ Done.
 
 last method
 </code></pre>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C# data-lang=C#>actions.GetInvocationList().Count()
-</code></pre></div><div class=dni-plaintext>4</div>
-<h2 id=use-cases>Use cases</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C#" data-lang="C#">actions.GetInvocationList().Count()
+</code></pre></div><div class="dni-plaintext">4</div>
+<h2 id="use-cases">Use cases</h2>
 <ul>
 <li>There&rsquo;s no need to declare new custom delegates, use <code>Action</code> and <code>Func</code> types.</li>
 <li>You can just use <code>var</code> and declare the types in the lambda definition. So why being aware of delegate types?:</li>
 </ul>
-<h3 id=delegates-as-abstractions>Delegates as abstractions</h3>
+<h3 id="delegates-as-abstractions">Delegates as abstractions</h3>
 <p>Code calling a delegate used as an abstraction doesn&rsquo;t need to know (and doesn&rsquo;t care) about how that delegate is implemented.</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C# data-lang=C#><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> WriteAsUpper(<span style=color:#66d9ef>string</span> message) {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C#" data-lang="C#"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> WriteAsUpper(<span style="color:#66d9ef">string</span> message) {
     Console.WriteLine(message.ToUpper());
 }
 
-<span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> WriteLength(<span style=color:#66d9ef>string</span> message) {
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> WriteLength(<span style="color:#66d9ef">string</span> message) {
     Console.WriteLine(message.Length);
 }
 
-<span style=color:#66d9ef>public</span> <span style=color:#66d9ef>string</span> CreateMessage(<span style=color:#66d9ef>string</span> title, <span style=color:#66d9ef>string</span> text, DateTime date, Action&lt;<span style=color:#66d9ef>string</span>&gt; writeCallback) {
-    <span style=color:#66d9ef>var</span> message = <span style=color:#e6db74>$&#34;{title}\n{text}\n{date.ToLongDateString()}&#34;</span>;
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> CreateMessage(<span style="color:#66d9ef">string</span> title, <span style="color:#66d9ef">string</span> text, DateTime date, Action&lt;<span style="color:#66d9ef">string</span>&gt; writeCallback) {
+    <span style="color:#66d9ef">var</span> message = <span style="color:#e6db74">$&#34;{title}\n{text}\n{date.ToLongDateString()}&#34;</span>;
 
-    <span style=color:#75715e>// I already know the delegate type: it receives a string and doesn&#39;t return anything. Ok more than enough info
-</span><span style=color:#75715e></span>    <span style=color:#75715e>// But what does it do? I COULD CARE LESS, just call it :)
-</span><span style=color:#75715e></span>    writeCallback(message);
+    <span style="color:#75715e">// I already know the delegate type: it receives a string and doesn&#39;t return anything. Ok more than enough info
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">// But what does it do? I COULD CARE LESS, just call it :)
+</span><span style="color:#75715e"></span>    writeCallback(message);
     
-    <span style=color:#66d9ef>return</span> message;
+    <span style="color:#66d9ef">return</span> message;
 }
-</code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C# data-lang=C#><span style=color:#66d9ef>var</span> redMessage = CreateMessage(<span style=color:#e6db74>&#34;Red&#34;</span>, <span style=color:#e6db74>&#34;Roses are red&#34;</span>, DateTime.Now, WriteLength);
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C#" data-lang="C#"><span style="color:#66d9ef">var</span> redMessage = CreateMessage(<span style="color:#e6db74">&#34;Red&#34;</span>, <span style="color:#e6db74">&#34;Roses are red&#34;</span>, DateTime.Now, WriteLength);
 </code></pre></div><pre><code>44
 </code></pre>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C# data-lang=C#>redMessage
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C#" data-lang="C#">redMessage
 </code></pre></div><pre><code>Red
 Roses are red
 Saturday, January 15, 2022
 </code></pre>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C# data-lang=C#><span style=color:#66d9ef>var</span> blueMessage = CreateMessage(<span style=color:#e6db74>&#34;Blue&#34;</span>, <span style=color:#e6db74>&#34;Blue roses are fake&#34;</span>, DateTime.Now, WriteAsUpper);
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C#" data-lang="C#"><span style="color:#66d9ef">var</span> blueMessage = CreateMessage(<span style="color:#e6db74">&#34;Blue&#34;</span>, <span style="color:#e6db74">&#34;Blue roses are fake&#34;</span>, DateTime.Now, WriteAsUpper);
 </code></pre></div><pre><code>BLUE
 BLUE ROSES ARE FAKE
 SATURDAY, JANUARY 15, 2022
@@ -237,91 +311,97 @@ SATURDAY, JANUARY 15, 2022
 <blockquote>
 <p>If you want to show the message in console, create a delegate to do it and pass it to me as the <code>callback</code> parameter. Or whatever you want to do with it just create a delegate for that and pass it. I don&rsquo;t care, that&rsquo;s the callback&rsquo;s job.</p>
 </blockquote>
-<h1 id=implementing-custom-linq-operations>Implementing custom LINQ operations</h1>
-<p>If you have used LINQ you know that it uses functions to process collections of data. The purpose of this exercise is to apply delegates in a
+<h1 id="implementing-custom-linq-operations">Implementing custom LINQ operations</h1>
+<p>If you have used LINQ you know that it uses functions to process collections of data. The purpose of this exercise is to apply delegates in a 
 more practical way than just dummy examples.</p>
 <p><strong>Note:</strong> I&rsquo;m not using tags inside docstrings because Visual Studio Code doesn&rsquo;t autocomplete them in notebooks, but they must be included in real code.</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C# data-lang=C#><span style=color:#75715e>/// Inheriting from List to skip specific implementations from interfaces, irrelevant for our topic,
-</span><span style=color:#75715e>/// so we can use foreach statements directly and focus on our custom methods and delegates.
-</span><span style=color:#75715e></span><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>IntList</span> : List&lt;<span style=color:#66d9ef>int</span>&gt; {
-    <span style=color:#75715e>/// Custom delegate equivalent to Func&lt;int, bool&gt;
-</span><span style=color:#75715e></span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>delegate</span> <span style=color:#66d9ef>bool</span> ConditionCallback(<span style=color:#66d9ef>int</span> integer);
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C#" data-lang="C#"><span style="color:#75715e">/// Inheriting from List to skip specific implementations from interfaces, irrelevant for our topic,
+</span><span style="color:#75715e">/// so we can use foreach statements directly and focus on our custom methods and delegates.
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">IntList</span> : List&lt;<span style="color:#66d9ef">int</span>&gt; {
+    <span style="color:#75715e">/// Custom delegate equivalent to Func&lt;int, bool&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">delegate</span> <span style="color:#66d9ef">bool</span> ConditionCallback(<span style="color:#66d9ef">int</span> integer);
 
-    <span style=color:#75715e>/// Equivalent for Where
-</span><span style=color:#75715e></span>    <span style=color:#66d9ef>public</span> IEnumerable&lt;<span style=color:#66d9ef>int</span>&gt; Filter(ConditionCallback condition) {
-        <span style=color:#66d9ef>foreach</span> (<span style=color:#66d9ef>var</span> integer <span style=color:#66d9ef>in</span> <span style=color:#66d9ef>this</span>) {
-            <span style=color:#66d9ef>if</span> (condition(integer)) {
-                <span style=color:#66d9ef>yield</span> <span style=color:#66d9ef>return</span> integer;
+    <span style="color:#75715e">/// Equivalent for Where
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> IEnumerable&lt;<span style="color:#66d9ef">int</span>&gt; Filter(ConditionCallback condition) {
+        <span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">var</span> integer <span style="color:#66d9ef">in</span> <span style="color:#66d9ef">this</span>) {
+            <span style="color:#66d9ef">if</span> (condition(integer)) {
+                <span style="color:#66d9ef">yield</span> <span style="color:#66d9ef">return</span> integer;
             }
         }
     }
 
-    <span style=color:#75715e>/// Equivalent for Select&lt;T&gt;
-</span><span style=color:#75715e></span>    <span style=color:#66d9ef>public</span> IEnumerable&lt;TReturn&gt; Map&lt;TReturn&gt;(Func&lt;<span style=color:#66d9ef>int</span>, TReturn&gt; mapper) {
-        <span style=color:#66d9ef>foreach</span> (<span style=color:#66d9ef>var</span> integer <span style=color:#66d9ef>in</span> <span style=color:#66d9ef>this</span>) {
-            <span style=color:#66d9ef>yield</span> <span style=color:#66d9ef>return</span> mapper(integer);
+    <span style="color:#75715e">/// Equivalent for Select&lt;T&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> IEnumerable&lt;TReturn&gt; Map&lt;TReturn&gt;(Func&lt;<span style="color:#66d9ef">int</span>, TReturn&gt; mapper) {
+        <span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">var</span> integer <span style="color:#66d9ef">in</span> <span style="color:#66d9ef">this</span>) {
+            <span style="color:#66d9ef">yield</span> <span style="color:#66d9ef">return</span> mapper(integer);
         }
     }
 
-    <span style=color:#75715e>/// Equivalent for All
-</span><span style=color:#75715e></span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>bool</span> Every(ConditionCallback condition) {
-        <span style=color:#66d9ef>foreach</span> (<span style=color:#66d9ef>var</span> integer <span style=color:#66d9ef>in</span> <span style=color:#66d9ef>this</span>) {
-            <span style=color:#66d9ef>if</span> (!condition(integer)) {
-                <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>false</span>;
+    <span style="color:#75715e">/// Equivalent for All
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">bool</span> Every(ConditionCallback condition) {
+        <span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">var</span> integer <span style="color:#66d9ef">in</span> <span style="color:#66d9ef">this</span>) {
+            <span style="color:#66d9ef">if</span> (!condition(integer)) {
+                <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>;
             }
         }
 
-        <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>true</span>;
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>;
     }
 
-    <span style=color:#75715e>/// Equivalent for Any
-</span><span style=color:#75715e></span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>bool</span> Some(ConditionCallback condition) {
-        <span style=color:#66d9ef>foreach</span> (<span style=color:#66d9ef>var</span> integer <span style=color:#66d9ef>in</span> <span style=color:#66d9ef>this</span>) {
-            <span style=color:#66d9ef>if</span> (condition(integer)) {
-                <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>true</span>;
+    <span style="color:#75715e">/// Equivalent for Any
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">bool</span> Some(ConditionCallback condition) {
+        <span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">var</span> integer <span style="color:#66d9ef">in</span> <span style="color:#66d9ef">this</span>) {
+            <span style="color:#66d9ef">if</span> (condition(integer)) {
+                <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>;
             }
         }
 
-        <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>false</span>;
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>;
     }
 }
 </code></pre></div><p>In the above code, each method invokes its delegate parameter, thus calling the function it encapsulates.</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C# data-lang=C#><span style=color:#66d9ef>var</span> ints = <span style=color:#66d9ef>new</span> IntList { <span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>2</span>, <span style=color:#ae81ff>3</span>, <span style=color:#ae81ff>4</span>, <span style=color:#ae81ff>5</span>, <span style=color:#ae81ff>6</span>, <span style=color:#ae81ff>7</span>, <span style=color:#ae81ff>8</span>, <span style=color:#ae81ff>9</span>, <span style=color:#ae81ff>10</span> };
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C#" data-lang="C#"><span style="color:#66d9ef">var</span> ints = <span style="color:#66d9ef">new</span> IntList { <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">10</span> };
 </code></pre></div><p>Using lambdas for throwaway functions:</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C# data-lang=C#><span style=color:#75715e>// get the fifth part of each integer as double
-</span><span style=color:#75715e></span>ints.Map(i =&gt; i / <span style=color:#ae81ff>5.0</span>)
-</code></pre></div><table><thead><tr><th><i>index</i></th><th>value</th></tr></thead><tbody><tr><td>0</td><td><div class=dni-plaintext>0.2</div></td></tr><tr><td>1</td><td><div class=dni-plaintext>0.4</div></td></tr><tr><td>2</td><td><div class=dni-plaintext>0.6</div></td></tr><tr><td>3</td><td><div class=dni-plaintext>0.8</div></td></tr><tr><td>4</td><td><div class=dni-plaintext>1</div></td></tr><tr><td>5</td><td><div class=dni-plaintext>1.2</div></td></tr><tr><td>6</td><td><div class=dni-plaintext>1.4</div></td></tr><tr><td>7</td><td><div class=dni-plaintext>1.6</div></td></tr><tr><td>8</td><td><div class=dni-plaintext>1.8</div></td></tr><tr><td>9</td><td><div class=dni-plaintext>2</div></td></tr></tbody></table>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C# data-lang=C#><span style=color:#75715e>// get integers as string percentages
-</span><span style=color:#75715e></span>ints.Map(i =&gt; <span style=color:#e6db74>$&#34;{i * 10}%&#34;</span>)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C#" data-lang="C#"><span style="color:#75715e">// get the fifth part of each integer as double
+</span><span style="color:#75715e"></span>ints.Map(i =&gt; i / <span style="color:#ae81ff">5.0</span>)
+</code></pre></div><table><thead><tr><th><i>index</i></th><th>value</th></tr></thead><tbody><tr><td>0</td><td><div class="dni-plaintext">0.2</div></td></tr><tr><td>1</td><td><div class="dni-plaintext">0.4</div></td></tr><tr><td>2</td><td><div class="dni-plaintext">0.6</div></td></tr><tr><td>3</td><td><div class="dni-plaintext">0.8</div></td></tr><tr><td>4</td><td><div class="dni-plaintext">1</div></td></tr><tr><td>5</td><td><div class="dni-plaintext">1.2</div></td></tr><tr><td>6</td><td><div class="dni-plaintext">1.4</div></td></tr><tr><td>7</td><td><div class="dni-plaintext">1.6</div></td></tr><tr><td>8</td><td><div class="dni-plaintext">1.8</div></td></tr><tr><td>9</td><td><div class="dni-plaintext">2</div></td></tr></tbody></table>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C#" data-lang="C#"><span style="color:#75715e">// get integers as string percentages
+</span><span style="color:#75715e"></span>ints.Map(i =&gt; <span style="color:#e6db74">$&#34;{i * 10}%&#34;</span>)
 </code></pre></div><table><thead><tr><th><i>index</i></th><th>value</th></tr></thead><tbody><tr><td>0</td><td>10%</td></tr><tr><td>1</td><td>20%</td></tr><tr><td>2</td><td>30%</td></tr><tr><td>3</td><td>40%</td></tr><tr><td>4</td><td>50%</td></tr><tr><td>5</td><td>60%</td></tr><tr><td>6</td><td>70%</td></tr><tr><td>7</td><td>80%</td></tr><tr><td>8</td><td>90%</td></tr><tr><td>9</td><td>100%</td></tr></tbody></table>
 <p>Implementing methods to reuse as callbacks:</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C# data-lang=C#><span style=color:#66d9ef>bool</span> IsEven(<span style=color:#66d9ef>int</span> integer) {
-    <span style=color:#66d9ef>return</span> integer % <span style=color:#ae81ff>2</span> == <span style=color:#ae81ff>0</span>;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C#" data-lang="C#"><span style="color:#66d9ef">bool</span> IsEven(<span style="color:#66d9ef">int</span> integer) {
+    <span style="color:#66d9ef">return</span> integer % <span style="color:#ae81ff">2</span> == <span style="color:#ae81ff">0</span>;
 }
 
-<span style=color:#66d9ef>bool</span> IsOdd(<span style=color:#66d9ef>int</span> integer) {
-    <span style=color:#75715e>// reuse code!
-</span><span style=color:#75715e></span>    <span style=color:#66d9ef>return</span> !IsEven(integer);
+<span style="color:#66d9ef">bool</span> IsOdd(<span style="color:#66d9ef">int</span> integer) {
+    <span style="color:#75715e">// reuse code!
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">return</span> !IsEven(integer);
 }
-</code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C# data-lang=C#>ints.Filter(IsEven)
-</code></pre></div><table><thead><tr><th><i>index</i></th><th>value</th></tr></thead><tbody><tr><td>0</td><td><div class=dni-plaintext>2</div></td></tr><tr><td>1</td><td><div class=dni-plaintext>4</div></td></tr><tr><td>2</td><td><div class=dni-plaintext>6</div></td></tr><tr><td>3</td><td><div class=dni-plaintext>8</div></td></tr><tr><td>4</td><td><div class=dni-plaintext>10</div></td></tr></tbody></table>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C# data-lang=C#>ints.Filter(IsOdd)
-</code></pre></div><table><thead><tr><th><i>index</i></th><th>value</th></tr></thead><tbody><tr><td>0</td><td><div class=dni-plaintext>1</div></td></tr><tr><td>1</td><td><div class=dni-plaintext>3</div></td></tr><tr><td>2</td><td><div class=dni-plaintext>5</div></td></tr><tr><td>3</td><td><div class=dni-plaintext>7</div></td></tr><tr><td>4</td><td><div class=dni-plaintext>9</div></td></tr></tbody></table>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C# data-lang=C#><span style=color:#75715e>// are there some even integers?
-</span><span style=color:#75715e></span>ints.Some(IsEven)
-</code></pre></div><div class=dni-plaintext>True</div>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C# data-lang=C#><span style=color:#66d9ef>var</span> odds = <span style=color:#66d9ef>new</span> IntList { <span style=color:#ae81ff>3</span>, <span style=color:#ae81ff>5</span>, <span style=color:#ae81ff>7</span>, <span style=color:#ae81ff>11</span>, <span style=color:#ae81ff>13</span>, <span style=color:#ae81ff>17</span> };
-<span style=color:#75715e>// is every integer odd?
-</span><span style=color:#75715e></span>odds.Every(IsOdd)
-</code></pre></div><div class=dni-plaintext>True</div>
-</p>
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C#" data-lang="C#">ints.Filter(IsEven)
+</code></pre></div><table><thead><tr><th><i>index</i></th><th>value</th></tr></thead><tbody><tr><td>0</td><td><div class="dni-plaintext">2</div></td></tr><tr><td>1</td><td><div class="dni-plaintext">4</div></td></tr><tr><td>2</td><td><div class="dni-plaintext">6</div></td></tr><tr><td>3</td><td><div class="dni-plaintext">8</div></td></tr><tr><td>4</td><td><div class="dni-plaintext">10</div></td></tr></tbody></table>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C#" data-lang="C#">ints.Filter(IsOdd)
+</code></pre></div><table><thead><tr><th><i>index</i></th><th>value</th></tr></thead><tbody><tr><td>0</td><td><div class="dni-plaintext">1</div></td></tr><tr><td>1</td><td><div class="dni-plaintext">3</div></td></tr><tr><td>2</td><td><div class="dni-plaintext">5</div></td></tr><tr><td>3</td><td><div class="dni-plaintext">7</div></td></tr><tr><td>4</td><td><div class="dni-plaintext">9</div></td></tr></tbody></table>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C#" data-lang="C#"><span style="color:#75715e">// are there some even integers?
+</span><span style="color:#75715e"></span>ints.Some(IsEven)
+</code></pre></div><div class="dni-plaintext">True</div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C#" data-lang="C#"><span style="color:#66d9ef">var</span> odds = <span style="color:#66d9ef">new</span> IntList { <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">11</span>, <span style="color:#ae81ff">13</span>, <span style="color:#ae81ff">17</span> };
+<span style="color:#75715e">// is every integer odd?
+</span><span style="color:#75715e"></span>odds.Every(IsOdd)
+</code></pre></div><div class="dni-plaintext">True</div>
+
+        </p>
+    </div>
 </div>
-</div>
-</main><footer class=footer>
-<span>&copy; 2022 </span>
-<span>
-Made with &#10084;&#65039; using <a target=_blank href=https://github.com/526avijitgupta/gokarna>Gokarna</a>
-</span>
+
+
+
+    
+
+        </main><footer class="footer">
+    <span>&copy; 2022 </span>
+    <span>
+        Made with &#10084;&#65039; using <a target="_blank" href="https://github.com/526avijitgupta/gokarna">Gokarna</a>
+    </span>
 </footer>
 </body>
 </html>

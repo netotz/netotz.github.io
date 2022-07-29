@@ -1,1 +1,209 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Tags on void?</title><link>https://netotz.github.io/tags/</link><description>Recent content in Tags on void?</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 26 Jul 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://netotz.github.io/tags/index.xml" rel="self" type="application/rss+xml"/><item><title>algorithms</title><link>https://netotz.github.io/tags/algorithms/</link><pubDate>Tue, 26 Jul 2022 00:00:00 +0000</pubDate><guid>https://netotz.github.io/tags/algorithms/</guid><description/></item><item><title>computer science</title><link>https://netotz.github.io/tags/computer-science/</link><pubDate>Tue, 26 Jul 2022 00:00:00 +0000</pubDate><guid>https://netotz.github.io/tags/computer-science/</guid><description/></item><item><title>data structures</title><link>https://netotz.github.io/tags/data-structures/</link><pubDate>Tue, 26 Jul 2022 00:00:00 +0000</pubDate><guid>https://netotz.github.io/tags/data-structures/</guid><description/></item><item><title>math</title><link>https://netotz.github.io/tags/math/</link><pubDate>Tue, 26 Jul 2022 00:00:00 +0000</pubDate><guid>https://netotz.github.io/tags/math/</guid><description/></item><item><title>operations research</title><link>https://netotz.github.io/tags/operations-research/</link><pubDate>Tue, 26 Jul 2022 00:00:00 +0000</pubDate><guid>https://netotz.github.io/tags/operations-research/</guid><description/></item><item><title>optimization</title><link>https://netotz.github.io/tags/optimization/</link><pubDate>Tue, 26 Jul 2022 00:00:00 +0000</pubDate><guid>https://netotz.github.io/tags/optimization/</guid><description/></item><item><title>thesis</title><link>https://netotz.github.io/tags/thesis/</link><pubDate>Tue, 26 Jul 2022 00:00:00 +0000</pubDate><guid>https://netotz.github.io/tags/thesis/</guid><description/></item><item><title>notes</title><link>https://netotz.github.io/tags/notes/</link><pubDate>Mon, 25 Apr 2022 00:00:00 +0000</pubDate><guid>https://netotz.github.io/tags/notes/</guid><description/></item><item><title>programming</title><link>https://netotz.github.io/tags/programming/</link><pubDate>Mon, 25 Apr 2022 00:00:00 +0000</pubDate><guid>https://netotz.github.io/tags/programming/</guid><description/></item><item><title>software engineering</title><link>https://netotz.github.io/tags/software-engineering/</link><pubDate>Mon, 25 Apr 2022 00:00:00 +0000</pubDate><guid>https://netotz.github.io/tags/software-engineering/</guid><description/></item><item><title>solid</title><link>https://netotz.github.io/tags/solid/</link><pubDate>Mon, 25 Apr 2022 00:00:00 +0000</pubDate><guid>https://netotz.github.io/tags/solid/</guid><description/></item><item><title>object oriented programming</title><link>https://netotz.github.io/tags/object-oriented-programming/</link><pubDate>Mon, 07 Mar 2022 00:00:00 +0000</pubDate><guid>https://netotz.github.io/tags/object-oriented-programming/</guid><description/></item><item><title>csharp</title><link>https://netotz.github.io/tags/csharp/</link><pubDate>Fri, 04 Mar 2022 00:00:00 +0000</pubDate><guid>https://netotz.github.io/tags/csharp/</guid><description/></item><item><title>dotnet</title><link>https://netotz.github.io/tags/dotnet/</link><pubDate>Fri, 04 Mar 2022 00:00:00 +0000</pubDate><guid>https://netotz.github.io/tags/dotnet/</guid><description/></item><item><title>aristotle</title><link>https://netotz.github.io/tags/aristotle/</link><pubDate>Thu, 26 Aug 2021 00:00:00 +0000</pubDate><guid>https://netotz.github.io/tags/aristotle/</guid><description/></item><item><title>boole</title><link>https://netotz.github.io/tags/boole/</link><pubDate>Thu, 26 Aug 2021 00:00:00 +0000</pubDate><guid>https://netotz.github.io/tags/boole/</guid><description/></item><item><title>history</title><link>https://netotz.github.io/tags/history/</link><pubDate>Thu, 26 Aug 2021 00:00:00 +0000</pubDate><guid>https://netotz.github.io/tags/history/</guid><description/></item><item><title>learning</title><link>https://netotz.github.io/tags/learning/</link><pubDate>Thu, 26 Aug 2021 00:00:00 +0000</pubDate><guid>https://netotz.github.io/tags/learning/</guid><description/></item><item><title>logic</title><link>https://netotz.github.io/tags/logic/</link><pubDate>Thu, 26 Aug 2021 00:00:00 +0000</pubDate><guid>https://netotz.github.io/tags/logic/</guid><description/></item><item><title>shannon</title><link>https://netotz.github.io/tags/shannon/</link><pubDate>Thu, 26 Aug 2021 00:00:00 +0000</pubDate><guid>https://netotz.github.io/tags/shannon/</guid><description/></item><item><title>miscellaneous</title><link>https://netotz.github.io/tags/miscellaneous/</link><pubDate>Wed, 18 Aug 2021 00:00:00 +0000</pubDate><guid>https://netotz.github.io/tags/miscellaneous/</guid><description/></item><item><title>test</title><link>https://netotz.github.io/tags/test/</link><pubDate>Wed, 18 Aug 2021 00:00:00 +0000</pubDate><guid>https://netotz.github.io/tags/test/</guid><description/></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on void?</title>
+    <link>https://netotz.github.io/tags/</link>
+    <description>Recent content in Tags on void?</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Tue, 26 Jul 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://netotz.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>algorithms</title>
+      <link>https://netotz.github.io/tags/algorithms/</link>
+      <pubDate>Tue, 26 Jul 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://netotz.github.io/tags/algorithms/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>computer science</title>
+      <link>https://netotz.github.io/tags/computer-science/</link>
+      <pubDate>Tue, 26 Jul 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://netotz.github.io/tags/computer-science/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>data structures</title>
+      <link>https://netotz.github.io/tags/data-structures/</link>
+      <pubDate>Tue, 26 Jul 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://netotz.github.io/tags/data-structures/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>math</title>
+      <link>https://netotz.github.io/tags/math/</link>
+      <pubDate>Tue, 26 Jul 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://netotz.github.io/tags/math/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>operations research</title>
+      <link>https://netotz.github.io/tags/operations-research/</link>
+      <pubDate>Tue, 26 Jul 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://netotz.github.io/tags/operations-research/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>optimization</title>
+      <link>https://netotz.github.io/tags/optimization/</link>
+      <pubDate>Tue, 26 Jul 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://netotz.github.io/tags/optimization/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>thesis</title>
+      <link>https://netotz.github.io/tags/thesis/</link>
+      <pubDate>Tue, 26 Jul 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://netotz.github.io/tags/thesis/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>notes</title>
+      <link>https://netotz.github.io/tags/notes/</link>
+      <pubDate>Mon, 25 Apr 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://netotz.github.io/tags/notes/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>programming</title>
+      <link>https://netotz.github.io/tags/programming/</link>
+      <pubDate>Mon, 25 Apr 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://netotz.github.io/tags/programming/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>software engineering</title>
+      <link>https://netotz.github.io/tags/software-engineering/</link>
+      <pubDate>Mon, 25 Apr 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://netotz.github.io/tags/software-engineering/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>solid</title>
+      <link>https://netotz.github.io/tags/solid/</link>
+      <pubDate>Mon, 25 Apr 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://netotz.github.io/tags/solid/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>object oriented programming</title>
+      <link>https://netotz.github.io/tags/object-oriented-programming/</link>
+      <pubDate>Mon, 07 Mar 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://netotz.github.io/tags/object-oriented-programming/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>csharp</title>
+      <link>https://netotz.github.io/tags/csharp/</link>
+      <pubDate>Fri, 04 Mar 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://netotz.github.io/tags/csharp/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>dotnet</title>
+      <link>https://netotz.github.io/tags/dotnet/</link>
+      <pubDate>Fri, 04 Mar 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://netotz.github.io/tags/dotnet/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>aristotle</title>
+      <link>https://netotz.github.io/tags/aristotle/</link>
+      <pubDate>Thu, 26 Aug 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://netotz.github.io/tags/aristotle/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>boole</title>
+      <link>https://netotz.github.io/tags/boole/</link>
+      <pubDate>Thu, 26 Aug 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://netotz.github.io/tags/boole/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>history</title>
+      <link>https://netotz.github.io/tags/history/</link>
+      <pubDate>Thu, 26 Aug 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://netotz.github.io/tags/history/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>learning</title>
+      <link>https://netotz.github.io/tags/learning/</link>
+      <pubDate>Thu, 26 Aug 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://netotz.github.io/tags/learning/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>logic</title>
+      <link>https://netotz.github.io/tags/logic/</link>
+      <pubDate>Thu, 26 Aug 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://netotz.github.io/tags/logic/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>shannon</title>
+      <link>https://netotz.github.io/tags/shannon/</link>
+      <pubDate>Thu, 26 Aug 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://netotz.github.io/tags/shannon/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>miscellaneous</title>
+      <link>https://netotz.github.io/tags/miscellaneous/</link>
+      <pubDate>Wed, 18 Aug 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://netotz.github.io/tags/miscellaneous/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>test</title>
+      <link>https://netotz.github.io/tags/test/</link>
+      <pubDate>Wed, 18 Aug 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://netotz.github.io/tags/test/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

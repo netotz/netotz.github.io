@@ -1,15 +1,60 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>notes on void?</title><link>https://netotz.github.io/tags/notes/</link><description>Recent content in notes on void?</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Mon, 25 Apr 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://netotz.github.io/tags/notes/index.xml" rel="self" type="application/rss+xml"/><item><title>The SOLID Principles</title><link>https://netotz.github.io/posts/solid/</link><pubDate>Mon, 25 Apr 2022 00:00:00 +0000</pubDate><guid>https://netotz.github.io/posts/solid/</guid><description>Awesome articles about the topic:
-SOLID Principles Around You In software engineering, SOLID is a mnemonic acronym for five design principles intended to make software designs more understandable, flexible, and maintainable.
-But when to apply SOLID? Ardalis recommends following the Pain Driven Development or PDD:
-Write code using the simplest techniques you know to get the problem solved. Trying to always apply all SOLID principles would result in a premature optimization of the application&amp;rsquo;s design.</description></item><item><title>The Four Pillars of Object Oriented Programming</title><link>https://netotz.github.io/posts/four-pillars-oop/</link><pubDate>Mon, 07 Mar 2022 00:00:00 +0000</pubDate><guid>https://netotz.github.io/posts/four-pillars-oop/</guid><description>The four pillars of OOP are:
-Abstraction Encapsulation Inheritance Polymorphism But before describing each, basic concepts of OOP are needed to understand.
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>notes on void?</title>
+    <link>https://netotz.github.io/tags/notes/</link>
+    <description>Recent content in notes on void?</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 25 Apr 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://netotz.github.io/tags/notes/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>The SOLID Principles</title>
+      <link>https://netotz.github.io/posts/solid/</link>
+      <pubDate>Mon, 25 Apr 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://netotz.github.io/posts/solid/</guid>
+      <description>Awesome articles about the topic:
+ SOLID Principles Around You    In software engineering, SOLID is a mnemonic acronym for five design principles intended to make software designs more understandable, flexible, and maintainable.
+ But when to apply SOLID? Ardalis recommends following the Pain Driven Development or PDD:
+ Write code using the simplest techniques you know to get the problem solved. Trying to always apply all SOLID principles would result in a premature optimization of the application&amp;rsquo;s design.</description>
+    </item>
+    
+    <item>
+      <title>The Four Pillars of Object Oriented Programming</title>
+      <link>https://netotz.github.io/posts/four-pillars-oop/</link>
+      <pubDate>Mon, 07 Mar 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://netotz.github.io/posts/four-pillars-oop/</guid>
+      <description>The four pillars of OOP are:
+ Abstraction Encapsulation Inheritance Polymorphism  But before describing each, basic concepts of OOP are needed to understand.
 Basic OOP Object Oriented Programming (OOP) is a programming paradigm that structures a software program into reusable pieces of code blueprints, which are called classes.
-Class A class is a code template or blueprint that describes what an object is and what it does, by defining attributes to store data and implementing methods or behaviors to use that data.</description></item><item><title>C# Wizardry - Understanding delegates with custom LINQ methods</title><link>https://netotz.github.io/posts/csharp-wizardry/delegates/</link><pubDate>Fri, 04 Mar 2022 00:00:00 +0000</pubDate><guid>https://netotz.github.io/posts/csharp-wizardry/delegates/</guid><description>The content below is retrieved from Jupyter notebooks that you can find in this repository.
+Class A class is a code template or blueprint that describes what an object is and what it does, by defining attributes to store data and implementing methods or behaviors to use that data.</description>
+    </item>
+    
+    <item>
+      <title>C# Wizardry - Understanding delegates with custom LINQ methods</title>
+      <link>https://netotz.github.io/posts/csharp-wizardry/delegates/</link>
+      <pubDate>Fri, 04 Mar 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://netotz.github.io/posts/csharp-wizardry/delegates/</guid>
+      <description>The content below is retrieved from Jupyter notebooks that you can find in this repository.
 Source: Microsoft documentation.
-A delegate encapsulates a method.
+ A delegate encapsulates a method.
 Actions System.Action is the standard library type for void delegates, methods that don&amp;rsquo;t return a value. By default it&amp;rsquo;s parameterless, but it can have parameters with generics.
-Action action = () =&amp;gt; Console.WriteLine(&amp;#34;Action done.&amp;#34;); // invoked as method call action() Action done.
-// user-declared delegate, no parameters delegate void MyAction(); MyAction myAction = () =&amp;gt; Console.</description></item><item><title>C# Wizardry - Understanding events</title><link>https://netotz.github.io/posts/csharp-wizardry/events/</link><pubDate>Fri, 04 Mar 2022 00:00:00 +0000</pubDate><guid>https://netotz.github.io/posts/csharp-wizardry/events/</guid><description>The content below is retrieved from Jupyter notebooks that you can find in this repository.
+Action action = () =&amp;gt; Console.WriteLine(&amp;#34;Action done.&amp;#34;); // invoked as method call action() Action done. // user-declared delegate, no parameters delegate void MyAction(); MyAction myAction = () =&amp;gt; Console.</description>
+    </item>
+    
+    <item>
+      <title>C# Wizardry - Understanding events</title>
+      <link>https://netotz.github.io/posts/csharp-wizardry/events/</link>
+      <pubDate>Fri, 04 Mar 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://netotz.github.io/posts/csharp-wizardry/events/</guid>
+      <description>The content below is retrieved from Jupyter notebooks that you can find in this repository.
 Source: Microsoft documentation.
-Events enable a class or object (the publisher) to notify other classes or objects (the subscribers) when something occurs.
-The publisher determines when to raise an event. It can have multiple subscribers. The subscriber determines how to handle an event when it&amp;rsquo;s raised. It can be subscribed to multiple events. System.</description></item></channel></rss>
+ Events enable a class or object (the publisher) to notify other classes or objects (the subscribers) when something occurs.
+ The publisher determines when to raise an event. It can have multiple subscribers. The subscriber determines how to handle an event when it&amp;rsquo;s raised. It can be subscribed to multiple events.  System.</description>
+    </item>
+    
+  </channel>
+</rss>
