@@ -29,7 +29,7 @@ The final version of the algorithm was baptized as the *Alpha Fast Vertex Substi
 Since then, I have been able to write most of the thesis (**big shout-out to [my mentor](https://yalma.fime.uanl.mx/~roger/work/index.html) and my revisors!**), which I think is more understandable than the previous post, so here is the chapter that reviews the background of the fast interchange concept and explains the observations that led us to the birth of the A-FVS.
 
 Still, I recommend reading that post [here](../decomposing-of) before reading this one because there's relevant context in there.
-Also, if this post gets too technical and I forgot to explain something or it's difficult to understand, please let me know via [Twitter](https://twitter.com/netotz) and I'll add or edit it :+1:.
+Also, if this post gets too technical and I forgot to explain something or it's difficult to understand, please let me know via [LinkedIn](https://www.linkedin.com/in/netotz) or [Twitter](https://twitter.com/netotz) and I'll edit this post :+1:.
 
 To the best of our knowledge, implementing a fast interchange local search heuristic to solve the ANPCP hadn't been considered before.
 The A-FVS has shown significant speedups of computational time in every test, being around 100 times faster than a simple interchange algorithm, depending on the size of the problem.
