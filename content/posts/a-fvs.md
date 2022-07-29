@@ -106,7 +106,7 @@ $$
     \phi_\alpha'(u) \gets
         \begin{cases}
             f_i,
-                & \text{if } d_{\alpha - 1}(u) < d_i(u) < d_\alpha(u) \\
+                & \text{if } d_{\alpha - 1}(u) < d_i(u) < d_\alpha(u) \\\\
             \phi_{\alpha - 1}(u),
                 & \text{if } d_i(u) < d_{\alpha - 1}(u)
         \end{cases}
@@ -199,7 +199,7 @@ Note that in the figure below, $\phi_{\alpha + 1}$ is not part of $A_u$, which i
 $$
 \begin{gather}
     A_u \leftarrow \{ \phi_k(u) \mid 1 \le k \le \alpha \}
-    \\
+    \\\\
     \nonumber A_u \subset S, \ u \in U
 \end{gather}
 $$
