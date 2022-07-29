@@ -91,7 +91,7 @@ A visual representation is shown below, where $f_r$ is the gray facility (the on
 
 <img src="/images/not_attracted.png" width="75%" />
 
-> Resulting new center of $u$, $\phi_\alpha'(u)$, after removing its current center $\phi_\alpha(u)$.
+> <center>Resulting new center of $u$, $\phi_\alpha'(u)$, after removing its current center $\phi_\alpha(u)$.</center>
 
 "Attraction" here refers to when $f_i$ is closer to $u$ than its center.
 
@@ -115,13 +115,13 @@ $$
 
 <img src="/images/attracted_fi.png" width="75%" />
 
-> $\phi_\alpha'(u) \gets f_i$
+> <center>$\phi_\alpha'(u) \gets f_i$</center>
 
 <img src="/images/attracted_a-1.png" width="75%" />
 
-> $\phi_\alpha'(u) \gets \phi_{\alpha - 1}(u)$
+> <center>$\phi_\alpha'(u) \gets \phi_{\alpha - 1}(u)$</center>
 
-> The two options for the new center when $u$ is attracted to $f_i$ (equation 2).
+> <center>The two options for the new center when $u$ is attracted to $f_i$ (equation 2).</center>
 
 These observations resulted in modifying FAGI to update the data structures $gain$ and $netloss$ accordingly.
 However, after applying such modifications, the algorithm did not produce any solutions either.
@@ -205,7 +205,7 @@ $$
 $$
 <img src="/images/alpha_neighbors.png" width="75%" />
 
-> $\alpha$-neighbors of $u$ ($A_u$).
+> <center>$\alpha$-neighbors of $u$ ($A_u$).</center>
 
 Each one of the $\alpha$-neighbors is an open facility, therefore they can be removed from the solution.
 In other words, any of them can be selected to be $f_r$.
@@ -234,13 +234,13 @@ Two examples of this case can be visualized below:
 
 <img src="/images/z_attracted_a-1_fi.png" width="75%" />
 
-> $d_{\alpha - 1} < d_i < d_\alpha$
+> <center>$d_{\alpha - 1} < d_i < d_\alpha$</center>
 
 <img src="/images/z_attracted_fi_a-1.png" width="75%" />
 
-> $d_i < d_{\alpha - 1} < d_\alpha$
+> <center>$d_i < d_{\alpha - 1} < d_\alpha$</center>
 
-> If an $\alpha$-neighbor is $f_r$ and $u$ is attracted to $f_i$, its center remains unchanged (no penalty).
+> <center>If an $\alpha$-neighbor is $f_r$ and $u$ is attracted to $f_i$, its center remains unchanged (no penalty).</center>
 
 However, in the worst case, if they were not attracted to $f_i$, then their new center would be either the $\alpha + 1$ closest facility or $f_i$, whichever is the closest, but still farther than their old center.
 
@@ -249,13 +249,13 @@ This penalty is stored in the array $z(\cdot)$, for each $\alpha$-neighbor.
 
 <img src="/images/z_not_attracted_a+1.png" width="75%" />
 
-> $d_\alpha < d_{\alpha + 1} < d_i$
+> <center>$d_\alpha < d_{\alpha + 1} < d_i$</center>
 
 <img src="/images/z_not_attracted_fi.png" width="75%" />
 
-> $d_\alpha < d_i < d_{\alpha + 1}$
+> <center>$d_\alpha < d_i < d_{\alpha + 1}$</center>
 
-> If an $\alpha$-neighbor is $f_r$ and $u$ is not attracted to $f_i$, its new center will be farther (penalty).
+> <center>If an $\alpha$-neighbor is $f_r$ and $u$ is not attracted to $f_i$, its new center will be farther (penalty).</center>
 
 ### When $f_r$ is not an $\alpha$-neighbor
 
