@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>code readability on void?</title>
+    <link>https://netotz.github.io/tags/code-readability/</link>
+    <description>Recent content in code readability on void?</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Tue, 30 Aug 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://netotz.github.io/tags/code-readability/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>A simple application of refactorization</title>
+      <link>https://netotz.github.io/posts/refactor-cp/</link>
+      <pubDate>Tue, 30 Aug 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://netotz.github.io/posts/refactor-cp/</guid>
+      <description>Valuable code is such because it works. It truly doesn&amp;rsquo;t matter how such code looks or under what standards or rules it was written. If it doesn&amp;rsquo;t work, it&amp;rsquo;s trash. If it works, it adds value.
+This is something that almost all programmers know. We should get this taught early in our journeys because we ought to solve problems by writing code. The satisfaction that a developer gets when she sees her program working as expected and how it actually solves a real problem is unexplainable (she can finally go to sleep).</description>
+    </item>
+    
+  </channel>
+</rss>

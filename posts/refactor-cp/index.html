@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        :root {
+            --accent-color: #ffc33c;
+        }
+    </style>
+
+    
+    
+    
+    
+    
+    
+
+    
+    <title>A simple application of refactorization</title>
+    <meta name="description" content="You should always refactor your code, even if it&#39;s not part of a large or complex project!">
+    <meta name="keywords" content='blog, personal, hugo, github-pages, programming, journal, programming blog, essays, computer science, technology blog, math, algorithms, code readability, competitive programming, refactorization'>
+
+    <meta property="og:url" content="https://netotz.github.io/posts/refactor-cp/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="A simple application of refactorization">
+    <meta property="og:description" content="You should always refactor your code, even if it&#39;s not part of a large or complex project!">
+    <meta property="og:image" content="/images/null.png">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="A simple application of refactorization">
+    <meta name="twitter:description" content="You should always refactor your code, even if it&#39;s not part of a large or complex project!">
+    <meta property="twitter:domain" content="https://netotz.github.io/posts/refactor-cp/">
+    <meta property="twitter:url" content="https://netotz.github.io/posts/refactor-cp/">
+    <meta name="twitter:image" content="/images/null.png">
+
+    
+    <link rel="canonical" href="https://netotz.github.io/posts/refactor-cp/" />
+
+    <link rel="stylesheet" type="text/css" href="https://netotz.github.io//css/normalize.min.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" type="text/css" href="https://netotz.github.io//css/main.css">
+    <link disabled id="dark-theme" rel="stylesheet" href="https://netotz.github.io//css/dark.css">
+
+    <script src="https://netotz.github.io//js/svg-injector.min.js"></script>
+    <script src="https://netotz.github.io//js/feather-icons.min.js"></script>
+    <script src="https://netotz.github.io//js/main.js"></script>
+
+    
+    
+            <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+        <link rel="manifest" href="/site.webmanifest">
+    
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css" integrity="sha384-Xi8rHCmBmhbuyyhbI88391ZKP2dmfnOl4rT9ZfRI7mLTdk1wblIUnrIq35nqwEvC" crossorigin="anonymous">
+
+        <!-- The loading of KaTeX is deferred to speed up page rendering -->
+        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js" integrity="sha384-X/XCfMm41VSsqRNQgDerQczD69XqmjOOOwYQvr/uuC+j4OPoNhVgjdGFwhvN02Ja" crossorigin="anonymous"></script>
+
+        <!-- To automatically render math in text elements, include the auto-render extension: -->
+        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js" integrity="sha384-+XBljXPPiv+OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR" crossorigin="anonymous"
+            onload="renderMathInElement(document.body);"></script>
+        
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false}
+                    ],
+                    // rendering keys, e.g.:
+                    throwOnError : false
+                });
+            });
+        </script>
+    
+    
+</head>
+<body>
+        <script type="text/javascript">
+            
+            setThemeByUserPref();
+        </script><header class="header">
+    <nav class="header-nav">
+
+        
+        <div class="avatar">
+            <a href="https://netotz.github.io/">
+                <img src="https://netotz.github.io//images/null.png" alt="avatar" />
+            </a>
+        </div>
+        
+
+        <div class="nav-title">
+            <a class="nav-brand" href="https://netotz.github.io/">void?</a>
+        </div>
+
+        <div class="nav-links">
+            
+            <div class="nav-link">
+                <a href="https://netotz.github.io/"><span data-feather="home"></span> Home </a>
+            </div>
+            
+            <div class="nav-link">
+                <a href="https://netotz.github.io/posts/"><span data-feather="book-open"></span> Posts </a>
+            </div>
+            
+            <div class="nav-link">
+                <a href="https://netotz.github.io/tags/"><span data-feather="tag"></span> Tags </a>
+            </div>
+            
+            <div class="nav-link">
+                <a href="https://github.com/netotz/netotz.github.io"><span data-feather="github"></span> Source </a>
+            </div>
+            
+
+            <span class="nav-icons-divider"></span>
+            <div class="nav-link dark-theme-toggle">
+                <a>
+                    <span id="theme-toggle-icon" data-feather="moon"></span>
+                </a>
+            </div>
+
+            <div class="nav-link" id="hamburger-menu-toggle">
+                <a>
+                    <span data-feather="menu"></span>
+                </a>
+            </div>
+
+            
+            <ul class="nav-hamburger-list visibility-hidden">
+                
+                <li class="nav-item">
+                    <a href="https://netotz.github.io/"><span data-feather="home"></span> Home </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="https://netotz.github.io/posts/"><span data-feather="book-open"></span> Posts </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="https://netotz.github.io/tags/"><span data-feather="tag"></span> Tags </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="https://github.com/netotz/netotz.github.io"><span data-feather="github"></span> Source </a>
+                </li>
+                
+                <li class="nav-item dark-theme-toggle">
+                    <a>
+                        <span id="theme-toggle-icon" data-feather="moon"></span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+</header>
+<main id="content">
+    <div class="post container">
+    <div class="post-header-section">
+        <h1>A simple application of refactorization</h1>
+        <small role="doc-subtitle">You should always refactor your code, even if it&#39;s not part of a large or complex project!</small>
+        <p class="post-date">
+            August 30, 2022
+        </p>
+
+        <ul class="post-tags">
+        
+            <li class="post-tag"><a href="https://netotz.github.io/tags/math">math</a></li>
+        
+            <li class="post-tag"><a href="https://netotz.github.io/tags/algorithms">algorithms</a></li>
+        
+            <li class="post-tag"><a href="https://netotz.github.io/tags/programming">programming</a></li>
+        
+            <li class="post-tag"><a href="https://netotz.github.io/tags/code-readability">code readability</a></li>
+        
+            <li class="post-tag"><a href="https://netotz.github.io/tags/competitive-programming">competitive programming</a></li>
+        
+            <li class="post-tag"><a href="https://netotz.github.io/tags/refactorization">refactorization</a></li>
+        
+        </ul>
+    </div>
+
+    <div class="post-content">
+        <p>
+            <p>Valuable code is such because <strong>it works</strong>.
+It truly doesn&rsquo;t matter how such code looks or under what standards or rules it was written.
+If it doesn&rsquo;t work, it&rsquo;s trash.
+If it works, it adds value.</p>
+<p>This is something that almost all programmers know.
+We should get this taught early in our journeys because we ought to solve problems by writing code.
+The satisfaction that a developer gets when she sees her program working as expected and how it actually solves a real problem is unexplainable <del>(she can finally go to sleep)</del>.</p>
+<p>It&rsquo;s not a secret that a programmer is capable of writing the most ugliest, anomalous, repulsive piece of code just for the sake of making it work.
+I wish I was kidding, but <a href="https://www.reddit.com/r/programminghorror/">here are the proofs</a>.
+There&rsquo;s also a substantial amount of evidence in my own projects.</p>
+<p>Now, the successful results of a program that works often distracts us from the actual code that we just wrote.
+When we are desperate enough for good results that we must resort to bad code, we stake <em>technical debt</em>.
+This concept is a straight analogy of financial debt: it refers to the <em>cost</em> of choosing the easiest option for an immediate problem, instead of taking the time to develop a better solution.
+Of course, this cost is no good and you never want to chose an expensive solution (expensive in the long run).
+However, in some situations we have no option but going for it, and that&rsquo;s okay.
+It actually happens more often than not!</p>
+<p>The remedy for technical debt is <strong>refactorization</strong>, which means modifying the code in such a way that its behavior remains unchanged.
+The purpose of refactoring code is making it pretty, or handsome, or both, while still getting the desired results.</p>
+<p>All of this makes obvious sense when developing large scale and enterprise projects because the code in there should be maintainable, scalable, and readable.
+This is actually the goal of the <a href="../solid">SOLID principles</a>.
+Yet we tend to ignore this basic programming guideline when we write small pieces of code, like miscellaneous scripts, or when solving problems from competitive programming, where time is key; and these cases are indeed the best examples to practice refactoring code!</p>
+<p>For example, let&rsquo;s take a look at a problem from Codeforces, <a href="https://codeforces.com/problemset/problem/1294/A">Collecting Coins (1294A)</a>:</p>
+<blockquote>
+<p>Polycarp has three sisters: Alice, Barbara, and Cerene. They&rsquo;re collecting coins. Currently, Alice has $a$ coins, Barbara has $b$ coins and Cerene has $c$ coins. Recently Polycarp has returned from the trip around the world and brought $n$ coins.</p>
+<p>He wants to distribute all these $n$ coins between his sisters in such a way that the number of coins Alice has is equal to the number of coins Barbara has and is equal to the number of coins Cerene has. In other words, if Polycarp gives $A$ coins to Alice, $B$ coins to Barbara and $C$ coins to Cerene ($A + B + C = n$), then $a + A = b + B = c + C$.</p>
+<p>Note that $A$, $B$ or $C$ (the number of coins Polycarp gives to Alice, Barbara and Cerene correspondingly) can be 0.</p>
+<p>Your task is to find out if it is possible to distribute all $n$ coins between sisters in a way described above.</p>
+<p>You have to answer $t$ independent test cases.</p>
+<p><strong>Input</strong></p>
+<p>The first line of the input contains one integer $t$ ($1 \le t \le 10^4$) — the number of test cases.</p>
+<p>The next $t$ lines describe test cases. Each test case is given on a new line and consists of four space-separated integers $a$, $b$, $c$ and $n$ ($1 \le a, b, c, n \le 10^8$) — the number of coins Alice has, the number of coins Barbara has, the number of coins Cerene has and the number of coins Polycarp has.</p>
+<p><strong>Output</strong></p>
+<p>For each test case, print <code>&quot;YES&quot;</code> if Polycarp can distribute all $n$ coins between his sisters and <code>&quot;NO&quot;</code> otherwise.</p>
+</blockquote>
+<p>As mentioned earlier, the first and most important step is to write code that can just solve this problem.</p>
+<p>We know that each sister can initially have a different amount of coins, and that Polycarp can only <em>give</em> coins to them, not take from them.
+So, to eliminate the gap between $a$, $b$ and $c$, we should use the maximum of them as a value to match, giving coins to the others in such a way that the 3 quantities are equal.
+Even if $a = b = c$, this would work because to match the &ldquo;maximum&rdquo;, we would just &ldquo;give&rdquo; 0 coins to the rest.</p>
+<p>Let&rsquo;s define $r$ as the remaining coins after matching the amounts, where $r \le n$.
+Polycarp must get rid of all the coins, so if $r &gt; 0$, it must to be divisible by 3 in order to be a possible distribution.
+If $r \mod 3 \ne 0$, then there is no way that the sisters can have the same amount of coins.</p>
+<p>Both the time and space complexities of this solution is constant.
+Now, this type of problems usually comes around during contests where the goal is to solve them ASAP, so a lot of submissions would look like a quick script:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">t <span style="color:#f92672">=</span> int(input())
+
+<span style="color:#66d9ef">while</span> t <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>:
+    a, b, c, n <span style="color:#f92672">=</span> map(int, input()<span style="color:#f92672">.</span>split())
+
+    m <span style="color:#f92672">=</span> max(a, b, c)
+    x <span style="color:#f92672">=</span> m <span style="color:#f92672">-</span> a
+    y <span style="color:#f92672">=</span> m <span style="color:#f92672">-</span> b
+    z <span style="color:#f92672">=</span> m <span style="color:#f92672">-</span> c
+
+    r <span style="color:#f92672">=</span> n <span style="color:#f92672">-</span> x <span style="color:#f92672">-</span> y <span style="color:#f92672">-</span> z
+
+    <span style="color:#66d9ef">if</span> r <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">and</span> r <span style="color:#f92672">%</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+        print(<span style="color:#e6db74">&#34;YES&#34;</span>)
+    <span style="color:#66d9ef">else</span>:
+        print(<span style="color:#e6db74">&#34;NO&#34;</span>)
+
+    t <span style="color:#f92672">-=</span> <span style="color:#ae81ff">1</span>
+</code></pre></div><p>This code is accepted by Codeforces, it&rsquo;s the optimal solution.</p>
+<p>If you were participating in a contest, you would immediately go to the next problem, of course.
+What I suggest here is, once the contest is over, take these pieces of code (your code) and see how you can make it prettier, more readable.
+I believe this is a good practice because it trains us as developers to always try to improve our code, to make sure it is maintainable and scalable, even when we already know that it works correctly.</p>
+<p>Code can be refactored in many ways.
+Following with the example, a good first thing to do is adding comments that explain something that the code itself don&rsquo;t.
+The names of variables, functions, and objects in general, should be descriptive enough to minimize comments:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">cases <span style="color:#f92672">=</span> int(input())
+
+<span style="color:#66d9ef">while</span> cases <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>:
+    a, b, c, n <span style="color:#f92672">=</span> map(int, input()<span style="color:#f92672">.</span>split())
+
+    max_coins <span style="color:#f92672">=</span> max(a, b, c)
+    <span style="color:#75715e"># differences to match amounts to max amount</span>
+    a_diff <span style="color:#f92672">=</span> max_coins <span style="color:#f92672">-</span> a
+    b_diff <span style="color:#f92672">=</span> max_coins <span style="color:#f92672">-</span> b
+    c_diff <span style="color:#f92672">=</span> max_coins <span style="color:#f92672">-</span> c
+
+    remainder <span style="color:#f92672">=</span> n <span style="color:#f92672">-</span> a_diff <span style="color:#f92672">-</span> b_diff <span style="color:#f92672">-</span> c_diff
+
+    <span style="color:#66d9ef">if</span> remainder <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">and</span> remainder <span style="color:#f92672">%</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+        print(<span style="color:#e6db74">&#34;YES&#34;</span>)
+    <span style="color:#66d9ef">else</span>:
+        print(<span style="color:#e6db74">&#34;NO&#34;</span>)
+
+    cases <span style="color:#f92672">-=</span> <span style="color:#ae81ff">1</span>
+</code></pre></div><p>Another common type of refactorization is <strong>modularizing</strong> your code.
+Modularization refers to separating the functionality of a program into independent and reusable modules that can then execute individual and specific tasks.
+If you take a look at the <a href="https://codeforces.com/contest/1294/status">solutions to the problem</a>, you may find something like the following:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">solve</span>():
+    a, b, c, n <span style="color:#f92672">=</span> map(int, input()<span style="color:#f92672">.</span>split())
+
+    max_coins <span style="color:#f92672">=</span> max(a, b, c)
+    <span style="color:#75715e"># differences to match amounts to max amount</span>
+    a_diff <span style="color:#f92672">=</span> max_coins <span style="color:#f92672">-</span> a
+    b_diff <span style="color:#f92672">=</span> max_coins <span style="color:#f92672">-</span> b
+    c_diff <span style="color:#f92672">=</span> max_coins <span style="color:#f92672">-</span> c
+
+    remainder <span style="color:#f92672">=</span> n <span style="color:#f92672">-</span> a_diff <span style="color:#f92672">-</span> b_diff <span style="color:#f92672">-</span> c_diff
+
+    <span style="color:#66d9ef">if</span> remainder <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">and</span> remainder <span style="color:#f92672">%</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+        print(<span style="color:#e6db74">&#34;YES&#34;</span>)
+    <span style="color:#66d9ef">else</span>:
+        print(<span style="color:#e6db74">&#34;NO&#34;</span>)
+
+cases <span style="color:#f92672">=</span> int(input())
+<span style="color:#66d9ef">while</span> cases <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>:
+    solve()
+    cases <span style="color:#f92672">-=</span> <span style="color:#ae81ff">1</span>
+</code></pre></div><p>Yes, the code is now organized in a function that can be called multiple times, but that function doesn&rsquo;t have any advantages as to how it was before.
+Besides, different aspects of the program functionality are not being separated, which makes the code harder to follow and maintain.
+Just wrapping a bunch of lines into a function is not always enough to apply a good modularization.</p>
+<p>Let&rsquo;s think about the steps of our solution.
+We read things from the input, we do some calculations, and then we print a result.
+A good modular code will do these 3 things separately:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">can_distribute</span>(a: int, b: int, c: int, n: int) <span style="color:#f92672">-&gt;</span> bool:
+    max_coins <span style="color:#f92672">=</span> max(a, b, c)
+
+    <span style="color:#75715e"># differences to match amounts to max amount</span>
+    a_diff <span style="color:#f92672">=</span> max_coins <span style="color:#f92672">-</span> a
+    b_diff <span style="color:#f92672">=</span> max_coins <span style="color:#f92672">-</span> b
+    c_diff <span style="color:#f92672">=</span> max_coins <span style="color:#f92672">-</span> c
+
+    remainder <span style="color:#f92672">=</span> n <span style="color:#f92672">-</span> a_diff <span style="color:#f92672">-</span> b_diff <span style="color:#f92672">-</span> c_diff
+    <span style="color:#66d9ef">return</span> remainder <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">and</span> remainder <span style="color:#f92672">%</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>
+
+<span style="color:#75715e"># read input</span>
+cases <span style="color:#f92672">=</span> int(input())
+
+<span style="color:#66d9ef">while</span> cases <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>:
+    <span style="color:#75715e"># read input again</span>
+    a, b, c, n <span style="color:#f92672">=</span> map(int, input()<span style="color:#f92672">.</span>split())
+
+    <span style="color:#75715e"># do calculations and save result</span>
+    answer <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;YES&#34;</span> <span style="color:#66d9ef">if</span> can_distribute(a, b, c, n) <span style="color:#66d9ef">else</span> <span style="color:#e6db74">&#34;NO&#34;</span>
+    <span style="color:#75715e"># print result</span>
+    print(answer)
+
+    cases <span style="color:#f92672">-=</span> <span style="color:#ae81ff">1</span>
+</code></pre></div><p>We have isolated the core part of our code, the one that actually solves the problem, which is the <code>can_distribute</code> function.
+This function has been abstracted to concern about a single task: calculating whether an equal distribution for the 3 sisters is possible or not, by returning a boolean value.
+And that&rsquo;s it.</p>
+<p>Now it doesn&rsquo;t matter if we get our input through the terminal or an API or by reading a file, because the function can do its job with just the parameters.
+We can say the same about the output, we can either print the solution to the console or use it to construct the reply of a bot, without ever modifying the function.
+And, especially, the code looks much cleaner.</p>
+<p>This is personally useful because I like testing my approaches with Pytest, but if I submit a file that has a <code>import pytest</code> in it, Codeforces throws a runtime error.
+To fix this, I created another file in which I import both the Pytest library and <a href="https://github.com/netotz/codecamp/blob/master/codeforces/p1294A_coins.py">the function</a> that actually solves the problem, and then write the tests <a href="https://github.com/netotz/codecamp/blob/master/codeforces/tests/1294A.py">in there</a>.</p>
+
+        </p>
+    </div>
+</div>
+
+<aside class="post-toc">
+    <nav id="toc">
+        <nav id="TableOfContents"></nav>
+    </nav>
+</aside>
+
+
+
+    
+
+        </main><footer class="footer">
+    <span>&copy; 2022 </span>
+    <span>
+        Made with &#10084;&#65039; using <a target="_blank" href="https://github.com/526avijitgupta/gokarna">Gokarna</a>
+    </span>
+</footer>
+</body>
+</html>

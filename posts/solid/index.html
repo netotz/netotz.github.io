@@ -202,7 +202,7 @@
 <li>Interface Segregation (ISP).</li>
 <li>Dependency Inversion (DIP).</li>
 </ol>
-<h1 id="single-responsibility-principle">Single Responsibility Principle</h1>
+<h1 id="single-responsibility-principle-srp">Single Responsibility Principle (SRP)</h1>
 <blockquote>
 <p>Each module should have one and only one reason to change.</p>
 </blockquote>
@@ -240,7 +240,7 @@ It measures how closely connected distinct modules are, and the strength of the 
 Each class has its own elements or members labeled with numbers.
 Imagine having to modify any member in the bad modularization example.
 Those are the moments when you ask yourself why you wanted to be a developer.</p>
-<h1 id="open-closed-principle">Open-Closed Principle</h1>
+<h1 id="open-closed-principle-ocp">Open-Closed Principle (OCP)</h1>
 <blockquote>
 <p>Software entities should be open for extension, but closed for modification.</p>
 </blockquote>
@@ -281,7 +281,7 @@ In order to have a good balance, we&rsquo;d have to try to predict where variati
 <p>A simple and good approach is to start being concrete in everything.
 Then, if we notice some modifications in some parts of the code, we should start implementing just enough abstraction to those parts to make them extensible, like adding parameters, designing inheritance, etc.</p>
 <p>In legacy projects, use new classes for new features, to avoid breaking existing dependencies and implementations.</p>
-<h1 id="liskov-substitution-principle">Liskov Substitution Principle</h1>
+<h1 id="liskov-substitution-principle-lsp">Liskov Substitution Principle (LSP)</h1>
 <p><a href="https://en.wikipedia.org/wiki/Barbara_Liskov">Barbara Liskov</a> and <a href="https://en.wikipedia.org/wiki/Jeannette_Wing">Jeannette Wing</a> described this principle in 1994 as follows:</p>
 <blockquote>
 <p>Let $\phi(x)$ be a property provable about objects $x$ of type $T$.
@@ -315,7 +315,7 @@ One way to solve this is to override specific behavior in the subclasses themsel
 This is known as <em>Tell, Don&rsquo;t Ask</em>.</p>
 <p>Another violation is the use of <code>NotImplementedException</code> because then the calls to a subtype methods wouldn&rsquo;t be safe.
 This is also a violation of the next principle, ISP.</p>
-<h1 id="interface-segregation-principle">Interface Segregation Principle</h1>
+<h1 id="interface-segregation-principle-isp">Interface Segregation Principle (ISP)</h1>
 <blockquote>
 <p>No code should be forced to depend on methods it doesn&rsquo;t use.</p>
 </blockquote>
@@ -325,7 +325,7 @@ This is very similar to what the Single Responsibility Principle states.</p>
 In the ISP context, an interface refers to anything that can be accessed by client code, such as public methods and properties.
 The client code is the calling code, so the OOP definition holds because a subtype is the client code of an interface, but it&rsquo;s not limited to that.</p>
 <p><a href="https://medium.com/@jim_ej/the-interface-segregation-principle-its-confused-aa856de97d36">This article</a> explains ISP with examples.</p>
-<h1 id="dependency-inversion-principle">Dependency Inversion Principle</h1>
+<h1 id="dependency-inversion-principle-dip">Dependency Inversion Principle (DIP)</h1>
 <blockquote>
 <p>High-level modules should not depend on low-level modules. Both should depend on abstractions.</p>
 <p>Details (concrete implementations) should depend on abstractions.</p>
@@ -341,6 +341,37 @@ In this way the client code knows the specific dependencies that a class needs.<
         </p>
     </div>
 </div>
+
+<aside class="post-toc">
+    <nav id="toc">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#single-responsibility-principle-srp">Single Responsibility Principle (SRP)</a>
+      <ul>
+        <li><a href="#responsibilities">Responsibilities</a></li>
+        <li><a href="#modularization">Modularization</a></li>
+      </ul>
+    </li>
+    <li><a href="#open-closed-principle-ocp">Open-Closed Principle (OCP)</a>
+      <ul>
+        <li><a href="#abstraction-vs-concreteness">Abstraction vs Concreteness</a></li>
+      </ul>
+    </li>
+    <li><a href="#liskov-substitution-principle-lsp">Liskov Substitution Principle (LSP)</a>
+      <ul>
+        <li><a href="#detecting-lsp-violations">Detecting LSP violations</a></li>
+      </ul>
+    </li>
+    <li><a href="#interface-segregation-principle-isp">Interface Segregation Principle (ISP)</a></li>
+    <li><a href="#dependency-inversion-principle-dip">Dependency Inversion Principle (DIP)</a>
+      <ul>
+        <li><a href="#dependency-injection">Dependency Injection</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </nav>
+</aside>
 
 
 

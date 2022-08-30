@@ -6,7 +6,17 @@
     <description>Recent content on void?</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 26 Jul 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://netotz.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 30 Aug 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://netotz.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>A simple application of refactorization</title>
+      <link>https://netotz.github.io/posts/refactor-cp/</link>
+      <pubDate>Tue, 30 Aug 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://netotz.github.io/posts/refactor-cp/</guid>
+      <description>Valuable code is such because it works. It truly doesn&amp;rsquo;t matter how such code looks or under what standards or rules it was written. If it doesn&amp;rsquo;t work, it&amp;rsquo;s trash. If it works, it adds value.
+This is something that almost all programmers know. We should get this taught early in our journeys because we ought to solve problems by writing code. The satisfaction that a developer gets when she sees her program working as expected and how it actually solves a real problem is unexplainable (she can finally go to sleep).</description>
+    </item>
+    
     <item>
       <title>The process of designing a new algorithm</title>
       <link>https://netotz.github.io/posts/a-fvs/</link>

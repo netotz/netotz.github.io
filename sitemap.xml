@@ -2,16 +2,40 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://netotz.github.io/posts/refactor-cp/</loc>
+    <lastmod>2022-08-30T17:45:47-05:00</lastmod>
+  </url><url>
     <loc>https://netotz.github.io/tags/algorithms/</loc>
-    <lastmod>2022-07-29T11:57:02-05:00</lastmod>
+    <lastmod>2022-08-30T17:45:47-05:00</lastmod>
+  </url><url>
+    <loc>https://netotz.github.io/tags/code-readability/</loc>
+    <lastmod>2022-08-30T17:45:47-05:00</lastmod>
+  </url><url>
+    <loc>https://netotz.github.io/tags/competitive-programming/</loc>
+    <lastmod>2022-08-30T17:45:47-05:00</lastmod>
+  </url><url>
+    <loc>https://netotz.github.io/tags/math/</loc>
+    <lastmod>2022-08-30T17:45:47-05:00</lastmod>
+  </url><url>
+    <loc>https://netotz.github.io/posts/</loc>
+    <lastmod>2022-08-30T17:45:47-05:00</lastmod>
+  </url><url>
+    <loc>https://netotz.github.io/tags/programming/</loc>
+    <lastmod>2022-08-30T17:45:47-05:00</lastmod>
+  </url><url>
+    <loc>https://netotz.github.io/tags/refactorization/</loc>
+    <lastmod>2022-08-30T17:45:47-05:00</lastmod>
+  </url><url>
+    <loc>https://netotz.github.io/tags/</loc>
+    <lastmod>2022-08-30T17:45:47-05:00</lastmod>
+  </url><url>
+    <loc>https://netotz.github.io/</loc>
+    <lastmod>2022-08-30T17:45:47-05:00</lastmod>
   </url><url>
     <loc>https://netotz.github.io/tags/computer-science/</loc>
     <lastmod>2022-07-29T11:57:02-05:00</lastmod>
   </url><url>
     <loc>https://netotz.github.io/tags/data-structures/</loc>
-    <lastmod>2022-07-29T11:57:02-05:00</lastmod>
-  </url><url>
-    <loc>https://netotz.github.io/tags/math/</loc>
     <lastmod>2022-07-29T11:57:02-05:00</lastmod>
   </url><url>
     <loc>https://netotz.github.io/tags/operations-research/</loc>
@@ -20,35 +44,23 @@
     <loc>https://netotz.github.io/tags/optimization/</loc>
     <lastmod>2022-07-29T11:57:02-05:00</lastmod>
   </url><url>
-    <loc>https://netotz.github.io/posts/</loc>
-    <lastmod>2022-07-29T11:57:02-05:00</lastmod>
-  </url><url>
-    <loc>https://netotz.github.io/tags/</loc>
-    <lastmod>2022-07-29T11:57:02-05:00</lastmod>
-  </url><url>
     <loc>https://netotz.github.io/posts/a-fvs/</loc>
     <lastmod>2022-07-29T11:57:02-05:00</lastmod>
   </url><url>
     <loc>https://netotz.github.io/tags/thesis/</loc>
     <lastmod>2022-07-29T11:57:02-05:00</lastmod>
   </url><url>
-    <loc>https://netotz.github.io/</loc>
-    <lastmod>2022-07-29T11:57:02-05:00</lastmod>
-  </url><url>
     <loc>https://netotz.github.io/tags/notes/</loc>
-    <lastmod>2022-04-25T11:03:52-05:00</lastmod>
-  </url><url>
-    <loc>https://netotz.github.io/tags/programming/</loc>
-    <lastmod>2022-04-25T11:03:52-05:00</lastmod>
+    <lastmod>2022-08-29T21:01:05-05:00</lastmod>
   </url><url>
     <loc>https://netotz.github.io/tags/software-engineering/</loc>
-    <lastmod>2022-04-25T11:03:52-05:00</lastmod>
+    <lastmod>2022-08-29T21:01:05-05:00</lastmod>
   </url><url>
     <loc>https://netotz.github.io/tags/solid/</loc>
-    <lastmod>2022-04-25T11:03:52-05:00</lastmod>
+    <lastmod>2022-08-29T21:01:05-05:00</lastmod>
   </url><url>
     <loc>https://netotz.github.io/posts/solid/</loc>
-    <lastmod>2022-04-25T11:03:52-05:00</lastmod>
+    <lastmod>2022-08-29T21:01:05-05:00</lastmod>
   </url><url>
     <loc>https://netotz.github.io/tags/object-oriented-programming/</loc>
     <lastmod>2022-04-01T12:08:30-06:00</lastmod>
