@@ -5,6 +5,7 @@ description: "Notes and definitions about the SOLID principles."
 date: 2022-04-25
 tags: ["programming", "software engineering", "solid", "notes"]
 image: "/images/unclebob.jfif"
+showTableOfContents: true
 ---
 
 ![](/images/unclebob.jfif)
@@ -29,7 +30,7 @@ The five SOLID principles are:
 4. Interface Segregation (ISP).
 5. Dependency Inversion (DIP).
 
-# Single Responsibility Principle
+# Single Responsibility Principle (SRP)
 
 > Each module should have one and only one reason to change.
 
@@ -82,7 +83,7 @@ Each class has its own elements or members labeled with numbers.
 Imagine having to modify any member in the bad modularization example.
 Those are the moments when you ask yourself why you wanted to be a developer.
 
-# Open-Closed Principle
+# Open-Closed Principle (OCP)
 
 > Software entities should be open for extension, but closed for modification.
 
@@ -142,7 +143,7 @@ Then, if we notice some modifications in some parts of the code, we should start
 
 In legacy projects, use new classes for new features, to avoid breaking existing dependencies and implementations.
 
-# Liskov Substitution Principle
+# Liskov Substitution Principle (LSP)
 
 [Barbara Liskov](https://en.wikipedia.org/wiki/Barbara_Liskov) and [Jeannette Wing](https://en.wikipedia.org/wiki/Jeannette_Wing) described this principle in 1994 as follows:
 
@@ -185,7 +186,7 @@ This is known as *Tell, Don't Ask*.
 Another violation is the use of `NotImplementedException` because then the calls to a subtype methods wouldn't be safe.
 This is also a violation of the next principle, ISP.
 
-# Interface Segregation Principle
+# Interface Segregation Principle (ISP)
 
 > No code should be forced to depend on methods it doesn't use.
 
@@ -198,7 +199,7 @@ The client code is the calling code, so the OOP definition holds because a subty
 
 [This article](https://medium.com/@jim_ej/the-interface-segregation-principle-its-confused-aa856de97d36) explains ISP with examples.
 
-# Dependency Inversion Principle
+# Dependency Inversion Principle (DIP)
 
 > High-level modules should not depend on low-level modules. Both should depend on abstractions.
 > 
