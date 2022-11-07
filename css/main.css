@@ -357,7 +357,7 @@ table td {
 }
 
 /* HOME PAGE */
-.home-about {
+.home-about, .home-content {
   text-align: center;
 }
 
@@ -556,7 +556,7 @@ table td {
     width: 100%;
   }
 
-  .home-about {
+  .home-about, .home-content {
     margin: 0 auto;
   }
 
@@ -577,4 +577,14 @@ table td {
   .nav-hamburger-list {
     visibility: hidden !important;
   }
+}
+
+/*Accessibility*/
+.sr-only {
+  position: absolute;
+  left: -10000px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
 }
