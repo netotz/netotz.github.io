@@ -80,8 +80,14 @@ theme = 'gokarna'
         name = 'Tags'
         weight = 3
     [[menu.main]]
+        identifier = 'threads'
+        url = '/threads/'
+        pre = '<span data-feather="twitter"></span>'
+        name = 'Threads'
+        weight = 4
+    [[menu.main]]
         identifier = 'source code'
         url = 'https://github.com/netotz/netotz.github.io'
         pre = '<span data-feather="github"></span>'
         name = 'Source'
-        weight = 4
+        weight = 5
