@@ -6,7 +6,17 @@
     <description>Recent content in Posts on void?</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 30 Aug 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://netotz.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 29 May 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://netotz.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>El Tao y el lenguaje como ilusión de la dualidad</title>
+      <link>https://netotz.github.io/posts/dualidad/</link>
+      <pubDate>Wed, 29 May 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://netotz.github.io/posts/dualidad/</guid>
+      <description>La dualidad es un concepto que engloba dos principios antagónicos pero coexistentes y eternamente enlazados, tales como el bien y el mal, el día y la noche, el blanco y el negro, como es arriba es abajo, vida y muerte, iniciados y profanos, el mundo de afuera y el yo de adentro; por mencionar solo algunas de muchas dualidades.
+Estos pares de conceptos opuestos pero complementarios son más que solo antónimos, pues el concepto de dualidad va más allá de la semántica al simbolizar polos de una misma realidad o fenómeno.</description>
+    </item>
+    
     <item>
       <title>A simple application of refactorization</title>
       <link>https://netotz.github.io/posts/refactor-cp/</link>
